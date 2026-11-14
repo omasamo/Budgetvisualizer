@@ -1,0 +1,1 @@
+!function(i){"use strict";i.module("app.rozpocet",["ngAnimate","ui.grid","ui.grid.pagination","ui.grid.resizeColumns","ui.grid.treeView","ngSanitize","ui.grid.autoResize","ui.bootstrap","ui.bootstrap.datetimepicker","rzModule"])}(angular||null);
