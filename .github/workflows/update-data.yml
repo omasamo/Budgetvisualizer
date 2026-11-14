@@ -1,0 +1,48 @@
+name: Update official data
+# Downloads the official files (MF SR open data portal and rozpocet.sk), rebuilds
+# data/processed and commits any change. Runs twice a month; MF SR publishes the
+# previous month's budget execution around the middle of the month.
+on:
+  schedule:
+    - cron: '30 6 20 * *'      # 20th of every month, 06:30 UTC
+    - cron: '30 6 5 * *'       # and the 5th, to pick up late updates
+  workflow_dispatch:
+  push:
+    branches: ['claude/**']
+    paths: ['pipeline/**', '.github/workflows/update-data.yml']
+permissions:
+  contents: write
+concurrency:
+  group: update-data-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r pipeline/requirements.txt
+      - name: Download MF SR open data files
+        run: python pipeline/fetch.py sk
+      - name: Download chapter data from rozpocet.sk
+        run: python pipeline/fetch_ris.py 2016
+      - name: Save downloaded files
+        # Raw files are kept even if the next step finds a problem, so nothing is downloaded twice.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/raw
+          if git diff --cached --quiet; then echo "No new raw data"; else
+            git commit -m "data: download official budget files ($(date -u +%Y-%m-%d))"; fi
+      - name: Build site data (validates totals)
+        run: python pipeline/parse_sk.py
+      - name: Commit site data
+        if: always()
+        run: |
+          git add data/processed
+          if ! git diff --cached --quiet; then
+            git commit -m "data: rebuild site data ($(date -u +%Y-%m-%d))"; fi
+          git push
