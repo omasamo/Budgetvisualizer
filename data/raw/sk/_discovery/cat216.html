@@ -1,0 +1,2177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="Windows-1250">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Open Data portál Ministerstva financií Slovenskej republiky je bezplatná platforma, kde nájdete okrem základných informácií o problematike otvorených údajov všetky datasety, ktoré zverejňuje Ministerstvo financií Slovenskej republiky a rozpočtové organizácie v zriaďovateľskej pôsobnosti ministerstva pod otvorenou licenciou, v strojovo spracovateľnom formáte pre voľné použitie na komerčné aj nekomerčné účely. Preskúmajte náš Lokálny katalóg otvorených dát">
+	<meta property="og:title" content="Open Data MFSR">
+	<meta property="og:image" content="http://opendata.mfsr.sk/img/logo.png">
+	<title>Open Data MFSR</title>
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" rel="icon" href="/img/favicon.ico" type="image/x-icon">
+	
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" rel="stylesheet" href="/css/idsk/govuk-frontend-3.0.0.min.css">	
+	
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" rel="stylesheet" href="/css/toastr.min.css">
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" rel="stylesheet" href="/css/all.css">
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" rel="stylesheet" href="/css/fontawesome.min.css">	
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" rel="stylesheet" href="/css/slick.css">
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" rel="stylesheet" href="/css/slick-theme.css">	
+	
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" rel="stylesheet" href="/css/style-front-mi.css?v=1.16">
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" rel="stylesheet" href="/css/style-menu-mi.css?v=1.15">	
+
+	
+	
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"> -->
+	<!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:600italic,400,800,700,300' rel='stylesheet' type='text/css'> -->
+	<!-- <link href='https://fonts.googleapis.com/css?family=BenchNine:300,400,700' rel='stylesheet' type='text/css'> -->
+	<!-- <link href='https://fonts.googleapis.com/css?family=Montserrat:300,400,700' rel='stylesheet' type='text/css'> -->
+	
+
+
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" href="/fonts/opensans.css" rel='stylesheet' type='text/css'>
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" href="/fonts/benchnine.css" rel='stylesheet' type='text/css'>
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" href="/fonts/montserrat.css" rel='stylesheet' type='text/css'>
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" href="/js/bxslider/jquery.bxslider.min.css" rel='stylesheet' type='text/css'>	
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" href="/css/zocial.css" rel='stylesheet' type='text/css'>	
+	<link nonce="Hsz+9B+hnYtG19GW5fObUA==" href="/css/jquery.subscribe-better.css" rel='stylesheet' type='text/css'>
+	
+	<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/modernizr.js"></script>
+	<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/iconify.min.js"></script>
+
+	<!--[if lt IE 9]>
+	<script src="/js/html5shiv.js"></script>
+	<script src="/js/respond.min.js"></script>
+	<![endif]-->
+
+	<!-- Google tag (gtag.js) -->
+	<script async nonce="Hsz+9B+hnYtG19GW5fObUA==" src="https://www.googletagmanager.com/gtag/js?id=G-J2HGQX9JX0"></script>
+	<script nonce="Hsz+9B+hnYtG19GW5fObUA==">
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-J2HGQX9JX0');
+	</script>
+
+
+</head>
+<body>
+
+<header class="top-header" role="banner" data-module="govuk-header">
+
+	<div class="container">
+
+
+		<div class="row idsk-header">
+
+
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 govuk-grid-column-full" style="padding-left:0px;">
+					<a href="/mi/"><span><img class="logo_fs_mi" src="/img/opendata_logo_mfsr.png" alt="Logo MFSR"></span></a>
+			</div>	
+
+		</div>		
+
+		<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">		
+			
+			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+				<p class="title"><a href="/mi/">Open Data portál<br><span class="subtitle">Ministerstva financií Slovenskej republiky</span></a></p>
+			</div>			
+			
+
+
+			<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 shift" id="hide1">
+				<form method="post" id="frm-searchForm" action="/mi/opendata/search?opened=216" class="searchbar" role="search">
+					<!--<a class="advanced-search" n:href="Opendata:search">Rozšírené vyhľadávanie</a>-->
+					<div class="input-group add-on">
+						<input class="form-control govuk-input" placeholder="Hľadať" name="search" maxlength="100" required data-nette-rules='[{"op":":filled","msg":"This field is required."},{"op":":maxLength","msg":"Maximálny počet znakov vo vyhľadávaní je 100.","arg":100}]' id="search" type="text">
+						<div class="input-group-btn">
+							<button class="btn btn-default govuk-button search-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+						</div>
+					</div>
+				<input type="hidden" name="_token_" value="nquz3eowbsqSV0RtgnLpICo2Gk8n3i+ikWVPk="><input type="hidden" name="_do" value="searchForm-submit"><!--[if IE]><input type=IEbug disabled style="display:none"><![endif]-->
+</form>
+			</div>
+			
+			
+
+
+			<div class="col-lg-4 col-md-4 col-sm-8 col-xs-9 shift1">
+				<span class="top-menu-align"> 			
+				<!--<a class="top-menu-first" n:href="Homepage:default">ÚVOD</a>-->
+				<a href="/mi/opendata/?opened=216" class="top-menu">DATASETY</a>
+				<!--<a class="top-menu" n:href="Opendata:lkod">KATALÓG</a>-->
+				<a href="/mi/page/openapi" class="top-menu">OPENAPI</a>
+				<a href="/mi/homepage/contact" class="top-menu">KONTAKT</a>
+				<a class="top-menu" id="button-viac" href="#">APLIKÁCIE</a>	
+
+					<div class="menu_viac">			
+						<div class="row underline">
+							<div class="col-xs-12">
+								<a href="https://rozpocet.sk/web/#/prehlad" target="_blank" class="item">Rozpočet</a>
+							</div>
+							<div class="col-xs-12">
+								<a href="https://www.mfsr.sk/sk/financie/institut-financnej-politiky/publikacie-ifp/kalkulacky/" target="_blank" class="item">IFP kalkulačky</a>
+							</div>							
+						</div>						
+					</div>
+				<button class="hide-menu" style="background:none; border:none;"><i class="fa fa-angle-down"></i></button>							
+				</span>					
+			</div>
+			
+			
+
+			<div class="col-lg-1 col-md-1 col-sm-2 col-xs-3 shift1" id="hide2">
+			
+				<span class="top-flag-align"> 
+					<a href="/en/mi/opendata/category/216-prijmy-a-vydavky-verejnej-spravy?opened=216" style="margin-left:10px;" class="locale">ENG</a><span> / </span>
+					<a href="/mi/opendata/category/216-prijmy-a-vydavky-verejnej-spravy?opened=216" class="locale">SVK</a>	
+				</span>								
+			</div>
+	
+
+			<div class="col-lg-1 col-md-1 col-sm-2 col-xs-3 shift1" id="hide3">
+				<label style="float:right;">
+					<input class='toggle-checkbox' type='checkbox'></input>
+						<div class='toggle-slot'>
+							
+							<div class='sun-icon-wrapper'>
+								<div class="iconify sun-icon" data-icon="feather-sun" data-inline="false"></div>
+							</div>
+							
+							<div class='toggle-button'></div>
+							
+							<div class='moon-icon-wrapper'>
+								<div class="iconify moon-icon" data-icon="feather-moon" data-inline="false"></div>
+							</div>
+							
+						</div>
+				</label>				
+			</div>
+			<span style="display:none;">
+				<a href="/mi/opendata/category/216-prijmy-a-vydavky-verejnej-spravy?opened=216" id="theme_mi"></a>
+				<a href="/opendata/category/216-prijmy-a-vydavky-verejnej-spravy?opened=216" id="theme_dt"></a>
+			</span>
+			
+		</div>
+
+
+		</div>
+<!--		
+		<div>
+			  <button class="hide-menu" style="background:none; border:none;"><i class="fa fa-angle-down"></i></button>		
+		</div>
+-->
+	</div>
+</header>
+
+
+
+
+	<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/jquery-3.5.1.min.js"></script>
+	
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==">	
+	
+$(function() {
+	
+	$('.toggle-slot').on( "click", function() {
+		
+		setTimeout(
+            function() {
+                
+				window.location.replace( $('#theme_dt').attr('href') );
+            },
+            1000);
+		
+	});
+});
+</script>	
+
+
+
+<section class="about text-center govuk-body" id="about">
+    <div class="container">
+        <div class="row">
+
+<div class="menu-left col-xs-4">
+
+<!--
+
+
+
+
+
+		<div class="row">
+			<div class="col-xs-12">
+					<span><img style="max-height:70px; margin-top:25px;" src="/img/logo_fs-mi.png" alt="Logo FS"></span>
+			</div>		
+		</div>
+
+
+
+
+
+
+-->
+
+    <nav id="sidebar" class="navbar-expand-lg">
+
+        <div class="sidebar-header">
+            <h3 title="Počet datasetov: 137">137
+				<button class="navbar-toggler" style="background-color: transparent; border:0;" type="button" data-toggle="collapse" 
+						data-target="#navbarContent" aria-controls="navbarContent" 
+						aria-expanded="true" aria-label="Toggle navigation">
+						<span><i class="fa fa-bars fa-1x"></i></span>
+				</button>	
+			
+			</h3>					
+        </div>
+
+		<div class="collapse navbar-collapse" id="navbarContent">
+		
+		
+		       
+			<ul class="list-unstyled components">
+			
+				<li style="padding-left: 2px;padding-bottom: 3px;">Poskytovateľ</li>
+            
+				
+			
+				<li >
+		
+					<a href="/mi/opendata/category/240-ministerstvo-financii-sr?opened=216">MINISTERSTVO FINANCIÍ SR (93)</a>
+				</li>
+			
+			
+			   
+			   
+				<li >
+					<a href="/mi/opendata/category/278-datovy-inventar?opened=216" class="subcat">&#187; Dátový inventár (3)  </a>
+			    </li>
+				
+				
+							
+				
+				   
+				
+			   
+			   
+				<li >
+					<a href="/mi/opendata/category/262-organizacia-a-kontakty-urad-mf-sr?opened=216" class="subcat">&#187; Organizácia a kontakty (Úrad MF SR) (4)  </a>
+			    </li>
+				
+				
+							
+				
+				   
+				
+			   
+			   
+				<li >
+					<a href="/mi/opendata/category/261-hospodarenie-urad-mf-sr?opened=216" class="subcat">&#187; Hospodárenie (Úrad MF SR) (5)  </a>
+			    </li>
+				
+				
+							
+				
+				   
+				
+			   
+			   
+				<li >
+					<a href="/mi/opendata/category/263-audit-a-kontrola-urad-mf-sr?opened=216" class="subcat">&#187; Audit a kontrola (Úrad MF SR) (4)  </a>
+			    </li>
+				
+				
+							
+				
+				   
+				
+			   
+			   
+				<li >
+					<a href="/mi/opendata/category/268-dotacie-urad-mf-sr?opened=216" class="subcat">&#187; Dotácie (Úrad MF SR) (1)  </a>
+			    </li>
+				
+				
+							
+				
+				   
+				
+			   
+			   
+				<li >
+					<a href="/mi/opendata/category/266-realizovane-projekty-urad-mf-sr?opened=216" class="subcat">&#187; Realizované projekty (Úrad MF SR) (1)  </a>
+			    </li>
+				
+				
+							
+				
+				   
+				
+			   
+			   
+				<li >
+					<a href="/mi/opendata/category/224-kancelaria-ministra?opened=216" class="subcat">&#187; Kancelária ministra (3)   <span style="float:right;"><i class="fa fa-caret-down fa-1x"></i></span></a>
+			    </li>
+				
+				
+							
+					  	  
+					  	  
+				
+				   
+				
+			   
+			   
+			   
+			   
+				<li >
+					<a href="/mi/opendata/category/185-sekcia-informacnych-technologii?opened=216" class="subcat">&#187; Sekcia informačných technológií (1)   <span style="float:right;"><i class="fa fa-caret-down fa-1x"></i></span></a>
+			    </li>
+				
+				
+							
+					  	  
+				
+				   
+				
+			   
+			   
+			   
+			   
+				<li >
+					<a href="/mi/opendata/category/208-sekcia-statneho-vykaznictva?opened=216" class="subcat">&#187; Sekcia štátneho výkazníctva (56)   <span style="float:right;"><i class="fa fa-caret-down fa-1x"></i></span></a>
+			    </li>
+				
+				
+							
+					  	  
+					  	  
+					  	  
+					  	  
+					  	  
+					  	  
+					  	  
+					  	  
+					  	  
+					  	     
+					  	  
+					  	  
+					  	  
+					  	  
+				
+				   
+				   
+			   
+				    
+							
+				   
+				   
+				    
+						
+						<li >
+							<a href="/mi/opendata/category/233-centralny-ekonomicky-system?opened=216" class="subsubcat">&#187; Centrálny ekonomický systém (1) </a>
+						</li>
+					
+					
+					
+				   
+			   
+				    
+							
+				   
+				   
+				    
+						
+						<li >
+							<a href="/mi/opendata/category/211-datasety-z-uctovnej-konsolidacie-verejnej-spravy?opened=216" class="subsubcat">&#187; Datasety z účtovnej konsolidácie verejnej správy (3) </a>
+						</li>
+					
+					
+					
+				   
+			   
+				    
+							
+				   
+				   
+				    
+				   
+			   
+				    
+							
+				   
+				   
+				    
+						
+						<li >
+							<a href="/mi/opendata/category/210-dlh-ustrednej-spravy?opened=216" class="subsubcat">&#187; Dlh ústrednej správy (1) </a>
+						</li>
+					
+					
+					
+				   
+			   
+				    
+							
+				   
+				   
+				    
+						
+						<li >
+							<a href="/mi/opendata/category/209-maastrichtsky-dlh-verejnej-spravy?opened=216" class="subsubcat">&#187; Maastrichtský dlh verejnej správy (1) </a>
+						</li>
+					
+					
+					
+				   
+			   
+				    
+							
+				   
+				   
+				    
+						
+						<li >
+							<a href="/mi/opendata/category/215-operacie-verejnej-spravy?opened=216" class="subsubcat">&#187; Operácie verejnej správy (1) </a>
+						</li>
+					
+					
+					
+				   
+			   
+				    
+							
+				   
+				   
+				    
+						
+						<li >
+							<a href="/mi/opendata/category/214-plnenie-statneho-rozpoctu-sr-v-narodnej-metodike?opened=216" class="subsubcat">&#187; Plnenie štátneho rozpočtu SR v národnej metodike (1) </a>
+						</li>
+					
+					
+					
+				   
+			   
+				    
+							
+				   
+				   
+				    
+						
+						<li >
+							<a href="/mi/opendata/category/242-priebezne-plnenie-statneho-rozpoctu?opened=216" class="subsubcat">&#187; Priebežné plnenie štátneho rozpočtu (1) </a>
+						</li>
+					
+					
+					
+				   
+			   
+				    
+							
+				   
+				   
+				    
+				   
+			   
+				    
+							
+				   
+				   
+				    
+						
+						<li  class="active-menu-item">
+							<a href="/mi/opendata/category/216-prijmy-a-vydavky-verejnej-spravy?opened=216" class="subsubcat">&#187; Príjmy a výdavky verejnej správy (3) </a>
+						</li>
+					
+					
+					
+				   
+			   
+				    
+							
+				   
+				   
+				    
+						
+						<li >
+							<a href="/mi/opendata/category/212-statistika-uzemnej-samospravy?opened=216" class="subsubcat">&#187; Štatistika územnej samosprávy (22) </a>
+						</li>
+					
+					
+					
+				   
+			   
+				    
+							
+				   
+				   
+				    
+						
+						<li >
+							<a href="/mi/opendata/category/231-suhrnna-vyrocna-sprava?opened=216" class="subsubcat">&#187; Súhrnná výročná správa (8) </a>
+						</li>
+					
+					
+					
+				   
+			   
+				    
+							
+				   
+				   
+				    
+						
+						<li >
+							<a href="/mi/opendata/category/228-udaje-podla-smernice-rady---eu?opened=216" class="subsubcat">&#187; Údaje podľa Smernice rady 2011/85/EÚ (5) </a>
+						</li>
+					
+					
+					
+				   
+			   
+				    
+							
+				   
+				   
+				    
+						
+						<li >
+							<a href="/mi/opendata/category/237-udaje-zo-zaverecneho-uctu-sr?opened=216" class="subsubcat">&#187; Údaje zo záverečného účtu SR (8) </a>
+						</li>
+					
+					
+					
+				
+			   
+			   
+				<li >
+					<a href="/mi/opendata/category/234-statistiky-navstevnosti-webov?opened=216" class="subcat">&#187; Štatistiky návštevnosti webov (14)   <span style="float:right;"><i class="fa fa-caret-down fa-1x"></i></span></a>
+			    </li>
+				
+				
+							
+					  	  
+					  	  
+				
+				   
+				
+			   
+			   
+				<li >
+					<a href="/mi/opendata/category/178-utvar-hodnoty-za-peniaze?opened=216" class="subcat">&#187; Útvar hodnoty za peniaze (1)   <span style="float:right;"><i class="fa fa-caret-down fa-1x"></i></span></a>
+			    </li>
+				
+				
+							
+					  	  
+				
+				   
+				
+			   
+				
+			
+				<li >
+		
+					<a href="/mi/opendata/category/190-urad-vladneho-auditu?opened=216">ÚRAD VLÁDNEHO AUDITU (6)</a>
+				</li>
+			
+			
+			   
+				
+			
+				<li >
+		
+					<a href="/mi/opendata/category/191-datacentrum?opened=216">DATACENTRUM (6)</a>
+				</li>
+			
+			
+			   
+				
+			
+				<li >
+		
+					<a href="/mi/opendata/category/271-vdz-vs-financie?opened=216">VDZ VS - FINANCIE (5)</a>
+				</li>
+			
+			
+			   
+				
+			
+				<li >
+		
+					<a href="/mi/opendata/category/193-statna-pokladnica?opened=216">ŠTÁTNA POKLADNICA (9)</a>
+				</li>
+			
+			
+			   
+				
+			
+				<li >
+		
+					<a href="/mi/opendata/category/194-ardal?opened=216">ARDAL (7)</a>
+				</li>
+			
+			
+			   
+				
+			
+				<li >
+		
+					<a href="/mi/opendata/category/195-urad-pre-regulaciu-hazardnych-hier?opened=216">ÚRAD PRE REGULÁCIU HAZARDNÝCH HIER (6)</a>
+				</li>
+			
+			
+			   
+				
+				
+			
+				<li >
+		
+					<a href="/mi/opendata/category/198-eximbanka-sr?opened=216">EXIMBANKA SR (5)</a>
+				</li>
+			
+			
+			   
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			
+			</ul>
+		</div>			
+
+    </nav>
+</div>
+
+
+
+<form action="/mi/opendata/category/216-prijmy-a-vydavky-verejnej-spravy?opened=216" method="post" id="frm-orderForm">
+
+<div class="menu-right col-xs-8 govuk-form-group" style="display:none;">
+				<h1 style="font-size: 30px;" class="govuk-caption-xl govuk-!-margin-bottom-6">Lokálny katalóg otvorených dát</h1>
+				<div class="view-content">
+ 
+					
+					<div id="lkod">
+						<div class="row">	
+							<div class="col-xs-3 col-md-3 col-lg-3 boxie govuk-button">
+								<div class="row">
+									<div class="col-xs-12 name">								
+										Datasetov		
+									</div>		  				
+									<div class="col-xs-12 number">								
+										137							
+									</div>		  					  				
+								</div>								
+							</div>		  				
+							
+							<div class="col-xs-3 col-md-3 col-lg-3 boxie govuk-button">
+								<div class="row">
+									<div class="col-xs-12 name">								
+										Distribúcií 		
+									</div>		  				
+									<div class="col-xs-12 number">								
+										525							
+									</div>		  					  				
+								</div>								
+							</div>		
+							
+							<div class="col-xs-3 col-md-3 col-lg-3 boxie govuk-button">
+								<div class="row">
+									<div class="col-xs-12 name">								
+										Poskytovateľov		
+									</div>		  				
+									<div class="col-xs-12 number">								
+										8							
+									</div>		  					  				
+								</div>								
+							</div>		
+							
+						</div>						
+					</div>
+					
+					
+					
+					
+				</div>
+</div>
+
+
+<div class="menu-right col-xs-8 govuk-form-group" style="display:none;">
+				<h3 style="font-size: 18px;" class="govuk-caption-xl govuk-!-margin-bottom-6">Stiahnuť lokálny katalóg v požadovanom formáte:</h3>
+				<div class="view-content">
+					
+						<div class="row">	
+							<div class="col-xs-12 col-md-12 col-lg-12">
+										<a href="/mi/opendata/catalogexport?opened=216" target="_blank" ><span class="govuk-button"><img style="max-height: 50px; margin:20px;" src="/img/icon_rdf.png" alt="Logo RDF/XML" title="Stiahnuť RDF/XML"></span></a>
+										<a href="/mi/opendata/catalog/lkod?opened=216" target="_blank" ><span class="govuk-button"><img style="max-height: 50px; margin:20px;" src="/img/icon_json.png" alt="Logo JSON" title="Otvoriť JSON LD"></span></a>
+										<a href="/mi/opendata/catalogexport?output=csv&amp;opened=216" target="_blank" ><span class="govuk-button"><img style="max-height: 50px; margin:20px;" src="/img/icon_csv.png" alt="Logo CSV" title="Stiahnuť CSV"></span></a>
+							</div>		  				
+																		
+						</div>																
+				</div>
+</div>
+
+<div class="menu-right col-xs-8 govuk-form-group" >
+
+    <h2 style="font-size: 24px;" class="site-nav govuk-caption-xl">MINISTERSTVO FINANCIÍ SR &gt; Sekcia štátneho výkazníctva &gt; Príjmy a výdavky verejnej správy (3)</h2>
+
+    <div class="view-content">
+	
+		
+        <select name="order" class="order govuk-select" id="order"><option value="1">Podľa názvu datasetu</option><option value="2">Podľa dátumu vydania (ASC)</option><option value="3">Podľa dátumu vydania (DESC)</option><option value="4">Podľa dátumu zmeny (ASC)</option><option value="5">Podľa dátumu zmeny (DESC)</option></select>		
+
+            <div id="datasets">
+
+<article  xmlns="https://www.w3.org/1999/html">
+
+
+        <div class="col-md-12 col-lg-12 col-xs-12 article">
+            <h3 class="node-title govuk-caption-l" style="font-size: 16px;font-weight: normal;">
+                <span class="fa fa-cubes" style="padding-right: 5px;"></span>
+				
+					<a href="/mi/opendata/show/celkove-prijmy-a-vydavky-na-hotovostnej-baze?opened=216" title="Celkové príjmy a&nbsp;výdavky na hotovostnej báze">
+				
+                Celkové príjmy a výdavky na hotovostnej báze
+				
+				</a>
+            </h3>
+    
+				
+				
+				
+
+				<div id="1492_4016">
+				</div>
+
+				
+				<br/>
+			
+				
+				
+				
+
+				<div id="1492_4013">
+				</div>
+
+				
+				<br/>
+			
+			
+			
+			<div class="table-responsive">
+				<table class="field-group-format group_additional table table-striped1 table-bordered1 sticky-enabled" style="margin-bottom: 0px !important;">
+                    <tbody>
+ 
+						<tr no_striping="1" class=""><th class="field-label" style="width: 135px;font-weight: normal;">Popis:</th><td class="field-content"><div class="field field-name-field-license field-type-text field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:description">
+							Na základe smernice Rady 2011/85/EÚ z&nbsp;8. novembra 2011 o&nbsp;požiadavkách na rozpočtové rámce členských štátov Slovenská republika zverejňuje údaje o&nbsp;plnení rozpočtu verejnej správy. Údaje pokrývajú hotovostné príjmy a&nbsp;výdavky ústrednej správy, fondov sociálneho zabezpečenia a&nbsp;miestnej samosprávy. Údaje sa zverejňujú mesačne pre subsektory ústrednej správy a&nbsp;fondy sociálneho zabezpečenia. Štvrťročne pre subsektor miestnej samosprávy. </div></div></div></td> </tr>																
+                        <tr no_striping="1" class=""><th class="field-label" style="width: 135px;font-weight: normal;">Dátum vydania:</th><td class="field-content"><div property="dcterms:issued" class="field-name-field-release-date">21. 03. 2023</div></td> </tr>
+                        <tr no_striping="1" class=""><th class="field-label" style="width: 135px;font-weight: normal;">Dátum modifikácie:</th><td class="field-content"><div property="dcterms:modified" class="field-name-field-modified-date">12. 11. 2026</div></td> </tr>
+						
+						
+						<tr class=""><th colspan="2" class="field-label" style="width: 135px;font-weight: normal;">
+						
+							<a href="/mi/opendata/show/celkove-prijmy-a-vydavky-na-hotovostnej-baze?opened=216" title="Celkové príjmy a&nbsp;výdavky na hotovostnej báze">
+						
+						<div style="" class="col-md-3 col-xs-4 button govuk-button">Detail datasetu</div></a>
+						
+						
+						</th>
+						</tr>
+                    </tbody>
+                </table>
+				
+ 
+
+            </div>			
+			
+			
+			
+			
+			<div class="social-container_1492" style="padding-top:5px;">
+				<a href="#" class="zocial facebook icon" aria-label="Zdielať na Facebook" role="button">Zdielať na Facebook</a>
+				<a href="#" class="zocial linkedin icon" aria-label="Zdielať na LinkedIn" role="button">Zdielať na LinkedIn</a>
+				<a href="#" class="zocial pinterest icon" aria-label="Zdielať na Pinterest" role="button">Zdielať na Pinterest</a>
+				<a href="#" class="zocial twitter icon" aria-label="Zdielať na Twitter" role="button">Zdielať na Twitter</a>
+				<a href="#" class="zocial email icon" aria-label="Zdielať na Email" role="button">Zdielať na E-mail</a>
+				<a href="#" style="" class="govuk-button notify_1492" aria-label="Notifikovať zmeny e-mailom" role="button">Notifikovať zmeny e-mailom</a>
+			</div>	
+			<script nonce="Hsz+9B+hnYtG19GW5fObUA==" >
+				$(function () {
+					$.fn.jqss.templates['notify_'+1492] = "http://opendata.mfsr.sk/mi/opendata/notify/1492?opened=216";
+					$(".social-container_"+1492+" a").jqss({ url: "http://opendata.mfsr.sk/mi/opendata/show/celkove-prijmy-a-vydavky-na-hotovostnej-baze?opened=216", 
+					image: "http://opendata.mfsr.sk"+"/img/dataset/"+1492+".png",
+					emailSubject: "Celkové príjmy a výdavky na hotovostnej báze", emailBody: "Na základe smernice Rady 2011/85/EÚ z 8. novembra 2011 o požiadavkách na rozpočtové rámce členských štátov Slovenská republika zverejňuje údaje o plnení rozpočtu verejnej správy. Údaje pokrývajú hotovostné príjmy a výdavky ústrednej správy, fondov sociálneho zabezpečenia a miestnej samosprávy. Údaje sa zverejňujú mesačne pre subsektory ústrednej správy a fondy sociálneho zabezpečenia. Štvrťročne pre subsektor miestnej samosprávy. " + " Url: " + "http://opendata.mfsr.sk/mi/opendata/show/celkove-prijmy-a-vydavky-na-hotovostnej-baze?opened=216" });
+				});
+			</script>			
+			
+			
+        </div>
+    
+	
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" >
+
+				
+
+
+	
+	
+	
+
+$(document).ready( function () {	
+Highcharts.chart( "1492_4016", {
+	credits: { enabled: false },
+    chart: {
+        type: "line",
+        
+		
+    },
+    title: {
+        text: ""
+    },
+ 
+    legend: {
+		enabled: true,
+		layout: 'horizontal',
+        backgroundColor: null,
+        borderWidth: 0,
+        symbolHeight: 12,
+        symbolWidth: 12,
+        symbolRadius: 8,
+		lineHeight: 16,
+        itemMarginTop: 2,
+        maxHeight: 65,
+        navigation:{ arrowSize: 25, activeColor: '#ec5c7d' },
+        align: 'center',
+		x: 20,
+        verticalAlign: 'bottom',
+		padding: 0
+    },	
+ 
+ 	lang: {				
+		downloadCSV: "Stiahnuť CSV",
+		downloadJPEG: "Stiahnuť obrázok JPEG",
+		downloadPDF: "Stiahnuť PDF dokument",
+		downloadPNG: "Stiahnuť obrázok PNG",
+		downloadSVG: "Stiahnuť vektorový obrázok SVG",
+		downloadXLS: "Stiahnuť XLS",
+		downloadJSON: "Stiahnuť JSON",						
+		exitFullscreen: "Ukončiť zobrazenie celej obrazovky",
+		hideData: "Skryť tabuľku s údajmi",
+		viewData: "Zobraziť tabuľku s údajmi",
+		viewFullscreen: "Zobraziť na celú obrazovku",
+		printChart: "Vytlačiť graf"
+	},		
+ 
+    xAxis: {
+		categories: [  2015,  2016,  2017,  2018,  2019,  2020,  2021,  2022,  2023,  2024,  2025,  2026,   ],
+		
+        tickmarkPlacement: 'on',
+        title: {
+            enabled: true
+        }
+    },
+    yAxis: [
+		{ title: { text: "mil. EUR" }, lineWidth: 2  }, 
+	],
+    plotOptions: {
+        area: {
+            stacking: 'normal',
+            lineColor: '#666666',
+            lineWidth: 1,
+            marker: {
+                lineWidth: 1,
+                lineColor: '#666666'
+            }
+        },
+    },
+    series: [
+	
+	{
+		name: "Saldo" + ' (' + "mil. EUR" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. EUR", },
+		
+        data: [  -800,  -767,  -524,  -14,  -1282,  -4861,  -5674,  -3305,  -6987,  -5551,  -5272,  -3699,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	
+	 
+	
+	]
+});
+});
+
+
+
+				
+
+
+	
+	
+	
+
+$(document).ready( function () {	
+Highcharts.chart( "1492_4013", {
+	credits: { enabled: false },
+    chart: {
+        type: "column",
+        
+		
+    },
+    title: {
+        text: ""
+    },
+ 
+    legend: {
+		enabled: true,
+		layout: 'horizontal',
+        backgroundColor: null,
+        borderWidth: 0,
+        symbolHeight: 12,
+        symbolWidth: 12,
+        symbolRadius: 8,
+		lineHeight: 16,
+        itemMarginTop: 2,
+        maxHeight: 65,
+        navigation:{ arrowSize: 25, activeColor: '#ec5c7d' },
+        align: 'center',
+		x: 20,
+        verticalAlign: 'bottom',
+		padding: 0
+    },	
+ 
+ 	lang: {				
+		downloadCSV: "Stiahnuť CSV",
+		downloadJPEG: "Stiahnuť obrázok JPEG",
+		downloadPDF: "Stiahnuť PDF dokument",
+		downloadPNG: "Stiahnuť obrázok PNG",
+		downloadSVG: "Stiahnuť vektorový obrázok SVG",
+		downloadXLS: "Stiahnuť XLS",
+		downloadJSON: "Stiahnuť JSON",						
+		exitFullscreen: "Ukončiť zobrazenie celej obrazovky",
+		hideData: "Skryť tabuľku s údajmi",
+		viewData: "Zobraziť tabuľku s údajmi",
+		viewFullscreen: "Zobraziť na celú obrazovku",
+		printChart: "Vytlačiť graf"
+	},		
+ 
+    xAxis: {
+		categories: [  "Príjmy (9/2026)",  "Výdavky (9/2026)",   ],
+		
+        tickmarkPlacement: 'on',
+        title: {
+            enabled: true
+        }
+    },
+    yAxis: [
+		{ title: { text: "mil. EUR" }, lineWidth: 2  }, 
+	],
+    plotOptions: {
+        area: {
+            stacking: 'normal',
+            lineColor: '#666666',
+            lineWidth: 1,
+            marker: {
+                lineWidth: 1,
+                lineColor: '#666666'
+            }
+        },
+		series: {
+            stacking: 'normal'
+        }
+    },
+    series: [
+	
+	{
+		name: "Ústredná správa" + ' (' + "mil. EUR" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. EUR", },
+		
+        data: [  30255.1,  34457.1,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	{
+		name: "Fondy sociálneho zabezpečenia" + ' (' + "mil. EUR" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. EUR", },
+		
+        data: [  14352.7,  14542.6,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	{
+		name: "Miestna samospráva" + ' (' + "mil. EUR" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. EUR", },
+		
+        data: [  9846.5,  9153.2,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	
+	 
+	
+	]
+});
+});
+
+
+
+
+
+$(function() { 
+
+ 
+(function(H) {
+    H.wrap(
+      H.Legend.prototype,
+      'handleOverflow',
+      function(proceed, legendHeight) {
+        var maxHeight = this.options.maxHeight;
+
+        legendHeight = proceed.apply(
+          this,
+          Array.prototype.slice.call(arguments, 1)
+        );
+
+        if (!H.defined(maxHeight) && this.pages) {
+
+          this.options.maxHeight = this.pages[1];
+
+          legendHeight = proceed.apply(
+            this,
+            Array.prototype.slice.call(arguments, 1)
+          );
+          this.options.maxHeight = maxHeight;
+        }
+        return legendHeight;
+      }
+    );
+  })(Highcharts);
+ 
+
+  
+});
+
+</script>	
+	
+</article>
+<article  xmlns="https://www.w3.org/1999/html">
+
+
+        <div class="col-md-12 col-lg-12 col-xs-12 article">
+            <h3 class="node-title govuk-caption-l" style="font-size: 16px;font-weight: normal;">
+                <span class="fa fa-cubes" style="padding-right: 5px;"></span>
+				
+					<a href="/mi/opendata/show/vydavky-kapitol-statneho-rozpoctu-na-informacne-technologie?opened=216" title="Výdavky kapitol štátneho rozpočtu na informačné technológie">
+				
+                Výdavky kapitol štátneho rozpočtu na informačné technológie
+				
+				</a>
+            </h3>
+    
+				
+				
+				
+
+				<div id="1556_1485">
+				</div>
+
+				
+				<br/>
+			
+			
+			
+			<div class="table-responsive">
+				<table class="field-group-format group_additional table table-striped1 table-bordered1 sticky-enabled" style="margin-bottom: 0px !important;">
+                    <tbody>
+ 
+						<tr no_striping="1" class=""><th class="field-label" style="width: 135px;font-weight: normal;">Popis:</th><td class="field-content"><div class="field field-name-field-license field-type-text field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:description">
+							Dataset zobrazuje výdavky na informačné systémy, špecializované systémy, podpornú infraštruktúru, systémy vnútornej správy, licencie k&nbsp;informačných systémom a&nbsp;aplikáciám, aplikačnú podporu a&nbsp;rozvoj informačných systémov štátnych organizácií za roky 2018 a&nbsp;2022. Klasifikujú sa pod kódom programovej štruktúry - 0EK. Graf zobrazuje údaje za TOP 10 kapitol ústrednej správy (poradie je určené na základe údajov za rok 2022).</div></div></div></td> </tr>																
+                        <tr no_striping="1" class=""><th class="field-label" style="width: 135px;font-weight: normal;">Dátum vydania:</th><td class="field-content"><div property="dcterms:issued" class="field-name-field-release-date">13. 04. 2023</div></td> </tr>
+                        <tr no_striping="1" class=""><th class="field-label" style="width: 135px;font-weight: normal;">Dátum modifikácie:</th><td class="field-content"><div property="dcterms:modified" class="field-name-field-modified-date">19. 03. 2025</div></td> </tr>
+						
+						
+						<tr class=""><th colspan="2" class="field-label" style="width: 135px;font-weight: normal;">
+						
+							<a href="/mi/opendata/show/vydavky-kapitol-statneho-rozpoctu-na-informacne-technologie?opened=216" title="Výdavky kapitol štátneho rozpočtu na informačné technológie">
+						
+						<div style="" class="col-md-3 col-xs-4 button govuk-button">Detail datasetu</div></a>
+						
+						
+						</th>
+						</tr>
+                    </tbody>
+                </table>
+				
+ 
+
+            </div>			
+			
+			
+			
+			
+			<div class="social-container_1556" style="padding-top:5px;">
+				<a href="#" class="zocial facebook icon" aria-label="Zdielať na Facebook" role="button">Zdielať na Facebook</a>
+				<a href="#" class="zocial linkedin icon" aria-label="Zdielať na LinkedIn" role="button">Zdielať na LinkedIn</a>
+				<a href="#" class="zocial pinterest icon" aria-label="Zdielať na Pinterest" role="button">Zdielať na Pinterest</a>
+				<a href="#" class="zocial twitter icon" aria-label="Zdielať na Twitter" role="button">Zdielať na Twitter</a>
+				<a href="#" class="zocial email icon" aria-label="Zdielať na Email" role="button">Zdielať na E-mail</a>
+				<a href="#" style="" class="govuk-button notify_1556" aria-label="Notifikovať zmeny e-mailom" role="button">Notifikovať zmeny e-mailom</a>
+			</div>	
+			<script nonce="Hsz+9B+hnYtG19GW5fObUA==" >
+				$(function () {
+					$.fn.jqss.templates['notify_'+1556] = "http://opendata.mfsr.sk/mi/opendata/notify/1556?opened=216";
+					$(".social-container_"+1556+" a").jqss({ url: "http://opendata.mfsr.sk/mi/opendata/show/vydavky-kapitol-statneho-rozpoctu-na-informacne-technologie?opened=216", 
+					image: "http://opendata.mfsr.sk"+"/img/dataset/"+1556+".png",
+					emailSubject: "Výdavky kapitol štátneho rozpočtu na informačné technológie", emailBody: "Dataset zobrazuje výdavky na informačné systémy, špecializované systémy, podpornú infraštruktúru, systémy vnútornej správy, licencie k informačných systémom a aplikáciám, aplikačnú podporu a rozvoj informačných systémov štátnych organizácií za roky 2018 a 2022. Klasifikujú sa pod kódom programovej štruktúry - 0EK. Graf zobrazuje údaje za TOP 10 kapitol ústrednej správy (poradie je určené na základe údajov za rok 2022)." + " Url: " + "http://opendata.mfsr.sk/mi/opendata/show/vydavky-kapitol-statneho-rozpoctu-na-informacne-technologie?opened=216" });
+				});
+			</script>			
+			
+			
+        </div>
+    
+	
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" >
+
+				
+
+
+	
+	
+	
+
+$(document).ready( function () {	
+Highcharts.chart( "1556_1485", {
+	credits: { enabled: false },
+    chart: {
+        type: "column",
+        
+		
+    },
+    title: {
+        text: null
+    },
+ 
+    legend: {
+		enabled: true,
+		layout: 'horizontal',
+        backgroundColor: null,
+        borderWidth: 0,
+        symbolHeight: 12,
+        symbolWidth: 12,
+        symbolRadius: 8,
+		lineHeight: 16,
+        itemMarginTop: 2,
+        maxHeight: 65,
+        navigation:{ arrowSize: 25, activeColor: '#ec5c7d' },
+        align: 'center',
+		x: 20,
+        verticalAlign: 'bottom',
+		padding: 0
+    },	
+ 
+ 	lang: {				
+		downloadCSV: "Stiahnuť CSV",
+		downloadJPEG: "Stiahnuť obrázok JPEG",
+		downloadPDF: "Stiahnuť PDF dokument",
+		downloadPNG: "Stiahnuť obrázok PNG",
+		downloadSVG: "Stiahnuť vektorový obrázok SVG",
+		downloadXLS: "Stiahnuť XLS",
+		downloadJSON: "Stiahnuť JSON",						
+		exitFullscreen: "Ukončiť zobrazenie celej obrazovky",
+		hideData: "Skryť tabuľku s údajmi",
+		viewData: "Zobraziť tabuľku s údajmi",
+		viewFullscreen: "Zobraziť na celú obrazovku",
+		printChart: "Vytlačiť graf"
+	},		
+ 
+    xAxis: {
+		categories: [  2018,  2019,  2020,  2021,  2022,   ],
+		
+        tickmarkPlacement: 'on',
+        title: {
+            enabled: true
+        }
+    },
+    yAxis: [
+		{ title: { text: "mil. Eur" }, lineWidth: 2  }, 
+	],
+    plotOptions: {
+        area: {
+            stacking: 'normal',
+            lineColor: '#666666',
+            lineWidth: 1,
+            marker: {
+                lineWidth: 1,
+                lineColor: '#666666'
+            }
+        },
+    },
+    series: [
+	
+	{
+		name: "Ministerstvo financií SR" + ' (' + "mil. Eur" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. Eur", },
+		
+        data: [  163.65,  170.66,  121.51,  133.56,  151.25,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	{
+		name: "Ministerstvo vnútra SR" + ' (' + "mil. Eur" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. Eur", },
+		
+        data: [  65.87,  99.08,  117.26,  77.45,  137.57,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	{
+		name: "Ministerstvo investícií, reg. rozvoja a informatizácie SR" + ' (' + "mil. Eur" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. Eur", },
+		
+        data: [  0.00,  0.00,  38.76,  32.41,  38.60,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	{
+		name: "Ministerstvo práce, sociálnych vecí a rodiny SR" + ' (' + "mil. Eur" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. Eur", },
+		
+        data: [  24.29,  29.00,  38.08,  26.10,  34.35,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	{
+		name: "Ministerstvo spravodlivosti SR" + ' (' + "mil. Eur" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. Eur", },
+		
+        data: [  21.93,  28.72,  24.92,  19.77,  21.13,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	{
+		name: "Ministerstvo školstva, vedy, výskumu a športu SR" + ' (' + "mil. Eur" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. Eur", },
+		
+        data: [  21.97,  32.08,  27.89,  23.00,  20.10,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	{
+		name: "Ministerstvo pôdohospodárstva a rozvoja vidieka SR" + ' (' + "mil. Eur" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. Eur", },
+		
+        data: [  13.48,  35.87,  10.63,  9.35,  12.52,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	{
+		name: "Štatistický úrad SR" + ' (' + "mil. Eur" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. Eur", },
+		
+        data: [  5.42,  8.72,  21.84,  9.76,  10.39,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	{
+		name: "Úrad geodézie, kartografie a katastra SR" + ' (' + "mil. Eur" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. Eur", },
+		
+        data: [  10.02,  9.50,  6.77,  11.23,  9.64,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	{
+		name: "Ministerstvo zahraničných vecí a európskych zálež. SR" + ' (' + "mil. Eur" + ')',
+		
+		tooltip: { valueSuffix: ' ' + "mil. Eur", },
+		
+        data: [  0.00,  8.40,  1.39,  3.86,  8.84,   ],
+		
+		
+		yAxis: 0,
+    }, 
+	
+	 
+	
+	]
+});
+});
+
+
+
+
+
+$(function() { 
+
+ 
+(function(H) {
+    H.wrap(
+      H.Legend.prototype,
+      'handleOverflow',
+      function(proceed, legendHeight) {
+        var maxHeight = this.options.maxHeight;
+
+        legendHeight = proceed.apply(
+          this,
+          Array.prototype.slice.call(arguments, 1)
+        );
+
+        if (!H.defined(maxHeight) && this.pages) {
+
+          this.options.maxHeight = this.pages[1];
+
+          legendHeight = proceed.apply(
+            this,
+            Array.prototype.slice.call(arguments, 1)
+          );
+          this.options.maxHeight = maxHeight;
+        }
+        return legendHeight;
+      }
+    );
+  })(Highcharts);
+ 
+
+  
+});
+
+</script>	
+	
+</article>
+<article  xmlns="https://www.w3.org/1999/html">
+
+
+        <div class="col-md-12 col-lg-12 col-xs-12 article">
+            <h3 class="node-title govuk-caption-l" style="font-size: 16px;font-weight: normal;">
+                <span class="fa fa-cubes" style="padding-right: 5px;"></span>
+				
+					<a href="/mi/opendata/show/vydavky-verejnej-spravy-za-rok-2022-v-suvislosti-s-ukrajinou?opened=216" title="Výdavky verejnej správy za rok 2022 v&nbsp;súvislosti s&nbsp;Ukrajinou">
+				
+                Výdavky verejnej správy za rok 2022 v súvislosti s Ukrajinou
+				
+				</a>
+            </h3>
+    
+				
+				
+				
+
+				<div id="1515_1243">
+				</div>
+
+				
+				<br/>
+			
+			
+			
+			<div class="table-responsive">
+				<table class="field-group-format group_additional table table-striped1 table-bordered1 sticky-enabled" style="margin-bottom: 0px !important;">
+                    <tbody>
+ 
+						<tr no_striping="1" class=""><th class="field-label" style="width: 135px;font-weight: normal;">Popis:</th><td class="field-content"><div class="field field-name-field-license field-type-text field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:description">
+							Výdavky verejnej správy, výdavky štátnych rozpočtových organizácií vynaložených v&nbsp;súvislosti s&nbsp;vojnovým konfliktom na Ukrajine, v&nbsp;roku 2022.</div></div></div></td> </tr>																
+                        <tr no_striping="1" class=""><th class="field-label" style="width: 135px;font-weight: normal;">Dátum vydania:</th><td class="field-content"><div property="dcterms:issued" class="field-name-field-release-date">21. 03. 2023</div></td> </tr>
+                        <tr no_striping="1" class=""><th class="field-label" style="width: 135px;font-weight: normal;">Dátum modifikácie:</th><td class="field-content"><div property="dcterms:modified" class="field-name-field-modified-date">06. 05. 2026</div></td> </tr>
+						
+						
+						<tr class=""><th colspan="2" class="field-label" style="width: 135px;font-weight: normal;">
+						
+							<a href="/mi/opendata/show/vydavky-verejnej-spravy-za-rok-2022-v-suvislosti-s-ukrajinou?opened=216" title="Výdavky verejnej správy za rok 2022 v&nbsp;súvislosti s&nbsp;Ukrajinou">
+						
+						<div style="" class="col-md-3 col-xs-4 button govuk-button">Detail datasetu</div></a>
+						
+						
+						</th>
+						</tr>
+                    </tbody>
+                </table>
+				
+ 
+
+            </div>			
+			
+			
+			
+			
+			<div class="social-container_1515" style="padding-top:5px;">
+				<a href="#" class="zocial facebook icon" aria-label="Zdielať na Facebook" role="button">Zdielať na Facebook</a>
+				<a href="#" class="zocial linkedin icon" aria-label="Zdielať na LinkedIn" role="button">Zdielať na LinkedIn</a>
+				<a href="#" class="zocial pinterest icon" aria-label="Zdielať na Pinterest" role="button">Zdielať na Pinterest</a>
+				<a href="#" class="zocial twitter icon" aria-label="Zdielať na Twitter" role="button">Zdielať na Twitter</a>
+				<a href="#" class="zocial email icon" aria-label="Zdielať na Email" role="button">Zdielať na E-mail</a>
+				<a href="#" style="" class="govuk-button notify_1515" aria-label="Notifikovať zmeny e-mailom" role="button">Notifikovať zmeny e-mailom</a>
+			</div>	
+			<script nonce="Hsz+9B+hnYtG19GW5fObUA==" >
+				$(function () {
+					$.fn.jqss.templates['notify_'+1515] = "http://opendata.mfsr.sk/mi/opendata/notify/1515?opened=216";
+					$(".social-container_"+1515+" a").jqss({ url: "http://opendata.mfsr.sk/mi/opendata/show/vydavky-verejnej-spravy-za-rok-2022-v-suvislosti-s-ukrajinou?opened=216", 
+					image: "http://opendata.mfsr.sk"+"/img/dataset/"+1515+".png",
+					emailSubject: "Výdavky verejnej správy za rok 2022 v súvislosti s Ukrajinou", emailBody: "Výdavky verejnej správy, výdavky štátnych rozpočtových organizácií vynaložených v súvislosti s vojnovým konfliktom na Ukrajine, v roku 2022." + " Url: " + "http://opendata.mfsr.sk/mi/opendata/show/vydavky-verejnej-spravy-za-rok-2022-v-suvislosti-s-ukrajinou?opened=216" });
+				});
+			</script>			
+			
+			
+        </div>
+    
+	
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" >
+
+				
+
+
+	
+	
+	
+
+$(document).ready( function () {
+Highcharts.chart("1515_1243", {
+	credits: { enabled: false },
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie',
+		
+    },
+    title: {
+        text: null
+    },
+
+    legend: {
+		enabled: true,
+		layout: 'horizontal',
+        backgroundColor: null,
+        borderWidth: 0,
+        symbolHeight: 12,
+        symbolWidth: 12,
+        symbolRadius: 8,
+		lineHeight: 16,
+        itemMarginTop: 2,
+		maxHeight: 65,
+        navigation:{ arrowSize: 25, activeColor: '#ec5c7d' },
+        align: 'center',
+		x: 20,
+        verticalAlign: 'bottom',
+		padding: 0
+    },	
+	
+	lang: {				
+		downloadCSV: "Stiahnuť CSV",
+		downloadJPEG: "Stiahnuť obrázok JPEG",
+		downloadPDF: "Stiahnuť PDF dokument",
+		downloadPNG: "Stiahnuť obrázok PNG",
+		downloadSVG: "Stiahnuť vektorový obrázok SVG",
+		downloadXLS: "Stiahnuť XLS",
+		downloadJSON: "Stiahnuť JSON",						
+		exitFullscreen: "Ukončiť zobrazenie celej obrazovky",
+		hideData: "Skryť tabuľku s údajmi",
+		viewData: "Zobraziť tabuľku s údajmi",
+		viewFullscreen: "Zobraziť na celú obrazovku",
+		printChart: "Vytlačiť graf"
+	},				
+	
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },			
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            },
+			showInLegend: true,
+										
+	
+	
+	
+			innerSize: 100,
+            depth: 45
+        }
+    },
+	
+    series: [{
+        name: "\"Výdavky súvisiace s vojnovým konfliktom na Ukrajine (rok 2022)\"",
+        colorByPoint: true,
+        data: [
+		
+			{
+				name: "Príspevkové organizácie štátu" + ' (' + "316" + ' ' + "tis. EUR" + ')',
+				y: 316
+			}, 
+			{
+				name: "Štátne rozpočtové organizácie" + ' (' + "193 698" + ' ' + "tis. EUR" + ')',
+				y: 193698
+			}, 
+			{
+				name: "Verejné výskumené inštitúcie" + ' (' + "2" + ' ' + "tis. EUR" + ')',
+				y: 2
+			}, 
+			{
+				name: "Verejné vysoké školy" + ' (' + "408" + ' ' + "tis. EUR" + ')',
+				y: 408
+			}, 
+			{
+				name: "Zdravotnícke zariadenia" + ' (' + "494" + ' ' + "tis. EUR" + ')',
+				y: 494
+			}, 
+			{
+				name: "Dopravné podniky zaradené do verejnej správy" + ' (' + "2" + ' ' + "tis. EUR" + ')',
+				y: 2
+			}, 
+			{
+				name: "Obce- rozpočtové organizácie" + ' (' + "64 315" + ' ' + "tis. EUR" + ')',
+				y: 64315
+			}, 
+			{
+				name: "Obce- príspevkové organizácie" + ' (' + "525" + ' ' + "tis. EUR" + ')',
+				y: 525
+			}, 
+			{
+				name: "VÚC- rozpočtové organizácie" + ' (' + "3 802" + ' ' + "tis. EUR" + ')',
+				y: 3802
+			}, 
+			{
+				name: "VÚC- príspevkové organizácie" + ' (' + "2 743" + ' ' + "tis. EUR" + ')',
+				y: 2743
+			}, 
+		 ]
+    }
+	
+	]
+});
+});
+
+
+
+
+
+$(function() { 
+
+ 
+(function(H) {
+    H.wrap(
+      H.Legend.prototype,
+      'handleOverflow',
+      function(proceed, legendHeight) {
+        var maxHeight = this.options.maxHeight;
+
+        legendHeight = proceed.apply(
+          this,
+          Array.prototype.slice.call(arguments, 1)
+        );
+
+        if (!H.defined(maxHeight) && this.pages) {
+
+          this.options.maxHeight = this.pages[1];
+
+          legendHeight = proceed.apply(
+            this,
+            Array.prototype.slice.call(arguments, 1)
+          );
+          this.options.maxHeight = maxHeight;
+        }
+        return legendHeight;
+      }
+    );
+  })(Highcharts);
+ 
+
+  
+});
+
+</script>	
+	
+</article>
+
+<style>
+.highcharts-title
+{
+   display: none;
+}
+</style>
+
+
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/highcharts/highcharts.js"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/highcharts/highcharts-3d.js"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/highcharts/modules/cylinder.js"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/highcharts/themes/white-unica.js?v=2"></script>
+
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/highcharts/modules/data.js"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/highcharts/modules/exporting.js"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/highcharts/modules/export-data.js?v=1"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/highcharts/modules/accessibility.js"></script>
+
+
+
+            </div>
+            <div class="pagination">
+                <div class="pagin">
+
+
+                            <button type="submit"  class="govuk-button page disabled">Predchádzajúca</button>
+                                <button type="submit" formaction="/mi/opendata/category/216-prijmy-a-vydavky-verejnej-spravy?opened=216" class="govuk-button page active">1</button>
+                            <button type="submit"  class="govuk-button page disabled">Nasledujúca</button>
+
+
+                </div>
+            </div>
+    </div>
+</div>
+<input type="hidden" name="_do" value="orderForm-submit"><!--[if IE]><input type=IEbug disabled style="display:none"><![endif]-->
+</form>
+
+
+</div>
+
+
+
+
+
+        </div>
+
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==">
+var actual_page = 1;
+var max_pages = 1;
+var category = 216;
+var next_url = "/mi/opendata/nextcategory?opened=216";
+</script>
+<!-- news starts here -->
+ <!-- end of news section -->
+
+				
+<!-- arc starts here -->
+<!-- end of arc section -->
+
+
+<!-- links starts here -->
+<section class="footers">
+
+      <div class="container site-foota govuk-grid-column-full govuk-body govuk-footer"> 
+
+        <div class="row" style="width: 100%;">		
+		
+			  <div class="col-xs-12 col-md-3 govuk-grid-column-one-quarter">
+			  <h6 style="padding-left: 35px;">Dôležité odkazy</h6>					  
+				<ul>
+				  
+				  
+				  <li><a target="_blank" href="https://www.mfsr.sk/">Portál Ministerstva financií</a></li>
+				  
+				  
+				  <li><a target="_blank" href="https://www.mfsr.sk/sk/verejnost/plan-obnovy-odolnosti/">Plán obnovy a odolnosti</a></li>
+				  
+				  
+				  <li><a target="_blank" href="https://www.financnasprava.sk/sk/titulna-stranka">Finančná správa SR</a></li>
+				</ul>
+			  </div>
+			  
+			  <div class="col-xs-12 col-md-3 govuk-grid-column-one-quarter">
+			  <h6 style="padding-left: 35px;">Dôležité informácie</h6>					  
+				<ul>
+				  
+				  
+				  <li><a target="_blank" href="https://www.mfsr.sk/sk/verejnost/ochrana-osobnych-udajov/">Ochrana osobných údajov</a></li>
+				  
+				  
+				  <li><a target="_blank" href="https://opendata.mfsr.sk/sk/mi/page/licence">Podmienky použitia</a></li>
+				  
+				  
+				  <li><a target="_blank" href="https://opendata.mfsr.sk/sk/mi/page/data">Dátová politika</a></li>
+				  
+				  
+				  <li><a target="_blank" href="https://www.mfsr.sk/sk/verejnost/informacny-servis/poskytovanie-informacii/">Poskytovanie informácií podľa zákona č. 211/2000 Z. z.</a></li>
+				</ul>
+			  </div>
+
+			  <div class="col-xs-12 col-md-3 govuk-grid-column-one-quarter">
+			  <h6 style="padding-left: 35px;">Iné</h6>					  
+				<ul>
+				  
+				  
+				  <li><a target="_blank" id="link_id_24" href="https://opendata.mfsr.sk/sk/mi/page/sitemap" >Mapa stránky</a></li>
+				  
+				  
+				  <li><a target="_blank" id="link_id_22" href="notifikacia"  onclickx="$('.subscribe-me').subscribeBetter( { animation: 'flyInUp', autoClose: false, delay: 0, showOnce: false, trigger: 'always'});return false;">Notifikácia</a></li>
+								<script nonce="Hsz+9B+hnYtG19GW5fObUA==">$(document).ready( function () {   
+								
+								$('#link_id_'+22).on( "click", function() {
+								$('.subscribe-me').subscribeBetter( { animation: 'flyInUp', autoClose: false, delay: 0, showOnce: false, trigger: 'always'});return false;   
+								} );
+								
+								});</script>								
+				  
+				  
+				  <li><a target="_blank" id="link_id_14" href="https://www.mfsr.sk/sk/kontakty/" >Kontakt MF</a></li>
+				  
+				  
+				  <li><a target="_blank" id="link_id_15" href="https://www.mfsr.sk/sk/verejnost/volne-pracovne-miesta/" >Kariéra na MF</a></li>
+				</ul>
+			  </div>			  
+			  
+			   
+			  
+			  
+			  <div class="col-xs-12 col-md-3 govuk-grid-column-one-quarter">
+			  <h6 style="padding-left: 35px;">Sociálne média</h6>				  
+			  
+				
+				<span class="button-social"> 	
+					<a href="https://www.facebook.com/ministerstvo.financii.sr/" target="_blank"><img class="height" src="/img/button_facebook-mi.png" alt="facebook"></a>
+					<a href="https://www.facebook.com/ministerstvo.financii.sr/" target="_blank"><img class="img-top"  src="/img/button_facebook_a-mi.png" alt="facebook"></a>
+				</span>
+<!--				
+				<span class="button-social"> 	
+					<a href="#"><img class="height"  src="/img/button_twitter-mi.png" alt="twitter"></a>
+					<a href="#"><img class="img-top"  src="/img/button_twitter_a-mi.png" alt="twitter"></a>
+				</span>
+-->					
+				<span class="button-social"> 	
+					<a href="https://www.instagram.com/ministerstvo.financii.sr/" target="_blank"><img class="height"  src="/img/button_instagram-mi.png" alt="instagram"></a>
+					<a href="https://www.instagram.com/ministerstvo.financii.sr/" target="_blank"><img class="img-top"  src="/img/button_instagram_a-mi.png" alt="instagram"></a>
+				</span>					
+				
+				<span class="button-social"> 	
+					<a href="https://www.youtube.com/channel/UCcwnQtI4csrouhFrp7O6eFg" target="_blank"><img class="height"  src="/img/button_youtube-mi.png" alt="youtube"></a>
+					<a href="https://www.youtube.com/channel/UCcwnQtI4csrouhFrp7O6eFg" target="_blank"><img class="img-top"  src="/img/button_youtube_a-mi.png" alt="youtube"></a>
+				</span>									
+				
+				<p style="font-size:12px; padding:10px; color:black;">&copy; 2022 Open Data MFSR. All rights reserved.</p>
+
+				
+			  </div>
+        </div>
+
+        <hr>
+     </div>
+</section><!-- end of links section -->
+
+
+<!-- footer starts here -->
+<!--
+<footer class="footer clearfix">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 footer-para">
+				<p>&copy; 2022 Open Data MFSR. All rights reserved.</p>
+			</div>
+			<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 footer-text-center">
+				<a n:href="Page:Data">Dátová politika<i class="fa"></i></a>
+				<a n:href="Page:licence">Podmienky použitia<i class="fa"></i></a>
+-->				
+				
+				<!--<a n:href="Page:Gdpr">Ochrana osobných údajov<i class="fa"></i></a>-->
+				
+<!--				
+				<a n:href="Homepage:Contact">Kontakt<i class="fa"></i></a>
+				<a href="#" onclick="$('.subscribe-me').subscribeBetter( { animation: 'flyInUp', autoClose: false, delay: 0, showOnce: false, trigger: 'always'});return false;">Notifikácie<i class="fa"></i></a>
+				
+			</div>
+
+		</div>
+
+	</div>
+</footer>
+-->
+<div class="scroll-top"><i class="fa fa-arrow-up"></i></div>
+
+<!-- script tags
+============================================================= -->
+
+	
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/idsk/govuk-frontend-3.0.0.min.js"></script>
+
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/toastr.min.js"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/slick.min.js"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/custom.js?v=1.11"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/netteForms.min.js"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="https://www.google.com/recaptcha/api.js?render=explicit"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/invisibleRecaptcha.js"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/bxslider/jquery.bxslider.min.js"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/jquery-socialshare.min.js"></script>
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==" src="/js/jquery.subscribe-better.js"></script>
+
+
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==">
+	 
+
+	$("button").click(function() {
+    $("#hide1").toggle();
+    $("#hide2").toggle();
+	});	
+	
+</script>
+
+
+
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==">
+	toastr.options.newestOnTop = true;
+	toastr.options.progressBar = true;
+	toastr.options.closeButton = true;
+	
+</script>
+
+
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==">
+
+var full=false;
+var full1=false;
+var full2=false;
+
+function fill(){
+  full=!full;
+  full1=!full1;
+  full2=!full2;
+  document.getElementById("logocontainer").style.backgroundColor=full?"#fff":"transparent";
+  document.getElementById("pelogo").style.backgroundColor=full1?"#fff":"transparent";
+  document.getElementById("pelogo").style.color=full2?"#b81821":"#fff";    
+}
+
+</script>
+
+<div class="subscribe-me" style="display:none;">
+	<div style="display:flex; height:100%;">
+		<div class="col-xs-3 sb-left"> 
+			<i class="fa fa-bell"></i>
+		</div>	
+		<div class="col-xs-9 sb-right">	
+			<h2 style="color:black;text-align: center;">Zasielať notifikácie</h2>
+			<a href="#close" class="sb-close-btn">x</a>
+			<p style="text-align:center;color:#999;">Radi by ste dostávali informácie o novinkách na našom portáli?</p>
+			<center>
+				<a style="color:black" href="#close" onclick="$('.subscribe-me').closeWindow();">nemám záujem</a>
+				<button id="push-subscription-button" style="color:black">ÁNO</button>
+			</center>
+		</div>			
+	</div>	
+</div>	
+
+
+ 
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==">
+document.addEventListener('DOMContentLoaded', () => 
+{
+  const applicationServerKey =
+    'BDGiU4bM83RWiQ2jnzQEQiykntfgJjswLId6GkBkynt_R8xPnyvYIbdt__wAOhs8vdfaoXFhQoOfNOPEaahZqck';
+  let isPushEnabled = false;
+
+  const pushButton = document.querySelector('#push-subscription-button');
+  if (!pushButton) {
+    return;
+  }
+
+  pushButton.addEventListener('click', function() {
+    if (isPushEnabled) {
+      push_unsubscribe();
+	  $('.subscribe-me').closeWindow();
+    } else {
+      push_subscribe();
+	  $('.subscribe-me').closeWindow();
+    }
+  });
+
+  if (!('serviceWorker' in navigator)) {
+    console.warn('Service workers are not supported by this browser');
+    changePushButtonState('incompatible');
+    return;
+  }
+
+  if (!('PushManager' in window)) {
+    console.warn('Push notifications are not supported by this browser');
+    changePushButtonState('incompatible');
+    return;
+  }
+
+  if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
+    console.warn('Notifications are not supported by this browser');
+    changePushButtonState('incompatible');
+    return;
+  }
+
+  // Check the current Notification permission.
+  // If its denied, the button should appears as such, until the user changes the permission manually
+  if (Notification.permission === 'denied') {
+    console.warn('Notifications are denied by the user');
+    changePushButtonState('incompatible');
+    return;
+  }
+
+  navigator.serviceWorker.register(""+'/serviceWorker.js').then(
+    () => {
+      console.log('[SW] Service worker has been registered');
+      push_updateSubscription();
+    },
+    e => {
+      console.error('[SW] Service worker registration failed', e);
+      changePushButtonState('incompatible');
+    }
+  );
+
+  function changePushButtonState(state) {
+    switch (state) {
+      case 'enabled':
+        pushButton.disabled = false;
+        pushButton.textContent = "NIE";
+        isPushEnabled = true;
+        break;
+      case 'disabled':
+	  {
+        pushButton.disabled = false;
+        pushButton.textContent = "ÁNO";
+        isPushEnabled = false;
+        break;
+	  }
+      case 'computing':
+        pushButton.disabled = true;
+        pushButton.textContent = '...';
+        break;
+      case 'incompatible':
+        pushButton.disabled = true;
+        pushButton.textContent = "nekompatibilné";
+        break;
+      default:
+        console.error('Unhandled push button state', state);
+        break;
+    }
+  }
+
+  function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+    const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }
+
+  function checkNotificationPermission() {
+    return new Promise((resolve, reject) => {
+      if (Notification.permission === 'denied') {
+        return reject(new Error('Push messages are blocked.'));
+      }
+
+      if (Notification.permission === 'granted') {
+        return resolve();
+      }
+
+      if (Notification.permission === 'default') {
+        return Notification.requestPermission().then(result => {
+          if (result !== 'granted') {
+            reject(new Error('Bad permission result'));
+          } else {
+            resolve();
+          }
+        });
+      }
+
+      return reject(new Error('Unknown permission'));
+    });
+  }
+
+  function push_subscribe() {
+    changePushButtonState('computing');
+
+    return checkNotificationPermission()
+      .then(() => navigator.serviceWorker.ready)
+      .then(serviceWorkerRegistration =>
+        serviceWorkerRegistration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(applicationServerKey),
+        })
+      )
+      .then(subscription => {
+        // Subscription was successful
+        // create subscription on your server
+        return push_sendSubscriptionToServer(subscription, 'POST');
+      })
+      .then(subscription => subscription && changePushButtonState('enabled')) // update your UI
+      .catch(e => {
+        if (Notification.permission === 'denied') {
+          // The user denied the notification permission which
+          // means we failed to subscribe and the user will need
+          // to manually change the notification permission to
+          // subscribe to push messages
+          console.warn('Notifications are denied by the user.');
+          changePushButtonState('incompatible');
+        } else {
+          // A problem occurred with the subscription; common reasons
+          // include network errors or the user skipped the permission
+          console.error('Impossible to subscribe to push notifications', e);
+          changePushButtonState('disabled');
+        }
+      });
+  }
+  
+  function push_setCookie(name, value, expiry) {
+		let d = new Date();
+		d.setTime(d.getTime() + (expiry*86400000));
+		document.cookie = name + "=" + value + ";" + "expires=" + d.toUTCString() + ";path=/";
+  }
+
+  function push_getCookie(name) {
+		let cookie = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+		return cookie ? cookie[2] : null;
+  }  
+
+  function push_updateSubscription() {
+    navigator.serviceWorker.ready
+      .then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.getSubscription())
+      .then(subscription => {
+        changePushButtonState('disabled');
+
+        if (!subscription) 
+		{
+		  if ( push_getCookie('opendatafs_subscribe-me') === null )
+		  {
+			push_setCookie('opendatafs_subscribe-me', '1', 30);
+		  
+			$(".subscribe-me").subscribeBetter({
+					animation: "flyInUp",
+					autoClose: false,
+					delay: 2000,
+					showOnce: false,
+					trigger: "always" 
+			});
+		  }		
+          return;
+        }
+
+        // Keep your server in sync with the latest endpoint
+        return push_sendSubscriptionToServer(subscription, 'PUT');
+      })
+      .then(subscription => subscription && changePushButtonState('enabled')) // Set your UI to show they have subscribed for push messages
+      .catch(e => {
+        console.error('Error when updating the subscription', e);
+      });
+  }
+
+  function push_unsubscribe() {
+    changePushButtonState('computing');
+
+    // To unsubscribe from push messaging, you need to get the subscription object
+    navigator.serviceWorker.ready
+      .then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.getSubscription())
+      .then(subscription => {
+        // Check that we have a subscription to unsubscribe
+        if (!subscription) {
+          // No subscription object, so set the state
+          // to allow the user to subscribe to push
+          changePushButtonState('disabled');
+          return;
+        }
+
+        // We have a subscription, unsubscribe
+        // Remove push subscription from server
+        return push_sendSubscriptionToServer(subscription, 'DELETE');
+      })
+      .then(subscription => subscription.unsubscribe())
+      .then(() => changePushButtonState('disabled'))
+      .catch(e => {
+        // We failed to unsubscribe, this can lead to
+        // an unusual state, so  it may be best to remove
+        // the users data from your data store and
+        // inform the user that you have done so
+        console.error('Error when unsubscribing the user', e);
+        changePushButtonState('disabled');
+      });
+  }
+
+  function push_sendSubscriptionToServer(subscription, method) {
+    const key = subscription.getKey('p256dh');
+    const token = subscription.getKey('auth');
+    const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0];
+	
+    return fetch("/mi/homepage/subscribe", {
+      method,
+      body: JSON.stringify({
+        endpoint: subscription.endpoint,
+        publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
+        authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
+        contentEncoding,
+      }),
+    }).then(() => subscription);
+  }
+ 
+});
+
+</script>
+
+<script nonce="Hsz+9B+hnYtG19GW5fObUA==">	
+
+	$(document).ready(function() {
+		$("#button-viac").click(function() {
+			var isHidden = $(".menu_viac").is(":hidden");
+			if (isHidden) {
+				$('.menu_viac').slideDown();
+			} else {
+				$('.menu_viac').slideUp();
+			}
+			return false;
+		});
+		
+		/*$('.simple-marquee-container').SimpleMarquee( { autostart: true, duration: 100000 } );*/
+	});	
+	
+</script>	
+	
+
+</body>
+</html>

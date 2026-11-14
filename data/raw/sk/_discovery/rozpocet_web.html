@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" ng-app="app" id="app" ng-strict-di>
+<head>
+    <meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rozpočet.sk - Ministerstvo financií Slovenskej republiky</title>
+    <meta name="description" content="Prehľad rozpočtov subjektov štátnej správy, samosprávy, vyšších územných celkov a ostatných subjektov verejnej správy" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="vendor/nvd3/nv.d3.min.css"/>
+	<link rel="stylesheet" type="text/css" href="vendor/angular-ui-grid/ui-grid.min.css"/>
+	<link rel="stylesheet" type="text/css" href="vendor/eu-cookie-policy-master/src/css/eu_accept_cookies.css"/>
+	<link rel="stylesheet" type="text/css" href="vendor/rzslider/rzslider.min.css"/>
+	<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css"/>
+	<link rel="stylesheet" type="text/css" href="assets/css/roboto.min.css"/>
+	<link rel="stylesheet" type="text/css" href="assets/css/style.min.css"/>
+	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png"/>
+	<script type="text/javascript" src="init.js"></script>
+</head>
+<body>
+	<div id="wrapper">
+		<div ng-controller="AppCtrl">
+			<div ng-view autoscroll="true" ng-if="::translationReady"></div>
+		</div>
+	</div>
+
+<script type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
+
+<script type="text/javascript" src="vendor/ammap/ammap.js"></script>
+<script type="text/javascript" src="vendor/ammap/maps/js/slovakiaLow.js"></script>
+<script type="text/javascript" src="vendor/ammap/themes/light.js"></script>
+
+<script type="text/javascript" src="vendor/angular/angular.min.js"></script>
+<script type="text/javascript" src="vendor/angular/angular-route.min.js"></script>
+<script type="text/javascript" src="vendor/angular/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="vendor/angular/angular-locale-en.min.js"></script>
+<script type="text/javascript" src="vendor/angular/angular-locale-sk.min.js"></script>
+<script type="text/javascript" src="vendor/angular/angular-local-storage.min.js"></script>
+<script type="text/javascript" src="vendor/angular/angular-animate.min.js"></script>
+<script type="text/javascript" src="vendor/angular/angular-translate.min.js"></script>
+<script type="text/javascript" src="vendor/angular/angular-translate-loader-static-files.min.js"></script>
+<script type="text/javascript" src="vendor/angular/angular-compat.js"></script>
+<script type="text/javascript" src="vendor/angular-ui-grid/ui-grid.min.js"></script>
+
+<script type="text/javascript" src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="vendor/bootstrap-ui-datetime-picker/datetime-picker.js"></script>
+<script type="text/javascript" src="vendor/ui-bootstrap/ui-bootstrap-tpls.js"></script>
+
+<script type="text/javascript" src="vendor/d3/d3.min.js"></script>
+<script type="text/javascript" src="vendor/nvd3/nv.d3.min.js"></script>
+<script type="text/javascript" src="vendor/html2canvas.min.js"></script>
+<script type="text/javascript" src="vendor/loadash/lodash.min.js"></script>
+<script type="text/javascript" src="vendor/ngStorage.js"></script>
+<script type="text/javascript" src="vendor/rzslider/rzslider.min.js"></script>
+<script type="text/javascript" src="vendor/eu-cookie-policy-master/src/js/eu_accept_cookies.js"></script>
+<script type="text/javascript" src="vendor/eu-cookie-policy-master/cookieAfter.js"></script>
+
+<script type="text/javascript" src="common/app.js?v=2016-03-17-001"></script>
+<script type="text/javascript" src="common/services.js?v=2016-03-17-001"></script>
+<script type="text/javascript" src="app/rozpocet.js?v=2016-03-17-001"></script>
+<script type="text/javascript" src="app/views-layouts.js?v=2016-03-17-001"></script>
+<script type="text/javascript" src="app/views-parts.js?v=2016-03-17-001"></script>
+<script type="text/javascript" src="app/filters.js?v=2016-03-17-001"></script>
+<script type="text/javascript" src="app/services.js?v=2016-03-17-001"></script>
+<script type="text/javascript" src="app/controllers.js?v=2016-03-17-001"></script>
+<script type="text/javascript" src="app/directives.js?v=2016-03-17-001"></script>
+<script type="text/javascript" src="app/app.js?v=2016-03-17-001"></script>
+<script type="text/javascript" async src="https://www.googletagmanager.com/gtag/js?id=G-GCNF6RS30G"></script>
+</body>
+</html>
