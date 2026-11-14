@@ -2,7 +2,7 @@
 # One-off discovery: download the MF SR open data catalog and candidate datasets
 # so their structure can be inspected. Files are saved unchanged.
 set -u
-out=data/raw/sk/_discovery/round3
+out=data/raw/sk/_discovery/round4
 mkdir -p "$out"
 UA="Mozilla/5.0 (compatible; budget-visualizer data fetch; +https://github.com/omasamo/Budgetvisualizer)"
 get() { # name url
@@ -10,18 +10,14 @@ get() { # name url
 }
 {
 printf "file\thttp\tbytes\ttype\turl\n"
-for base in "https://rozpocet.sk/rest/api/" "https://rozpocet.sk/web/rest/api/"; do
-  b=$(echo "$base" | md5sum | cut -c1-4)
-  for p in service-info rozpocet/sumareZaRoky rozpocet/aktualizacie rozpocet/poslednaAktualizacia/PLNENIE/VS/SKU rozpocet/poslednaAktualizacia/SR/VS/SCH \
-           organizacie/podurovne/sk/VS/0 organizacie/podurovne/sk/VS/1 organizacia/info/sk/VS/0 organizacia/info/sk/VS/1 \
-           rozpocet/konsolidovanyRozpocet/sk/2026 rozpocet/rozpoctyPodorganizaciiVSOrg/0/2026/SKU rozpocet/rozpoctyPodorganizaciiVSOrg/1/2026/SKU \
-           rozpocet/rozpocetVSOrg/1/2026/SKU rozpocet/stavUzavrierky/VS/2026/SKU; do
-    get "${b}_$(echo $p | tr '/' '_')" "$base$p"
-  done
+base="https://rozpocet.sk/rest/api/"
+for p in rozpocet/rozpoctyPodorganizaciiVSOrg/0/2026/10 rozpocet/rozpoctyPodorganizaciiVSOrg/0/2026/9 rozpocet/rozpoctyPodorganizaciiVSOrg/0/2025/12 \
+         rozpocet/rozpoctyPodorganizaciiVSOrg/0/2024/12 rozpocet/rozpocetVSOrg/0/2026/10 rozpocet/rozpocetVSOrg/10003/2026/10 \
+         rozpocet/rozpoctyVSOrg/0/2016/2026/12/true rozpocet/rozpoctyVSOrg/0/2016/2026/0/true "rozpocet/rozpocetSumarVSOrg/0/2026/10?EKV=SpoluV&DRH=21" \
+         rozpocet/uzavierkaRozpoctu/VS/2026/SKU rozpocet/uzavierkaRozpoctu/VS/2026/SCH rozpocet/uzavierkaRozpoctu/VS/2026/UPR \
+         rozpocet/poslednaAktualizacia/SR/VS/UPR rozpocet/poslednaAktualizacia/SR/VS/SKU "organizacie/info/sk/VS/0/2026/2"; do
+  sleep 1
+  get "$(echo "$p" | tr '/?&=' '____')" "$base$p"
 done
-get ris_views_parts.js "https://rozpocet.sk/web/app/views-parts.js"
-get ris_views_layouts.js "https://rozpocet.sk/web/app/views-layouts.js"
-get ris_directives.js "https://rozpocet.sk/web/app/directives.js"
-get ris_locale_sk.json "https://rozpocet.sk/web/i18n/locale-sk.json"
 } > "$out/_index.tsv"
 cat "$out/_index.tsv"
