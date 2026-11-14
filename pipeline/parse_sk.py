@@ -276,6 +276,15 @@ def parse_ris():
         elif year > actual_to["rok"]:
             last = 0
         monthly = {k: _monthly_series(v["response"]["payload"]) for k, v in (rec.get("monthly") or {}).items()}
+        # A month where every chapter repeats the previous month's figure was not
+        # published per chapter (e.g. June 2026); mark it missing rather than show a flat line.
+        series_all = [v for v in monthly.values() if v]
+        for i in range(1, 12):
+            vals = [(v[i], v[i - 1]) for v in series_all if v[i] is not None]
+            if vals and len(vals) == len(series_all) and all(a == b for a, b in vals) and any(b for _, b in vals):
+                print(f"note: {year} month {i + 1} not published per chapter in RIS; left empty")
+                for v in series_all:
+                    v[i] = None
         chapters = []
         for code, entries in sorted(payload.items()):
             c = _pair(entries)

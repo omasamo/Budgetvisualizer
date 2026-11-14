@@ -118,7 +118,7 @@ function annualActual(year, scope = state.scope) {
   }
   const cum = cumulativeFor(year, scope);
   if (cum && cum[11] != null) return cum[11];
-  if (scope === 'total') return A(year)?.total?.actual ?? null;
+  if (scope === 'total' && A(year)?.month === 12) return A(year)?.total?.actual ?? null;
   return null;
 }
 
@@ -635,7 +635,8 @@ function openDetail(r) {
   k.replaceChildren();
   const { inYear } = breakdownRows();
   if (inYear) {
-    k.append(kpi(t('common.budget'), r.budget, String(state.year)), kpi(t('common.actualSoFar'), r.spent, t('kpi.actualNoteInProgress', { month: monthGen(lastMonthOf(state.year) - 1) })));
+    const mo = r.id.startsWith('ch:') ? (A(state.year)?.month ?? lastMonthOf(state.year)) : lastMonthOf(state.year);
+    k.append(kpi(t('common.budget'), r.budget, r.id.startsWith('ch:') ? t('kpi.adjustedNote') : String(state.year)), kpi(t('common.actualSoFar'), r.spent, t('kpi.actualNoteInProgress', { month: monthGen(mo - 1) })));
   } else {
     k.append(kpi(t('common.approved'), r.approved, ''), kpi(t('common.adjusted'), r.adjusted, ''), kpi(t('common.actual'), r.spent, pct(r.adjusted ? r.spent / r.adjusted : null) + ' ' + t('common.ofAdjusted')));
   }
