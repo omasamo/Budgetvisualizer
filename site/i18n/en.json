@@ -1,0 +1,123 @@
+{
+  "locale": "en-GB",
+  "skip": "Skip to content",
+  "brand": "Budget for People",
+  "navLabel": "Sections",
+  "nav": { "chapters": "Chapters", "year": "Through the year", "history": "Over the years", "about": "About the data" },
+  "country": "Country",
+  "themeToggle": "Toggle dark mode",
+  "langToggle": "Prepnúť do slovenčiny",
+  "filters": { "year": "Year", "scope": "Show", "all": "Whole state budget" },
+  "asOf": "Spending data up to {date}",
+  "asOfFinal": "Final figures for {year}",
+  "loading": "Loading data…",
+  "noData": {
+    "title": "Data is not available yet",
+    "body": "Official data for this country has not been downloaded yet. This site never shows estimated or made-up numbers."
+  },
+  "loadError": "Could not load the data ({error}).",
+  "hero": {
+    "inProgress": "In {year} the state plans to spend <em>{budget}</em>. By the end of {month} it had paid out {spent}.",
+    "final": "In {year} the state spent <em>{spent}</em>.",
+    "noBudget": "By the end of {month} {year} the state had paid out <em>{spent}</em>.",
+    "captionInProgress": "paid out by the end of {month}, which is {pct} of the annual budget",
+    "captionFinal": "actual spending for the whole year, {pct} of the adjusted budget",
+    "meterSpent": "Paid out: {pct}",
+    "meterPace": "{pct} of the year has passed",
+    "meterLabel": "Paid out {spent} of {budget} ({pct}). {pace} of the year has passed."
+  },
+  "kpi": {
+    "approved": "Approved budget",
+    "approvedNote": "as passed by parliament",
+    "adjusted": "Adjusted budget",
+    "adjustedNote": "after changes during the year",
+    "actual": "Actually paid out",
+    "actualNoteInProgress": "by the end of {month}",
+    "actualNoteFinal": "for the whole year",
+    "change": "Compared with last year",
+    "changeNote": "spending in the same period of {year}",
+    "missing": "not published"
+  },
+  "chapters": {
+    "title": "Where the money goes",
+    "lede": "The state budget is split into {n} chapters: ministries, offices and other institutions. The light part of each bar is the chapter's whole budget; the dark part is what it has already paid out. Click a chapter for details.",
+    "search": "Search chapters",
+    "searchPlaceholder": "Search chapters…",
+    "sort": "Sort",
+    "sortBudget": "By budget",
+    "sortPace": "By share spent",
+    "legendSpent": "Paid out",
+    "legendBudget": "Budget",
+    "legendPace": "Share of the year passed",
+    "showAll": "Show all chapters ({n})",
+    "showLess": "Show fewer",
+    "none": "No chapter matches your search.",
+    "share": "{pct} of the budget",
+    "rowLabel": "{name}: budget {budget}, paid out {spent}, which is {pct}. Open details."
+  },
+  "year": {
+    "title": "How the money is spent through the year",
+    "lede": "Total spending from January to the end of each month. The blue line is {year}; the grey lines are previous years, so you can see whether spending is faster or slower than usual.",
+    "unit": "Unit",
+    "unitShare": "% of budget",
+    "unitEur": "Euros",
+    "noMonthly": "Monthly figures for this selection have not been published.",
+    "month": "Month"
+  },
+  "history": {
+    "title": "Over the years",
+    "lede": "Actual spending for each full year. The last column, if lighter, is the budget of the year still in progress.",
+    "actual": "Actual",
+    "budget": "Budget (year in progress)",
+    "noData": "Figures for previous years are not available for this selection.",
+    "change": "Change on the previous year"
+  },
+  "share": {
+    "title": "What it means per person",
+    "lede": "State budget spending divided by the population of Slovakia ({pop} people, {popSource}).",
+    "perYear": "Per person per year",
+    "perMonth": "Per person per month",
+    "perDay": "Per person per day",
+    "basis": "from the {year} budget",
+    "noPop": "Population is not in the data yet, so this view is not shown."
+  },
+  "dialog": {
+    "monthly": "Spending through the year",
+    "history": "Previous years"
+  },
+  "about": {
+    "title": "About the data",
+    "body": "<p>Every number comes from the official sources listed below. The site does not change them; it only presents them in a readable form. Where a figure has not been published, the site says so and estimates nothing.</p><p>The state budget is only part of public finances. It does not include, for example, the budgets of municipalities, the Social Insurance Agency or health insurers.</p>",
+    "glossaryTitle": "Glossary",
+    "sourcesTitle": "Sources",
+    "downloads": "Download the processed data: {links}.",
+    "licence": "Licence: {licence}",
+    "downloaded": "downloaded {date}"
+  },
+  "glossary": [
+    ["State budget", "The state's plan of revenue and spending for one year. Parliament passes it as a law."],
+    ["Chapter (kapitola)", "The part of the budget one institution is responsible for, such as a ministry, office or court."],
+    ["Approved budget", "The amount parliament approved at the start of the year."],
+    ["Adjusted budget", "The budget after changes made during the year by the government or the Ministry of Finance."],
+    ["Actual spending", "Money the state actually paid out. During the year it is the total since 1 January."],
+    ["General Treasury Administration", "A chapter managed by the Ministry of Finance. It pays, for example, interest on state debt, contributions to the EU budget and grants to local governments."]
+  ],
+  "common": {
+    "showTable": "Show as a table",
+    "close": "Close",
+    "chapter": "Chapter",
+    "total": "Total",
+    "budget": "Budget",
+    "approved": "Approved",
+    "adjusted": "Adjusted",
+    "actual": "Actual",
+    "pct": "Spent",
+    "year": "Year",
+    "na": "—"
+  },
+  "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  "monthsGen": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  "monthsShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  "units": { "bn": "bn €", "m": "m €", "k": "k €", "eur": "€" },
+  "footer": "Data source: {sources}. The site's code is open on GitHub."
+}

@@ -1,0 +1,123 @@
+{
+  "locale": "sk-SK",
+  "skip": "Preskočiť na obsah",
+  "brand": "Rozpočet pre ľudí",
+  "navLabel": "Sekcie",
+  "nav": { "chapters": "Kapitoly", "year": "Počas roka", "history": "V rokoch", "about": "O dátach" },
+  "country": "Krajina",
+  "themeToggle": "Prepnúť tmavý režim",
+  "langToggle": "Switch to English",
+  "filters": { "year": "Rok", "scope": "Zobraziť", "all": "Celý štátny rozpočet" },
+  "asOf": "Údaje o čerpaní k {date}",
+  "asOfFinal": "Konečné údaje za rok {year}",
+  "loading": "Načítavam údaje…",
+  "noData": {
+    "title": "Údaje zatiaľ nie sú k dispozícii",
+    "body": "Pre túto krajinu ešte nie sú stiahnuté oficiálne údaje. Stránka nezobrazuje žiadne odhadované ani vymyslené čísla."
+  },
+  "loadError": "Údaje sa nepodarilo načítať ({error}).",
+  "hero": {
+    "inProgress": "V roku {year} plánuje štát minúť <em>{budget}</em>. Do konca {month} už vyplatil {spent}.",
+    "final": "V roku {year} štát minul <em>{spent}</em>.",
+    "noBudget": "V roku {year} štát do konca {month} vyplatil <em>{spent}</em>.",
+    "captionInProgress": "vyplatené do konca {month}, to je {pct} ročného rozpočtu",
+    "captionFinal": "skutočné výdavky za celý rok, {pct} upraveného rozpočtu",
+    "meterSpent": "Vyplatené: {pct}",
+    "meterPace": "Uplynulo {pct} roka",
+    "meterLabel": "Vyplatené {spent} z {budget} ({pct}). Uplynulo {pace} roka."
+  },
+  "kpi": {
+    "approved": "Schválený rozpočet",
+    "approvedNote": "ako ho schválila Národná rada",
+    "adjusted": "Upravený rozpočet",
+    "adjustedNote": "po zmenách počas roka",
+    "actual": "Skutočne vyplatené",
+    "actualNoteInProgress": "do konca {month}",
+    "actualNoteFinal": "za celý rok",
+    "change": "Oproti minulému roku",
+    "changeNote": "výdavky za rovnaké obdobie {year}",
+    "missing": "nezverejnené"
+  },
+  "chapters": {
+    "title": "Kam idú peniaze",
+    "lede": "Štátny rozpočet sa delí na {n} kapitol — ministerstvá, úrady a ďalšie inštitúcie. Svetlá časť pruhu je celý rozpočet kapitoly, tmavá časť je to, čo už vyplatila. Kliknite na kapitolu pre viac detailov.",
+    "search": "Hľadať kapitolu",
+    "searchPlaceholder": "Hľadať kapitolu…",
+    "sort": "Zoradiť",
+    "sortBudget": "Podľa rozpočtu",
+    "sortPace": "Podľa čerpania",
+    "legendSpent": "Vyplatené",
+    "legendBudget": "Rozpočet",
+    "legendPace": "Uplynulá časť roka",
+    "showAll": "Zobraziť všetky kapitoly ({n})",
+    "showLess": "Zobraziť menej",
+    "none": "Žiadna kapitola nezodpovedá hľadaniu.",
+    "share": "{pct} rozpočtu",
+    "rowLabel": "{name}: rozpočet {budget}, vyplatené {spent}, to je {pct}. Otvoriť detail."
+  },
+  "year": {
+    "title": "Ako sa míňa počas roka",
+    "lede": "Súčet výdavkov od januára do konca každého mesiaca. Modrá čiara je rok {year}, sivé čiary sú predchádzajúce roky, aby ste videli, či sa míňa rýchlejšie alebo pomalšie ako zvyčajne.",
+    "unit": "Jednotka",
+    "unitShare": "% rozpočtu",
+    "unitEur": "Eurá",
+    "noMonthly": "Mesačné údaje pre tento výber nie sú zverejnené.",
+    "month": "Mesiac"
+  },
+  "history": {
+    "title": "Vývoj v rokoch",
+    "lede": "Skutočné výdavky za celý rok. Posledný stĺpec, ak je svetlejší, je rozpočet roka, ktorý ešte prebieha.",
+    "actual": "Skutočnosť",
+    "budget": "Rozpočet (rok prebieha)",
+    "noData": "Údaje za minulé roky pre tento výber nie sú k dispozícii.",
+    "change": "Zmena oproti predchádzajúcemu roku"
+  },
+  "share": {
+    "title": "Koľko je to na človeka",
+    "lede": "Výdavky štátneho rozpočtu prepočítané na jedného obyvateľa Slovenska ({pop} obyvateľov, {popSource}).",
+    "perYear": "Na obyvateľa za rok",
+    "perMonth": "Na obyvateľa za mesiac",
+    "perDay": "Na obyvateľa za deň",
+    "basis": "z rozpočtu {year}",
+    "noPop": "Počet obyvateľov zatiaľ nie je v údajoch, preto sa tento prepočet nezobrazuje."
+  },
+  "dialog": {
+    "monthly": "Čerpanie počas roka",
+    "history": "V minulých rokoch"
+  },
+  "about": {
+    "title": "O dátach",
+    "body": "<p>Všetky čísla pochádzajú z oficiálnych zdrojov uvedených nižšie. Stránka ich nemení, iba prevádza do prehľadnej podoby. Ak niektorý údaj nie je zverejnený, stránka to povie a nič neodhaduje.</p><p>Štátny rozpočet je len časť verejných financií. Nezahŕňa napríklad rozpočty obcí, Sociálnej poisťovne či zdravotných poisťovní.</p>",
+    "glossaryTitle": "Slovníček",
+    "sourcesTitle": "Zdroje",
+    "downloads": "Spracované údaje si môžete stiahnuť: {links}.",
+    "licence": "Licencia: {licence}",
+    "downloaded": "stiahnuté {date}"
+  },
+  "glossary": [
+    ["Štátny rozpočet", "Plán príjmov a výdavkov štátu na jeden rok. Schvaľuje ho Národná rada ako zákon."],
+    ["Kapitola", "Časť rozpočtu, za ktorú zodpovedá jedna inštitúcia, napríklad ministerstvo, úrad alebo súd."],
+    ["Schválený rozpočet", "Suma, ktorú na začiatku roka schválila Národná rada."],
+    ["Upravený rozpočet", "Rozpočet po zmenách, ktoré počas roka urobila vláda alebo ministerstvo financií."],
+    ["Skutočnosť (čerpanie)", "Peniaze, ktoré štát naozaj vyplatil. Počas roka ide o súčet od 1. januára."],
+    ["Všeobecná pokladničná správa", "Kapitola, ktorú spravuje ministerstvo financií. Platia sa z nej napríklad úroky zo štátneho dlhu, odvody do rozpočtu EÚ a dotácie samosprávam."]
+  ],
+  "common": {
+    "showTable": "Zobraziť ako tabuľku",
+    "close": "Zavrieť",
+    "chapter": "Kapitola",
+    "total": "Spolu",
+    "budget": "Rozpočet",
+    "approved": "Schválený",
+    "adjusted": "Upravený",
+    "actual": "Skutočnosť",
+    "pct": "Čerpanie",
+    "year": "Rok",
+    "na": "—"
+  },
+  "months": ["január", "február", "marec", "apríl", "máj", "jún", "júl", "august", "september", "október", "november", "december"],
+  "monthsGen": ["januára", "februára", "marca", "apríla", "mája", "júna", "júla", "augusta", "septembra", "októbra", "novembra", "decembra"],
+  "monthsShort": ["jan", "feb", "mar", "apr", "máj", "jún", "júl", "aug", "sep", "okt", "nov", "dec"],
+  "units": { "bn": "mld. €", "m": "mil. €", "k": "tis. €", "eur": "€" },
+  "footer": "Zdroj údajov: {sources}. Kód stránky je otvorený na GitHube."
+}
