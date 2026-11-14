@@ -34,6 +34,14 @@
     2022,
     2023
   ],
+  "functionYears": [
+    2020,
+    2021,
+    2022,
+    2023
+  ],
+  "chapterMonth": null,
+  "chapterMonthlyYears": [],
   "population": null,
   "sources": [
     {
@@ -77,5 +85,5 @@
       "downloaded": "2026-11-14T16:22:00Z"
     }
   ],
-  "generated": "2026-11-14T16:27:01Z"
+  "generated": "2026-11-14T16:33:55Z"
 }

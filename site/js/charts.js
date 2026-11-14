@@ -206,7 +206,10 @@ export function historyChart(el, { items, emptyText, height = 280 }) {
 
   // Direct label only on the latest column and the maximum.
   const maxItem = usable.reduce((a, b) => (b.value > a.value ? b : a));
-  for (const d of new Set([last, maxItem])) {
+  const lastI = usable.indexOf(last), maxI = usable.indexOf(maxItem);
+  // Label the latest column; also the maximum if it is far enough not to collide.
+  const toLabel = Math.abs(lastI - maxI) >= 3 || (x.bandwidth() > 70 && lastI !== maxI) ? [last, maxItem] : [last];
+  for (const d of toLabel) {
     g.append('text').attr('x', x(d.year) + x.bandwidth() / 2).attr('y', y(d.value) - 6)
       .attr('text-anchor', 'middle').attr('class', d === last ? 'label-strong' : '').text(money(d.value));
   }

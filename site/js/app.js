@@ -90,18 +90,21 @@ function functionName(f) { return label('functions', f.code, f.name); }
 /** The 12 cumulative values for the current scope in a year, or null. */
 function cumulativeFor(year, scope = state.scope) {
   const m = M(year);
+  if (scope.startsWith('ch:')) return chapterOf(year, scope.slice(3))?.monthly || null;
   if (!m) return null;
   if (scope === 'total') return m.expenditure.total?.cumulative || null;
   if (scope.startsWith('type:')) return m.expenditure[scope.slice(5)]?.cumulative || null;
+  if (scope.startsWith('ch:')) return chapterOf(year, scope.slice(3))?.monthly || null;
   return null;
 }
+function chapterOf(year, code) { return A(year)?.chapters.find(c => c.code === code) || null; }
 function budgetFor(year, scope = state.scope) {
   const m = M(year);
   if (scope === 'total') return m?.expenditure.total?.budget ?? A(year)?.total?.approved ?? null;
   if (scope.startsWith('type:')) return m?.expenditure[scope.slice(5)]?.budget ?? null;
   if (scope.startsWith('ch:')) {
-    const c = A(year)?.chapters.find(c => c.code === scope.slice(3));
-    return c?.approved ?? null;
+    const c = chapterOf(year, scope.slice(3));
+    return c ? (c.adjusted ?? c.approved) : null;
   }
   return null;
 }
@@ -110,8 +113,8 @@ function lastMonthOf(year) { return M(year)?.lastMonth ?? (A(year) ? 12 : 0); }
 /** Annual actual for a scope; for an unfinished year returns null. */
 function annualActual(year, scope = state.scope) {
   if (scope.startsWith('ch:')) {
-    const c = A(year)?.chapters.find(c => c.code === scope.slice(3));
-    return c?.actual ?? null;
+    if (A(year)?.month !== 12) return null;
+    return chapterOf(year, scope.slice(3))?.actual ?? null;
   }
   const cum = cumulativeFor(year, scope);
   if (cum && cum[11] != null) return cum[11];
@@ -195,9 +198,9 @@ function endOfMonth(y, m) {
   return d.toISOString().slice(0, 10);
 }
 
-/** Year whose chapter data is shown: the selected year if available, else the latest earlier one. */
-function chapterYear(year = state.year) {
-  const ys = (state.meta.annualYears || []).filter(y => A(y)?.chapters?.length);
+/** Year whose chapter (or function) data is shown: the selected year if available, else the latest earlier one. */
+function chapterYear(year = state.year, kind = 'chapters') {
+  const ys = (state.meta.annualYears || []).filter(y => A(y)?.[kind]?.length);
   if (ys.includes(year)) return year;
   const earlier = ys.filter(y => y < year);
   return earlier.length ? earlier.at(-1) : (ys.at(-1) ?? null);
@@ -301,7 +304,7 @@ function breakdownRows() {
     })).filter(r => r.budget != null || r.spent != null);
     return { rows, year: y, pace: lm < 12 ? lm / 12 : null, inYear: true };
   }
-  const cy = chapterYear(y);
+  const cy = chapterYear(y, state.breakdown);
   const a = cy && A(cy);
   if (!a) return { rows: [], year: cy };
   if (state.breakdown === 'functions') {
@@ -310,26 +313,32 @@ function breakdownRows() {
       rows: a.functions.map(f => ({ id: `fn:${f.code}`, name: functionName(f), sub: describe('functions', f.code), budget: f.adjusted ?? f.approved, approved: f.approved, adjusted: f.adjusted, spent: f.actual })),
     };
   }
+  const partial = a.month < 12;
   return {
     year: cy,
+    inYear: partial,
+    month: a.month,
+    pace: partial && a.month ? a.month / 12 : null,
     rows: a.chapters.map(c => ({ id: `ch:${c.code}`, code: c.code, name: chapterName(c), sub: describe('chapters', c.code), budget: c.adjusted ?? c.approved, approved: c.approved, adjusted: c.adjusted, spent: c.actual })),
   };
 }
 
 function renderBreakdown() {
-  const { rows, year, pace, inYear } = breakdownRows();
+  const { rows, year, pace, inYear, month } = breakdownRows();
   const list = $('chapter-list');
   list.replaceChildren();
 
   const ledeKey = { chapters: 'chapters.lede', functions: 'chapters.ledeFunctions', types: 'chapters.ledeTypes' }[state.breakdown];
   let lede = t(ledeKey, { n: rows.length, year });
   if (state.breakdown !== 'types' && year !== state.year) lede += ' ' + t('chapters.olderYear', { year, selected: state.year });
+  if (state.breakdown === 'chapters' && inYear && month) lede += ' ' + t('chapters.asOfMonth', { month: monthGen(month - 1) });
   $('chapters-lede').textContent = lede;
 
   const legend = $('chapters-legend');
+  const budgetLegend = state.breakdown === 'types' ? t('chapters.legendBudget') : t('chapters.legendAdjusted');
   legend.replaceChildren(
     legendItem('swatch', 'var(--accent)', inYear ? t('chapters.legendSpent') : t('chapters.legendActual')),
-    legendItem('swatch', 'var(--track)', inYear ? t('chapters.legendBudget') : t('chapters.legendAdjusted')),
+    legendItem('swatch', 'var(--track)', budgetLegend),
   );
   if (pace != null) legend.append(legendItem('swatch pace', null, t('chapters.legendPace')));
 
@@ -401,7 +410,7 @@ function renderBreakdown() {
     ? [t('common.item'), t('common.budget'), t('common.actualSoFar'), t('common.pct')]
     : [t('common.item'), t('common.approved'), t('common.adjusted'), t('common.actual'), t('common.pct')];
   const body = shown.map(r => inYear
-    ? [r.name, moneyFull(r.budget), moneyFull(r.spent), pct(r.budget ? r.spent / r.budget : null, 1)]
+    ? [r.name, moneyFull(r.budget), moneyFull(r.spent), pct(r.budget && r.spent != null ? r.spent / r.budget : null, 1)]
     : [r.name, moneyFull(r.approved), moneyFull(r.adjusted), moneyFull(r.spent), pct(r.adjusted ? r.spent / r.adjusted : null, 1)]);
   table($('chapters-table'), head, body);
 }
@@ -456,7 +465,8 @@ function table(el, head, rows) {
 const COMPARE_YEARS = 5;
 
 function yearSeries(scope = state.scope, unit = state.unit, year = state.year) {
-  const years = (state.meta.monthlyYears || []).filter(y => y <= year && y > year - 1 - COMPARE_YEARS);
+  const pool = scope.startsWith('ch:') ? (state.meta.chapterMonthlyYears || []) : (state.meta.monthlyYears || []);
+  const years = pool.filter(y => y <= year && y > year - 1 - COMPARE_YEARS);
   return years.map(y => {
     const cum = cumulativeFor(y, scope);
     if (!cum) return null;
@@ -467,7 +477,7 @@ function yearSeries(scope = state.scope, unit = state.unit, year = state.year) {
 }
 
 function renderYearView() {
-  const scopeHasMonthly = !state.scope.startsWith('ch:');
+  const scopeHasMonthly = !state.scope.startsWith('ch:') || (state.meta.chapterMonthlyYears || []).includes(state.year);
   $('year-lede').textContent = t('year.lede', { year: state.year, scope: scopeName() });
   const series = scopeHasMonthly ? yearSeries() : [];
   const legend = $('year-legend');
@@ -488,7 +498,7 @@ function historyItems(scope = state.scope) {
   for (const y of years) {
     const act = annualActual(y, scope);
     if (act != null) items.push({ year: y, value: act, kind: 'actual' });
-    else if (lastMonthOf(y) < 12 && y === state.meta.currentYear) {
+    else if (y === state.meta.currentYear && (lastMonthOf(y) < 12 || (scope.startsWith('ch:') && A(y)?.month < 12))) {
       const b = budgetFor(y, scope);
       if (b != null) items.push({ year: y, value: b, kind: 'budget' });
     }
@@ -521,7 +531,7 @@ function renderRevenue() {
   $('revenue-lede').textContent = t(lm < 12 ? 'revenue.ledeInProgress' : 'revenue.ledeFinal', {
     year: state.year, month: monthGen(lm - 1), revenue: money(got), gap: money(Math.abs(spent - got)),
     budget: money(tot.budget),
-  }) + ' ' + (spent > got ? t('revenue.deficit') : t('revenue.surplus'));
+  }) + ' ' + t(spent > got ? 'revenue.deficit' : 'revenue.surplus', { gap: money(Math.abs(spent - got)) });
   legend.append(legendItem('swatch', 'var(--accent)', t('revenue.legendGot')), legendItem('swatch', 'var(--track)', t('revenue.legendBudget')));
   if (lm < 12) legend.append(legendItem('swatch pace', null, t('chapters.legendPace')));
 
@@ -636,9 +646,10 @@ function openDetail(r) {
   requestAnimationFrame(() => {
     const yc = $('dlg-year-chart');
     const yh = $('dlg-year-title');
-    if (r.id.startsWith('type:')) {
+    const series = (r.id.startsWith('type:') || r.id.startsWith('ch:')) ? yearSeries(r.id, 'share') : [];
+    if (series.length) {
       yh.hidden = false; yc.hidden = false;
-      yearChart(yc, { series: yearSeries(r.id, 'share'), unit: 'share', emptyText: t('year.noMonthly'), height: 260 });
+      yearChart(yc, { series, unit: 'share', emptyText: t('year.noMonthly'), height: 260 });
     } else { yh.hidden = true; yc.hidden = true; yc.replaceChildren(); }
 
     let items = [];

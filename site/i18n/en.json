@@ -3,11 +3,23 @@
   "skip": "Skip to content",
   "brand": "Budget for People",
   "navLabel": "Sections",
-  "nav": { "chapters": "Chapters", "year": "Through the year", "history": "Over the years", "about": "About the data" },
+  "nav": {
+    "chapters": "Chapters",
+    "year": "Through the year",
+    "history": "Over the years",
+    "about": "About the data",
+    "revenue": "Revenue"
+  },
   "country": "Country",
   "themeToggle": "Toggle dark mode",
   "langToggle": "Prepnúť do slovenčiny",
-  "filters": { "year": "Year", "scope": "Show", "all": "Whole state budget" },
+  "filters": {
+    "year": "Year",
+    "scope": "Show",
+    "all": "Whole state budget",
+    "byChapter": "Chapter",
+    "byType": "Type of spending"
+  },
   "asOf": "Spending data up to {date}",
   "asOfFinal": "Final figures for {year}",
   "loading": "Loading data…",
@@ -24,7 +36,8 @@
     "captionFinal": "actual spending for the whole year, {pct} of the adjusted budget",
     "meterSpent": "Paid out: {pct}",
     "meterPace": "{pct} of the year has passed",
-    "meterLabel": "Paid out {spent} of {budget} ({pct}). {pace} of the year has passed."
+    "meterLabel": "Paid out {spent} of {budget} ({pct}). {pace} of the year has passed.",
+    "meterBudget": "Budget: {budget}"
   },
   "kpi": {
     "approved": "Approved budget",
@@ -36,11 +49,12 @@
     "actualNoteFinal": "for the whole year",
     "change": "Compared with last year",
     "changeNote": "spending in the same period of {year}",
-    "missing": "not published"
+    "missing": "not published",
+    "adjustedMissing": "not in the data for this year yet"
   },
   "chapters": {
     "title": "Where the money goes",
-    "lede": "The state budget is split into {n} chapters: ministries, offices and other institutions. The light part of each bar is the chapter's whole budget; the dark part is what it has already paid out. Click a chapter for details.",
+    "lede": "The state budget has {n} chapters: ministries, offices, courts and other institutions. The bar length shows the size of each chapter's budget in {year}; the dark part is what it has actually paid out. Click a chapter to see its history.",
     "search": "Search chapters",
     "searchPlaceholder": "Search chapters…",
     "sort": "Sort",
@@ -53,20 +67,35 @@
     "showLess": "Show fewer",
     "none": "No chapter matches your search.",
     "share": "{pct} of the budget",
-    "rowLabel": "{name}: budget {budget}, paid out {spent}, which is {pct}. Open details."
+    "rowLabel": "{name}: budget {budget}, paid out {spent}, which is {pct}. Open details.",
+    "breakdown": "Spending breakdown",
+    "byChapter": "Who spends",
+    "byFunction": "What for",
+    "byType": "How",
+    "ledeFunctions": "The same money split by purpose (the international COFOG classification), for {year}. The dark part is the amount actually paid out; the light part is the adjusted budget.",
+    "ledeTypes": "Spending in {year} by what the state pays for: wages, purchases, transfers to others, interest or investment. The dark part is what has been paid out; the light part is the approved budget.",
+    "olderYear": "This breakdown has not been published for {selected} yet, so you are seeing {year}.",
+    "legendActual": "Actually paid out",
+    "legendAdjusted": "Adjusted budget",
+    "noData": "This breakdown has not been published for this year.",
+    "noTypes": "Monthly figures have not been published for this year.",
+    "ofBudget": "{pct} of {budget}",
+    "asOfMonth": "Chapter figures are up to the end of {month}."
   },
   "year": {
     "title": "How the money is spent through the year",
-    "lede": "Total spending from January to the end of each month. The blue line is {year}; the grey lines are previous years, so you can see whether spending is faster or slower than usual.",
+    "lede": "Total spending from January to the end of each month: {scope}. The blue line is {year}; the grey lines are previous years, so you can see whether money is being spent faster or slower than usual.",
     "unit": "Unit",
     "unitShare": "% of budget",
     "unitEur": "Euros",
     "noMonthly": "Monthly figures for this selection have not been published.",
-    "month": "Month"
+    "month": "Month",
+    "noMonthlyChapter": "Monthly figures are not available for this chapter.",
+    "previous": "previous years ({n})"
   },
   "history": {
     "title": "Over the years",
-    "lede": "Actual spending for each full year. The last column, if lighter, is the budget of the year still in progress.",
+    "lede": "Actual spending for whole years: {scope}. A lighter last column is the budget of the year still in progress.",
     "actual": "Actual",
     "budget": "Budget (year in progress)",
     "noData": "Figures for previous years are not available for this selection.",
@@ -79,7 +108,9 @@
     "perMonth": "Per person per month",
     "perDay": "Per person per day",
     "basis": "from the {year} budget",
-    "noPop": "Population is not in the data yet, so this view is not shown."
+    "noPop": "Population is not in the data yet, so this view is not shown.",
+    "basisActual": "from actual spending in {year}",
+    "basisBudget": "from the {year} budget"
   },
   "dialog": {
     "monthly": "Spending through the year",
@@ -90,17 +121,35 @@
     "body": "<p>Every number comes from the official sources listed below. The site does not change them; it only presents them in a readable form. Where a figure has not been published, the site says so and estimates nothing.</p><p>The state budget is only part of public finances. It does not include, for example, the budgets of municipalities, the Social Insurance Agency or health insurers.</p>",
     "glossaryTitle": "Glossary",
     "sourcesTitle": "Sources",
-    "downloads": "Download the processed data: {links}.",
-    "licence": "Licence: {licence}",
+    "downloads": "Download the processed data:",
+    "licence": "MF SR data licence:",
     "downloaded": "downloaded {date}"
   },
   "glossary": [
-    ["State budget", "The state's plan of revenue and spending for one year. Parliament passes it as a law."],
-    ["Chapter (kapitola)", "The part of the budget one institution is responsible for, such as a ministry, office or court."],
-    ["Approved budget", "The amount parliament approved at the start of the year."],
-    ["Adjusted budget", "The budget after changes made during the year by the government or the Ministry of Finance."],
-    ["Actual spending", "Money the state actually paid out. During the year it is the total since 1 January."],
-    ["General Treasury Administration", "A chapter managed by the Ministry of Finance. It pays, for example, interest on state debt, contributions to the EU budget and grants to local governments."]
+    [
+      "State budget",
+      "The state's plan of revenue and spending for one year. Parliament passes it as a law."
+    ],
+    [
+      "Chapter (kapitola)",
+      "The part of the budget one institution is responsible for, such as a ministry, office or court."
+    ],
+    [
+      "Approved budget",
+      "The amount parliament approved at the start of the year."
+    ],
+    [
+      "Adjusted budget",
+      "The budget after changes made during the year by the government or the Ministry of Finance."
+    ],
+    [
+      "Actual spending",
+      "Money the state actually paid out. During the year it is the total since 1 January."
+    ],
+    [
+      "General Treasury Administration",
+      "A chapter managed by the Ministry of Finance. It pays, for example, interest on state debt, contributions to the EU budget and grants to local governments."
+    ]
   ],
   "common": {
     "showTable": "Show as a table",
@@ -113,11 +162,70 @@
     "actual": "Actual",
     "pct": "Spent",
     "year": "Year",
-    "na": "—"
+    "na": "—",
+    "actualSoFar": "Paid out so far",
+    "amount": "Amount",
+    "item": "Item",
+    "ofAdjusted": "of the adjusted budget"
   },
-  "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-  "monthsGen": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-  "monthsShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-  "units": { "bn": "bn €", "m": "m €", "k": "k €", "eur": "€" },
-  "footer": "Data source: {sources}. The site's code is open on GitHub."
+  "months": [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  "monthsGen": [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  "monthsShort": [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ],
+  "units": {
+    "bn": "bn €",
+    "m": "m €",
+    "k": "k €",
+    "eur": "€"
+  },
+  "footer": "Data: {publisher}, licence {licence}. The site does not change the numbers, it only shows them. Source code is on",
+  "revenue": {
+    "title": "Where the money comes from",
+    "ledeInProgress": "By the end of {month} {year} the state had collected {revenue} (plan for the whole year: {budget}).",
+    "ledeFinal": "In {year} the state collected {revenue}.",
+    "deficit": "Spending was higher by {gap}; the state covers this gap (the deficit) by borrowing.",
+    "surplus": "Revenue exceeded spending by {gap}.",
+    "legendGot": "Collected",
+    "legendBudget": "Plan for the year",
+    "noData": "Revenue figures have not been published for this year.",
+    "total": "Total revenue"
+  }
 }

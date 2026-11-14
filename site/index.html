@@ -25,6 +25,7 @@
         <a href="#kapitoly" data-i18n="nav.chapters">Kapitoly</a>
         <a href="#pocas-roka" data-i18n="nav.year">Počas roka</a>
         <a href="#roky" data-i18n="nav.history">V rokoch</a>
+        <a href="#prijmy" data-i18n="nav.revenue">Príjmy</a>
         <a href="#o-datach" data-i18n="nav.about">O dátach</a>
       </nav>
       <div class="header-tools">
@@ -72,6 +73,13 @@
         <div>
           <h2 id="chapters-title" data-i18n="chapters.title">Kam idú peniaze</h2>
           <p class="lede" id="chapters-lede"></p>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="seg" role="radiogroup" aria-label="Rozdelenie" data-i18n-attr="aria-label:chapters.breakdown">
+          <button type="button" role="radio" aria-checked="true" data-breakdown="chapters" data-i18n="chapters.byChapter">Kto míňa</button>
+          <button type="button" role="radio" aria-checked="false" data-breakdown="functions" data-i18n="chapters.byFunction">Na čo</button>
+          <button type="button" role="radio" aria-checked="false" data-breakdown="types" data-i18n="chapters.byType">Akým spôsobom</button>
         </div>
         <div class="card-tools">
           <label class="visually-hidden" for="chapter-search" data-i18n="chapters.search">Hľadať kapitolu</label>
@@ -126,7 +134,22 @@
       </details>
     </section>
 
-    <section id="podiel" class="card" aria-labelledby="share-title">
+    <section id="prijmy" class="card" aria-labelledby="revenue-title">
+      <div class="card-head">
+        <div>
+          <h2 id="revenue-title" data-i18n="revenue.title">Odkiaľ peniaze prichádzajú</h2>
+          <p class="lede" id="revenue-lede"></p>
+        </div>
+      </div>
+      <div class="legend" id="revenue-legend"></div>
+      <ol class="meter-list" id="revenue-list"></ol>
+      <details class="table-view">
+        <summary data-i18n="common.showTable">Zobraziť ako tabuľku</summary>
+        <div class="table-scroll" id="revenue-table"></div>
+      </details>
+    </section>
+
+    <section id="podiel" class="card" hidden aria-labelledby="share-title">
       <div class="card-head">
         <div>
           <h2 id="share-title" data-i18n="share.title">Koľko je to na človeka</h2>
@@ -152,7 +175,7 @@
     <h2 id="dlg-title"></h2>
     <p class="lede" id="dlg-desc"></p>
     <div class="kpi-row" id="dlg-kpis"></div>
-    <h3 data-i18n="dialog.monthly">Čerpanie počas roka</h3>
+    <h3 id="dlg-year-title" data-i18n="dialog.monthly">Čerpanie počas roka</h3>
     <div class="chart" id="dlg-year-chart"></div>
     <h3 data-i18n="dialog.history">V minulých rokoch</h3>
     <div class="chart" id="dlg-history-chart"></div>

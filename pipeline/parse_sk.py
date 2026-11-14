@@ -175,7 +175,7 @@ def parse_chapters(wb, year):
         if is_total:
             total = rec
         else:
-            rec = {"code": str(cells[code_idx]).strip(), "name": clean(name), **rec}
+            rec = {"code": str(cells[code_idx]).strip()[2:], "name": clean(name), **rec}
             chapters.append(rec)
     if total is None:
         raise ValueError(f"{year}: chapter total row not found")
@@ -230,29 +230,134 @@ def parse_annual():
     return years
 
 
+
+# ---------------------------------------------------------------------------
+# Chapters from rozpocet.sk (RIS): 2016 onwards, month by month for recent years
+# ---------------------------------------------------------------------------
+
+def _pair(entries):
+    """RIS returns [revenue, expenditure] for every organisation."""
+    rev, exp = (entries + [None, None])[:2]
+    h = lambda e, k: (None if e is None or e.get("hodnoty") is None or e["hodnoty"].get(k) is None
+                      else round(e["hodnoty"][k]))
+    return {
+        "approved": h(exp, "SCHVALENY"), "adjusted": h(exp, "UPRAVENY"), "actual": h(exp, "SKUTOCNOST"),
+        "revenue": {"approved": h(rev, "SCHVALENY"), "adjusted": h(rev, "UPRAVENY"), "actual": h(rev, "SKUTOCNOST")},
+        "nameEn": (exp or rev or {}).get("nazovOrganizacieEn"),
+        "name": (exp or rev or {}).get("nazovOrganizacie"),
+    }
+
+
+def _monthly_series(payload, what="SKUTOCNOST"):
+    """MESIAC_1..MESIAC_n -> 12 cumulative expenditure values (null where not published)."""
+    out = [None] * 12
+    for key, entries in payload.items():
+        m = int(key.split("_")[1])
+        if 1 <= m <= 12 and len(entries) > 1 and entries[1].get("hodnoty"):
+            v = entries[1]["hodnoty"].get(what)
+            out[m - 1] = None if v is None else round(v)
+    return out
+
+
+def parse_ris():
+    d = RAW / "ris"
+    if not d.exists():
+        return {}, None
+    status = json.loads((d / "status.json").read_text("utf-8"))
+    actual_to = status["actual"]
+    years = {}
+    for path in sorted(d.glob("[0-9][0-9][0-9][0-9].json")):
+        rec = json.loads(path.read_text("utf-8"))
+        year = rec["year"]
+        payload = rec["chapters"]["response"]["payload"]
+        last = 12
+        if year == actual_to["rok"]:
+            last = actual_to["mesiac"]
+        elif year > actual_to["rok"]:
+            last = 0
+        monthly = {k: _monthly_series(v["response"]["payload"]) for k, v in (rec.get("monthly") or {}).items()}
+        chapters = []
+        for code, entries in sorted(payload.items()):
+            c = _pair(entries)
+            series = monthly.get(code)
+            if series is not None:
+                series = [v if i < last else None for i, v in enumerate(series)]
+            if last < 12:
+                # Budget figures are newer than actuals; take actual from the month series.
+                c["actual"] = series[last - 1] if (series and last) else None
+            if all(c[k] in (None, 0) for k in ("approved", "adjusted", "actual")) and not any(series or []):
+                continue
+            chapters.append({"code": code, "name": clean(c["name"]), "nameEn": c["nameEn"],
+                             "approved": c["approved"], "adjusted": c["adjusted"], "actual": c["actual"],
+                             "revenue": c["revenue"], **({"monthly": series} if series else {})})
+        total = None
+        if rec.get("total"):
+            tp = rec["total"]["response"]["payload"]
+            key = f"MESIAC_{rec['month']}"
+            t = _pair(tp.get(key, [])) if key in tp else None
+            ts = _monthly_series(tp)
+            ts = [v if i < last else None for i, v in enumerate(ts)]
+            if t:
+                total = {"approved": t["approved"], "adjusted": t["adjusted"],
+                         "actual": ts[last - 1] if last else None, "monthly": ts}
+        if total is None:
+            total = {k: sum(c[k] or 0 for c in chapters) or None for k in ("approved", "adjusted", "actual")}
+        years[str(year)] = {"source": "ris", "month": last, "total": total, "chapters": chapters}
+    return years, status
+
+
+def merge_annual(szu, ris):
+    """Chapters come from RIS where available (it covers more years and the current
+    one); functions come from the final account tables."""
+    out = {}
+    for y in sorted(set(szu) | set(ris), key=int):
+        if y in ris:
+            rec = dict(ris[y])
+        else:
+            rec = {"source": szu[y]["source"], "month": 12, "total": szu[y]["total"], "chapters": szu[y]["chapters"]}
+        if y in szu:
+            rec["functions"] = szu[y]["functions"]
+            rec["functionsTotal"] = szu[y]["functionsTotal"]
+            rec["functionsSource"] = szu[y]["source"]
+        out[y] = rec
+    return out
+
 # ---------------------------------------------------------------------------
 # Validation: refuse to publish numbers that do not add up.
 # ---------------------------------------------------------------------------
 
-def validate(monthly, annual):
+def validate(monthly, szu, ris):
     problems = []
-    for y, d in annual.items():
+    for y, d in szu.items():
         for kind in ("approved", "adjusted", "actual"):
-            s = sum(c[kind] or 0 for c in d["chapters"])
+            s_ = sum(c[kind] or 0 for c in d["chapters"])
             t = d["total"][kind]
-            if t and abs(s - t) > 5_000 * len(d["chapters"]):  # rounding in thousands
-                problems.append(f"{y} chapters {kind}: sum {s} != total {t}")
+            if t and abs(s_ - t) > 5_000 * len(d["chapters"]):  # rounding in thousands
+                problems.append(f"{y} final account chapters {kind}: sum {s_} != total {t}")
             fs = sum(f[kind] or 0 for f in d["functions"])
             ft = d["functionsTotal"][kind] if d["functionsTotal"] else None
             if ft and abs(fs - ft) > 5_000 * 10:
                 problems.append(f"{y} functions {kind}: sum {fs} != total {ft}")
-        # The final account and the monthly series should agree on the annual actual.
         m = monthly.get(y)
         if m and m["lastMonth"] == 12:
             dec = m["expenditure"]["total"]["cumulative"][11]
             act = d["total"]["actual"]
             if abs(dec - act) > 0.001 * act:
                 problems.append(f"{y}: monthly December {dec} vs final account {act}")
+    for y, d in ris.items():
+        if d["month"] == 0:
+            continue
+        act = sum(c["actual"] or 0 for c in d["chapters"])
+        m = monthly.get(y)
+        if m and m["lastMonth"] >= d["month"]:
+            ref = m["expenditure"]["total"]["cumulative"][d["month"] - 1]
+            if ref and abs(act - ref) > 0.005 * ref:
+                problems.append(f"{y}: RIS chapters sum {act} vs monthly execution {ref} (month {d['month']})")
+        if y in szu:
+            for c in d["chapters"]:
+                o = next((x for x in szu[y]["chapters"] if x["code"] == c["code"]), None)
+                if o and o["actual"] is not None and c["actual"] is not None and abs(o["actual"] - c["actual"]) > 2_000:
+                    problems.append(f"{y} chapter {c['code']}: RIS {c['actual']} vs final account {o['actual']}")
     for y, d in monthly.items():
         cum = [v for v in d["expenditure"]["total"]["cumulative"] if v is not None]
         if any(b < a * 0.98 for a, b in zip(cum, cum[1:])):
@@ -266,12 +371,14 @@ def main() -> int:
     lock = json.loads((RAW / "sources.lock.json").read_text("utf-8"))
 
     monthly = parse_monthly()
-    annual = parse_annual()
-    problems = validate(monthly, annual)
+    szu = parse_annual()
+    ris, ris_status = parse_ris()
+    problems = validate(monthly, szu, ris)
     if problems:
         print("VALIDATION FAILED:\n  " + "\n  ".join(problems))
         return 1
 
+    annual = merge_annual(szu, ris)
     current = max(int(y) for y in monthly)
     last_month = monthly[str(current)]["lastMonth"]
     as_of = None
@@ -280,6 +387,10 @@ def main() -> int:
         as_of = (nxt - dt.timedelta(days=1)).isoformat()
 
     sources = []
+    if ris_status:
+        sources.append({"id": "ris", "title": "Rozpočtový informačný systém (rozpocet.sk)",
+                        "titleEn": "Budget Information System (rozpocet.sk)", "page": "https://rozpocet.sk/web/#/rozpocet/VS/kapitoly/0",
+                        "url": "https://rozpocet.sk/rest/api/", "downloaded": ris_status["fetched"]})
     for s in manifest["sources"]:
         sources.append({
             "id": s["id"], "title": s["title"], "titleEn": s["titleEn"], "page": s["page"],
@@ -297,6 +408,9 @@ def main() -> int:
         "asOf": as_of,
         "monthlyYears": sorted(int(y) for y in monthly),
         "annualYears": sorted(int(y) for y in annual),
+        "functionYears": sorted(int(y) for y in annual if annual[y].get("functions")),
+        "chapterMonth": annual.get(str(current), {}).get("month"),
+        "chapterMonthlyYears": sorted(int(y) for y in annual if any("monthly" in c for c in annual[y]["chapters"])),
         "population": None,  # added once an official ŠÚ SR figure is in data/raw
         "sources": sources,
         "generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -307,6 +421,9 @@ def main() -> int:
 
     write("monthly.json", {"unit": "EUR", "source": "plnenie-narodna", "years": monthly})
     write("annual.json", {"unit": "EUR", "years": annual})
+    labels = json.loads((ROOT / "pipeline" / "labels" / "sk.json").read_text("utf-8"))
+    labels.pop("_comment", None)
+    write("labels.json", labels)
     (OUT / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", "utf-8")
     print(f"ok: monthly {meta['monthlyYears'][0]}-{current} (to month {last_month}), "
           f"annual {meta['annualYears']}")
