@@ -29,10 +29,17 @@
     2026
   ],
   "annualYears": [
+    2016,
+    2017,
+    2018,
+    2019,
     2020,
     2021,
     2022,
-    2023
+    2023,
+    2024,
+    2025,
+    2026
   ],
   "functionYears": [
     2020,
@@ -40,10 +47,23 @@
     2022,
     2023
   ],
-  "chapterMonth": null,
-  "chapterMonthlyYears": [],
+  "chapterMonth": 7,
+  "chapterMonthlyYears": [
+    2023,
+    2024,
+    2025,
+    2026
+  ],
   "population": null,
   "sources": [
+    {
+      "id": "ris",
+      "title": "Rozpočtový informačný systém (rozpocet.sk)",
+      "titleEn": "Budget Information System (rozpocet.sk)",
+      "page": "https://rozpocet.sk/web/#/rozpocet/VS/kapitoly/0",
+      "url": "https://rozpocet.sk/rest/api/",
+      "downloaded": "2026-11-14T17:03:29Z"
+    },
     {
       "id": "plnenie-narodna",
       "title": "Plnenie štátneho rozpočtu SR v národnej metodike",
@@ -85,5 +105,5 @@
       "downloaded": "2026-11-14T16:22:00Z"
     }
   ],
-  "generated": "2026-11-14T16:43:00Z"
+  "generated": "2026-11-14T17:09:12Z"
 }
