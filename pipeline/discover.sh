@@ -2,7 +2,7 @@
 # One-off discovery: download the MF SR open data catalog and candidate datasets
 # so their structure can be inspected. Files are saved unchanged.
 set -u
-out=data/raw/sk/_discovery/round2
+out=data/raw/sk/_discovery/round3
 mkdir -p "$out"
 UA="Mozilla/5.0 (compatible; budget-visualizer data fetch; +https://github.com/omasamo/Budgetvisualizer)"
 get() { # name url
@@ -10,11 +10,18 @@ get() { # name url
 }
 {
 printf "file\thttp\tbytes\ttype\turl\n"
-for f in init.js common/services.js app/services.js app/rozpocet.js common/app.js app/app.js app/controllers.js; do
-  get "ris_$(echo $f | tr / _)" "https://rozpocet.sk/web/$f"
+for base in "https://rozpocet.sk/rest/api/" "https://rozpocet.sk/web/rest/api/"; do
+  b=$(echo "$base" | md5sum | cut -c1-4)
+  for p in service-info rozpocet/sumareZaRoky rozpocet/aktualizacie rozpocet/poslednaAktualizacia/PLNENIE/VS/SKU rozpocet/poslednaAktualizacia/SR/VS/SCH \
+           organizacie/podurovne/sk/VS/0 organizacie/podurovne/sk/VS/1 organizacia/info/sk/VS/0 organizacia/info/sk/VS/1 \
+           rozpocet/konsolidovanyRozpocet/sk/2026 rozpocet/rozpoctyPodorganizaciiVSOrg/0/2026/SKU rozpocet/rozpoctyPodorganizaciiVSOrg/1/2026/SKU \
+           rozpocet/rozpocetVSOrg/1/2026/SKU rozpocet/stavUzavrierky/VS/2026/SKU; do
+    get "${b}_$(echo $p | tr '/' '_')" "$base$p"
+  done
 done
-get od_show_szu2024.html "https://opendata.mfsr.sk/mi/opendata/show/tabulky-k-hotovostnemu-cerpaniu-sr-v-szu-za-rok-2024"
-get mfsr_rozpocet_ludi_2026.html "https://www.mfsr.sk/sk/verejnost/rozpocet-ludi-2026/"
-get mfsr_home.html "https://www.mfsr.sk/sk/"
+get ris_views_parts.js "https://rozpocet.sk/web/app/views-parts.js"
+get ris_views_layouts.js "https://rozpocet.sk/web/app/views-layouts.js"
+get ris_directives.js "https://rozpocet.sk/web/app/directives.js"
+get ris_locale_sk.json "https://rozpocet.sk/web/i18n/locale-sk.json"
 } > "$out/_index.tsv"
 cat "$out/_index.tsv"
