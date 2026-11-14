@@ -1,0 +1,37 @@
+{
+  "plnenie-narodna": {
+    "url": "https://opendata.mfsr.sk/mi/opendata/download/plnenie-statneho-rozpoctu-sr-v-narodnej-metodike/1",
+    "path": "plnenie-narodna/plnenie-statneho-rozpoctu-sr-v-narodnej-metodike.xlsx",
+    "bytes": 185919,
+    "sha256": "cb46d7748641b2d0bfc2da7ada112a80d790dd350c3da5d062274d558772b4b7",
+    "downloaded": "2026-11-14T16:22:00Z"
+  },
+  "szu-2020": {
+    "url": "https://opendata.mfsr.sk/mi/opendata/download/tabulky-k-hotovostnemu-cerpaniu-sr-v-szu-za-rok-2020/1",
+    "path": "szu/szu-2020.xlsx",
+    "bytes": 508866,
+    "sha256": "10ac7d62e67b08ae9c716ecf48038666980ef5159c47bd91e7353f01b43ee237",
+    "downloaded": "2026-11-14T16:22:00Z"
+  },
+  "szu-2021": {
+    "url": "https://opendata.mfsr.sk/mi/opendata/download/tabulky-k-hotovostnemu-cerpaniu-sr-v-szu-za-rok-2021/1",
+    "path": "szu/szu-2021.xlsx",
+    "bytes": 529625,
+    "sha256": "1ba61b2ccc0fde8b357e93f668388c5c73b30ef472bdd26c8682e8977ad62e82",
+    "downloaded": "2026-11-14T16:22:00Z"
+  },
+  "szu-2022": {
+    "url": "https://opendata.mfsr.sk/mi/opendata/download/tabulky-k-hotovostnemu-cerpaniu-sr-v-szu-za-rok-2022/1",
+    "path": "szu/szu-2022.xlsx",
+    "bytes": 514205,
+    "sha256": "56c9c8a75b1e2e384bfe94e13545c675dd36f3f5b5f6fe964d46720e7d7972a4",
+    "downloaded": "2026-11-14T16:22:00Z"
+  },
+  "szu-2023": {
+    "url": "https://opendata.mfsr.sk/mi/opendata/download/tabulky-k-hotovostnemu-cerpaniu-sr-v-szu-za-rok-2023/1",
+    "path": "szu/szu-2023.xlsx",
+    "bytes": 481465,
+    "sha256": "ef53c62ed6636c53c041f0e084bfe6d49da5084e68dfa92d30cbff5f628c1def",
+    "downloaded": "2026-11-14T16:22:00Z"
+  }
+}

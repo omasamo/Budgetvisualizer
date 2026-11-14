@@ -1,0 +1,57 @@
+{
+  "country": "sk",
+  "publisher": "Ministerstvo financií Slovenskej republiky (MF SR)",
+  "licence": "CC BY 4.0",
+  "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "sources": [
+    {
+      "id": "plnenie-narodna",
+      "title": "Plnenie štátneho rozpočtu SR v národnej metodike",
+      "titleEn": "State budget execution, national methodology (monthly, cumulative)",
+      "page": "https://opendata.mfsr.sk/mi/opendata/show/plnenie-statneho-rozpoctu-sr-v-narodnej-metodike",
+      "url": "https://opendata.mfsr.sk/mi/opendata/download/plnenie-statneho-rozpoctu-sr-v-narodnej-metodike/1",
+      "path": "plnenie-narodna/plnenie-statneho-rozpoctu-sr-v-narodnej-metodike.xlsx",
+      "covers": "2008 to the latest published month; totals by economic category"
+    },
+    {
+      "id": "szu-2020",
+      "title": "Tabuľky k hotovostnému čerpaniu ŠR v ŠZÚ za rok 2020",
+      "titleEn": "State final account 2020, cash execution tables",
+      "page": "https://opendata.mfsr.sk/mi/opendata/show/tabulky-k-hotovostnemu-cerpaniu-sr-v-szu-za-rok-2020",
+      "url": "https://opendata.mfsr.sk/mi/opendata/download/tabulky-k-hotovostnemu-cerpaniu-sr-v-szu-za-rok-2020/1",
+      "path": "szu/szu-2020.xlsx",
+      "year": 2020,
+      "covers": "chapters and functions: approved, adjusted, actual"
+    },
+    {
+      "id": "szu-2021",
+      "title": "Tabuľky k hotovostnému čerpaniu ŠR v ŠZÚ za rok 2021",
+      "titleEn": "State final account 2021, cash execution tables",
+      "page": "https://opendata.mfsr.sk/mi/opendata/show/tabulky-k-hotovostnemu-cerpaniu-sr-v-szu-za-rok-2021",
+      "url": "https://opendata.mfsr.sk/mi/opendata/download/tabulky-k-hotovostnemu-cerpaniu-sr-v-szu-za-rok-2021/1",
+      "path": "szu/szu-2021.xlsx",
+      "year": 2021,
+      "covers": "chapters and functions: approved, adjusted, actual"
+    },
+    {
+      "id": "szu-2022",
+      "title": "Tabuľky k hotovostnému čerpaniu ŠR v ŠZÚ za rok 2022",
+      "titleEn": "State final account 2022, cash execution tables",
+      "page": "https://opendata.mfsr.sk/mi/opendata/show/tabulky-k-hotovostnemu-cerpaniu-sr-v-szu-za-rok-2022",
+      "url": "https://opendata.mfsr.sk/mi/opendata/download/tabulky-k-hotovostnemu-cerpaniu-sr-v-szu-za-rok-2022/1",
+      "path": "szu/szu-2022.xlsx",
+      "year": 2022,
+      "covers": "chapters and functions: approved, adjusted, actual"
+    },
+    {
+      "id": "szu-2023",
+      "title": "Tabuľky k hotovostnému čerpaniu ŠR v ŠZÚ za rok 2023",
+      "titleEn": "State final account 2023, cash execution tables",
+      "page": "https://opendata.mfsr.sk/mi/opendata/show/tabulky-k-hotovostnemu-cerpaniu-sr-v-szu-za-rok-2023",
+      "url": "https://opendata.mfsr.sk/mi/opendata/download/tabulky-k-hotovostnemu-cerpaniu-sr-v-szu-za-rok-2023/1",
+      "path": "szu/szu-2023.xlsx",
+      "year": 2023,
+      "covers": "chapters and functions: approved, adjusted, actual"
+    }
+  ]
+}
