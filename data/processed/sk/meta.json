@@ -62,7 +62,7 @@
       "titleEn": "Budget Information System (rozpocet.sk)",
       "page": "https://rozpocet.sk/web/#/rozpocet/VS/kapitoly/0",
       "url": "https://rozpocet.sk/rest/api/",
-      "downloaded": "2026-11-14T17:03:29Z"
+      "downloaded": "2026-11-14T17:10:32Z"
     },
     {
       "id": "plnenie-narodna",
@@ -105,5 +105,5 @@
       "downloaded": "2026-11-14T16:22:00Z"
     }
   ],
-  "generated": "2026-11-14T17:10:09Z"
+  "generated": "2026-11-14T17:11:30Z"
 }
