@@ -178,7 +178,7 @@ select, input[type="search"] {
 /* Chapter meter list */
 .meter-list { list-style: none; margin: 0; padding: 0; }
 .meter-row { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 3fr) 9.5rem; gap: 6px 16px; align-items: center; padding: 10px 8px; border-radius: 10px; cursor: pointer; }
-.meter-row + .meter-row { border-top: 1px solid var(--grid); }
+
 .meter-row:hover, .meter-row:focus-visible { background: var(--surface-2); }
 .meter-name { font-weight: 550; overflow-wrap: anywhere; }
 .meter-name small { display: block; color: var(--ink-muted); font-weight: 400; font-size: .8rem; }
@@ -271,3 +271,11 @@ dialog::backdrop { background: rgba(0,0,0,.45); }
   .as-of { margin-left: 0; width: 100%; }
   .hero { padding-top: 24px; }
 }
+/* Chapter rows are real buttons */
+.meter-list > li { list-style: none; }
+.meter-list > li + li { border-top: 1px solid var(--grid); }
+button.meter-row { width: 100%; text-align: left; background: none; border: 0; font: inherit; color: inherit; }
+.meter-row > span { display: block; }
+.meter-scaled, .meter-scaled .meter, .meter-scaled .meter-fill, .meter-scaled .meter-pace { display: block; }
+.meter-name small { display: block; }
+.meter-fig .pct { display: block; }

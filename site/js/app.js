@@ -258,17 +258,17 @@ function renderHero() {
   );
 }
 
-function meter(share, pace, ariaLabel) {
-  const m = document.createElement('div');
+function meter(share, pace, ariaLabel, tag = 'div') {
+  const m = document.createElement(tag);
   m.className = 'meter';
   m.setAttribute('role', 'img');
   m.setAttribute('aria-label', ariaLabel);
-  const f = document.createElement('div');
+  const f = document.createElement(tag);
   f.className = 'meter-fill';
   f.style.width = `${Math.max(0, Math.min(1, share)) * 100}%`;
   m.append(f);
   if (pace != null) {
-    const p = document.createElement('div');
+    const p = document.createElement(tag);
     p.className = 'meter-pace';
     p.style.left = `calc(${pace * 100}% - 1px)`;
     m.append(p);
@@ -360,31 +360,31 @@ function renderBreakdown() {
 
   for (const r of visible) {
     const li = document.createElement('li');
-    li.className = 'meter-row';
-    li.tabIndex = 0;
-    li.setAttribute('role', 'button');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'meter-row';
     const share = r.budget ? (r.spent ?? 0) / r.budget : null;
-    li.setAttribute('aria-label', t('chapters.rowLabel', { name: r.name, budget: money(r.budget), spent: money(r.spent), pct: pct(share) }));
+    btn.setAttribute('aria-label', t('chapters.rowLabel', { name: r.name, budget: money(r.budget), spent: money(r.spent), pct: pct(share) }));
 
-    const name = document.createElement('div');
+    const name = document.createElement('span');
     name.className = 'meter-name';
     name.textContent = r.name;
     if (r.sub) { const s = document.createElement('small'); s.textContent = r.sub; name.append(s); }
 
     // Bar length is proportional to the row's size on a shared scale, so rows compare.
-    const wrap = document.createElement('div');
+    const wrap = document.createElement('span');
     wrap.className = 'meter-wrap';
-    const scaled = document.createElement('div');
+    const scaled = document.createElement('span');
     scaled.className = 'meter-scaled';
     const width = Math.max(r.budget ?? 0, r.spent ?? 0) / maxVal;
-    const m = meter(r.budget ? Math.min(1, (r.spent ?? 0) / Math.max(r.budget, r.spent ?? 0)) : 1, pace != null ? pace * (r.budget ? Math.min(1, r.budget / Math.max(r.budget, r.spent ?? 0)) : 1) : null, '');
+    const m = meter(r.budget ? Math.min(1, (r.spent ?? 0) / Math.max(r.budget, r.spent ?? 0)) : 1, pace != null ? pace * (r.budget ? Math.min(1, r.budget / Math.max(r.budget, r.spent ?? 0)) : 1) : null, '', 'span');
     m.removeAttribute('role'); m.removeAttribute('aria-label');
     m.style.width = `${Math.max(width * 100, 1.5)}%`;
     if (r.spent != null && r.budget != null && r.spent > r.budget) m.classList.add('over');
     scaled.append(m);
     wrap.append(scaled);
 
-    const fig = document.createElement('div');
+    const fig = document.createElement('span');
     fig.className = 'meter-fig';
     fig.textContent = money(r.spent);
     const p = document.createElement('span');
@@ -392,12 +392,11 @@ function renderBreakdown() {
     p.textContent = r.budget ? t('chapters.ofBudget', { pct: pct(share), budget: money(r.budget) }) : '';
     fig.append(p);
 
-    li.append(name, wrap, fig);
-    const open = () => openDetail(r);
-    li.addEventListener('click', open);
-    li.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
-    li.addEventListener('pointermove', e => showTip(e, r.name, tipRows(r, inYear)));
-    li.addEventListener('pointerleave', hideTip);
+    btn.append(name, wrap, fig);
+    btn.addEventListener('click', () => openDetail(r));
+    btn.addEventListener('pointermove', e => showTip(e, r.name, tipRows(r, inYear)));
+    btn.addEventListener('pointerleave', hideTip);
+    li.append(btn);
     list.append(li);
   }
 

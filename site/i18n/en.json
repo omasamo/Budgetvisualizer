@@ -18,7 +18,8 @@
     "scope": "Show",
     "all": "Whole state budget",
     "byChapter": "Chapter",
-    "byType": "Type of spending"
+    "byType": "Type of spending",
+    "label": "Filters"
   },
   "asOf": "Spending data up to {date}",
   "asOfFinal": "Final figures for {year}",
@@ -91,7 +92,8 @@
     "noMonthly": "Monthly figures for this selection have not been published.",
     "month": "Month",
     "noMonthlyChapter": "Monthly figures are not available for this chapter.",
-    "previous": "previous years ({n})"
+    "previous": "previous years ({n})",
+    "keyboardHint": "Chart by month. Use the left and right arrow keys to move between months."
   },
   "history": {
     "title": "Over the years",

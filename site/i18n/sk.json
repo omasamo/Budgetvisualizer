@@ -18,7 +18,8 @@
     "scope": "Zobraziť",
     "all": "Celý štátny rozpočet",
     "byChapter": "Kapitola",
-    "byType": "Druh výdavku"
+    "byType": "Druh výdavku",
+    "label": "Filtre"
   },
   "asOf": "Údaje o čerpaní k {date}",
   "asOfFinal": "Konečné údaje za rok {year}",
@@ -91,7 +92,8 @@
     "noMonthly": "Mesačné údaje pre tento výber nie sú zverejnené.",
     "month": "Mesiac",
     "noMonthlyChapter": "Mesačné údaje pre túto kapitolu nie sú k dispozícii.",
-    "previous": "predchádzajúce roky ({n})"
+    "previous": "predchádzajúce roky ({n})",
+    "keyboardHint": "Graf po mesiacoch. Šípkami doľava a doprava prechádzate mesiace."
   },
   "history": {
     "title": "Vývoj v rokoch",

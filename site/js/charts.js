@@ -132,7 +132,7 @@ export function yearChart(el, { series, unit, emptyText, height = 320 }) {
   const cross = g.append('line').attr('class', 'crosshair').attr('y1', 0).attr('y2', H).style('display', 'none');
   const accent = cssVar('--accent'), past = cssVar('--past-strong');
   const overlay = g.append('rect').attr('width', W).attr('height', H).attr('fill', 'transparent')
-    .attr('tabindex', 0).attr('aria-label', t('year.month'));
+    .attr('tabindex', 0).attr('role', 'img').attr('aria-label', t('year.keyboardHint'));
   let focusIdx = -1;
   function show(i, evt) {
     cross.style('display', null).attr('x1', x(i)).attr('x2', x(i));
@@ -193,7 +193,7 @@ export function historyChart(el, { items, emptyText, height = 280 }) {
     .attr('d', d => colPath(x(d.year) + (x.bandwidth() - bw) / 2, y(d.value), bw, H - y(d.value)));
   // Hit area = whole band, bigger than the mark.
   cols.append('rect').attr('class', 'bar-hit').attr('x', d => x(d.year)).attr('width', x.bandwidth())
-    .attr('y', 0).attr('height', H).attr('tabindex', 0)
+    .attr('y', 0).attr('height', H).attr('tabindex', 0).attr('role', 'img')
     .attr('aria-label', d => `${d.year}: ${money(d.value)}`)
     .on('pointermove focus', (evt, d) => {
       const i = usable.indexOf(d);
