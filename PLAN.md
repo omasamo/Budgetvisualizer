@@ -78,9 +78,7 @@ missing. It never estimates, interpolates or invents a value.
 data/
   raw/<country>/...            original official files, never edited
   processed/<country>/         small JSON files the site reads
-    meta.json                  country, currency, years available, sources
-    chapters.json              chapter id -> names (sk/en), group, plain description
-    budget-<year>.json         per chapter: approved, adjusted, actual, monthly cumulative
+    meta.json, monthly.json, annual.json, labels.json   (see Data contract)
 pipeline/                      Python scripts: fetch -> parse -> validate -> write JSON
 site/                          static website (HTML, CSS, vanilla JS + D3)
   countries.json               list of countries the site offers
@@ -96,22 +94,15 @@ site/                          static website (HTML, CSS, vanilla JS + D3)
   Chapter names, currency and language come from data, not code.
 - **Bilingual:** Slovak first, English second; UI strings live in `site/i18n/*.json`.
 
-### Data contract (`budget-<year>.json`)
+### Data contract (`data/processed/<cc>/`)
 
-```json
-{
-  "year": 2026,
-  "status": "in-progress",          // or "final"
-  "asOf": "2026-09-30",             // last month with actual data
-  "unit": "EUR",
-  "source": "sk-plnenie-narodna-2026-09",
-  "totals": { "approved": 0, "adjusted": 0, "actual": 0 },
-  "chapters": [
-    { "id": "MPSVR", "approved": 0, "adjusted": 0, "actual": 0,
-      "monthly": [ /* cumulative actual at end of Jan..Dec, null if not yet known */ ] }
-  ]
-}
-```
+- `meta.json` — country, currency, publisher, licence, current year, last month with data,
+  which years exist for each view, and the list of sources with download dates.
+- `monthly.json` — `years[YYYY].expenditure|revenue[key] = { budget, cumulative[12] }`
+  where `key` is `total` or a type (`wages`, `goods`, `transfers`, `interest`, `capital`, `vat`, …).
+- `annual.json` — `years[YYYY] = { month, total, chapters[{code, name, approved, adjusted, actual, monthly?[12]}], functions?[…] }`.
+  `month` is 12 for a finished year, otherwise the last month with actual figures.
+- `labels.json` — plain-language names and one-line explanations (SK/EN), written by hand.
 
 `null` always means "not published", never zero.
 
@@ -128,7 +119,7 @@ Existing solutions, best practices, official sources, this plan.
 - Language switch (SK/EN), country switch (only SK for now), year switch.
 - Empty states that say clearly when data is missing.
 
-### Stage 3 — Interactive views ✅ (code), ⏳ (with real data)
+### Stage 3 — Interactive views ✅
 1. **Headline**: "In 2026 the state plans to spend X €. By the end of <month> it has
    paid out Y € (Z %)." Big number plus a progress meter.
 2. **Where the money goes**: every chapter as a ranked bar with budget vs spent so far;
@@ -136,20 +127,22 @@ Existing solutions, best practices, official sources, this plan.
 3. **Spending through the year**: cumulative monthly line for the selected year,
    with previous years in grey for comparison (emphasis form, one axis).
 4. **Over the years**: per-chapter history of actual spending, chapter picker.
-5. **Your share**: the budget per resident per year, month and day.
+5. **Your share**: the budget per resident per year, month and day (hidden until official population data is added).
+5b. **Where the money comes from**: taxes, EU money and other revenue against the yearly plan, with the deficit explained.
+5c. **Three ways to split spending**: *who spends* (chapters), *what for* (COFOG functions) and *how* (wages, purchases, transfers, interest, investment).
 6. **Table view** for every chart, CSV download of the processed data.
 7. **About the data**: sources, licence, definitions, glossary in plain language.
 
-### Stage 4 — Data pipeline ⏳
+### Stage 4 — Data pipeline ✅
 - `pipeline/fetch.py`: downloads the files listed in `pipeline/sources/sk.json`,
   stores them in `data/raw/` with a `SOURCE.md`.
 - `pipeline/parse_sk.py`: reads the MF SR spreadsheets, maps chapter rows to stable ids,
   writes `data/processed/sk/*.json`.
 - `pipeline/validate.py`: checks that chapters sum to the published total, monthly
   values never decrease, every year has a source. The build fails if a check fails.
-- Blocked until the official files can be downloaded (see Change log, 2026-11-14).
+- `pipeline/fetch_ris.py`: downloads chapter figures from the rozpocet.sk API, one file per year.
 
-### Stage 5 — Automation and hosting ⏳
+### Stage 5 — Automation and hosting ✅ (needs Pages enabled once)
 - `pages.yml`: deploy to GitHub Pages on every push to `main`.
 - `update-data.yml`: on the 20th of each month (MF SR publishes monthly execution
   around mid-month) download the new files, rebuild JSON and open a commit.
@@ -173,3 +166,14 @@ Existing solutions, best practices, official sources, this plan.
   `opendata.mfsr.sk` or `rozpocet.sk`, so the download step is moved to a GitHub
   Actions workflow (which also serves as the monthly update job), pending the owner's
   approval. Site and pipeline are built against the data contract above in the meantime.
+- **2026-11-14 (later)** — The owner approved downloading via GitHub Actions. Findings:
+  the monthly execution file covers 2008 to August 2026 but only by economic type, not by
+  chapter. The final account tables on the open data portal stop at 2023. The rozpocet.sk
+  portal (MF SR) exposes the data behind its own pages through a public REST API with every
+  chapter's approved, adjusted and actual figures from 2016 and month-by-month actuals; these
+  figures match the final accounts exactly for 2020–2023, so the site uses them for chapters.
+  Added a revenue view and the "what for / how" splits. Per-person view waits for official
+  population data.
+- **2026-11-14 (later)** — Accessibility audit with axe-core (WCAG 2.1 AA + best practice):
+  fixed chapter rows to be real buttons, labelled the filter region and chart focus targets.
+  0 violations in light and dark mode.

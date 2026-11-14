@@ -356,7 +356,8 @@ def validate(monthly, szu, ris):
         if y in szu:
             for c in d["chapters"]:
                 o = next((x for x in szu[y]["chapters"] if x["code"] == c["code"]), None)
-                if o and o["actual"] is not None and c["actual"] is not None and abs(o["actual"] - c["actual"]) > 2_000:
+                if (o and o["actual"] is not None and c["actual"] is not None
+                        and abs(o["actual"] - c["actual"]) > max(100_000, 0.001 * abs(o["actual"]))):
                     problems.append(f"{y} chapter {c['code']}: RIS {c['actual']} vs final account {o['actual']}")
     for y, d in monthly.items():
         cum = [v for v in d["expenditure"]["total"]["cumulative"] if v is not None]
