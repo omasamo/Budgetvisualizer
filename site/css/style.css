@@ -452,3 +452,82 @@ dialog[open] { animation: dlg-in .3s cubic-bezier(.2,.7,.2,1); }
 }
 /* Mid-width desktops: keep header on one row by showing only the logo mark. */
 @media (min-width: 1181px) and (max-width: 1400px) { .brand span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
+
+/* =========================================================================
+   Colour and texture (2026-11-15, second pass). Decoration lives only in the
+   page background; every chart and number stays on a plain card surface.
+   ========================================================================= */
+:root {
+  --page: #eaf0f8;
+  --band-1: #0d366b; --band-2: #1c5cab; --band-3: #2a78d6;
+  --dot: rgba(28, 92, 171, 0.13);
+  --band-dot: rgba(255, 255, 255, 0.10);
+  --card-shadow: 0 1px 2px rgba(13, 54, 107, .06), 0 10px 30px rgba(13, 54, 107, .08);
+  --eyebrow-bg: #dcebfc;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #0a0f17;
+    --band-1: #0a1c36; --band-2: #10325f; --band-3: #184f95;
+    --dot: rgba(134, 182, 239, 0.08);
+    --band-dot: rgba(255, 255, 255, 0.07);
+    --card-shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px rgba(0, 0, 0, .25);
+    --eyebrow-bg: #13243a;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #0a0f17;
+  --band-1: #0a1c36; --band-2: #10325f; --band-3: #184f95;
+  --dot: rgba(134, 182, 239, 0.08);
+  --band-dot: rgba(255, 255, 255, 0.07);
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px rgba(0, 0, 0, .25);
+  --eyebrow-bg: #13243a;
+}
+
+/* Tinted page with a faint dot grid, like graph paper. */
+body {
+  background-color: var(--page);
+  background-image: radial-gradient(circle at 1px 1px, var(--dot) 1.2px, transparent 0);
+  background-size: 22px 22px;
+  position: relative;
+}
+/* A deep-blue band behind the top of the page; the hero card sits on it. */
+body::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 520px; z-index: -1;
+  background:
+    radial-gradient(circle at 1px 1px, var(--band-dot) 1.2px, transparent 0) 0 0 / 22px 22px,
+    radial-gradient(ellipse 60% 80% at 85% 0%, color-mix(in srgb, var(--band-3) 70%, transparent), transparent 70%),
+    linear-gradient(165deg, var(--band-1) 0%, var(--band-2) 70%, var(--band-3) 100%);
+  border-radius: 0 0 48px 48px;
+}
+@media (max-width: 720px) { body::before { height: 420px; border-radius: 0 0 28px 28px; } }
+
+/* Header and filter bar are part of the band: deep blue glass, light text. */
+.site-header, .filter-bar { background: color-mix(in srgb, var(--band-1) 94%, transparent); border-bottom: 1px solid rgba(255, 255, 255, .10); color: #ffffff; }
+.brand { color: #ffffff; }
+.brand svg { fill: #86b6ef; }
+.header-nav a { color: #cde2fb; }
+.header-nav a:hover { color: #ffffff; background: rgba(255, 255, 255, .10); }
+.header-nav a[aria-current="true"] { background: #ffffff; color: var(--band-1); }
+.site-header .ghost-btn { border-color: rgba(255, 255, 255, .28); color: #ffffff; }
+.site-header .ghost-btn:hover { background: rgba(255, 255, 255, .10); }
+.site-header :focus-visible, .filter-bar :focus-visible { outline-color: #ffffff; }
+.filter-bar .field label, .filter-bar .as-of { color: #cde2fb; }
+.filter-bar select, .site-header select { border-color: transparent; color: var(--ink); background-color: var(--surface); }
+@media (max-width: 1180px) { .header-nav a { background: rgba(255, 255, 255, .08); } .header-nav a[aria-current="true"] { background: #ffffff; } }
+
+/* Hero becomes a solid card on the band so the big number stays crisp. */
+.hero { background: linear-gradient(160deg, var(--hero-from), var(--surface) 70%); box-shadow: 0 20px 50px rgba(5, 25, 55, .25); border-color: transparent; }
+
+/* Cards: plain surface, soft lift. */
+.card { box-shadow: var(--card-shadow); border-color: transparent; }
+.eyebrow { display: inline-block; background: var(--eyebrow-bg); padding: 3px 10px; border-radius: 999px; }
+.hero .eyebrow { background: transparent; padding: 0; }
+
+/* Footer mirrors the top band to close the page. */
+.site-footer { margin-top: 40px; padding: 32px 0 48px; color: #cde2fb;
+  background: radial-gradient(circle at 1px 1px, var(--band-dot) 1.2px, transparent 0) 0 0 / 22px 22px, linear-gradient(165deg, var(--band-1), var(--band-2)); }
+.site-footer a { color: #ffffff; }
+
+@media (forced-colors: active) { body::before { display: none; } }
+@media print { body { background: #fff; } body::before, .site-footer { background: none; color: inherit; } }
