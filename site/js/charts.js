@@ -52,6 +52,9 @@ export function placeTip(evt) {
 
 export function hideTip() { tip().hidden = true; }
 
+/** True when the reader asked the system for less motion. */
+export const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 function cssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
 
 function emptyNote(el, text) {
@@ -67,7 +70,7 @@ function emptyNote(el, text) {
  * series: [{ key, label, current, values: [12 numbers|null] }] — values already in the chosen unit
  * unit: 'share' (0..1+) or 'eur'
  */
-export function yearChart(el, { series, unit, emptyText, height = 320 }) {
+export function yearChart(el, { series, unit, emptyText, height = 320, animate = false }) {
   const usable = series.filter(s => s.values.some(v => v != null));
   if (!usable.length) return emptyNote(el, emptyText);
   el.replaceChildren();
@@ -109,9 +112,19 @@ export function yearChart(el, { series, unit, emptyText, height = 320 }) {
     const area = d3.area().defined(d => d != null).x((d, i) => x(i)).y0(H).y1(d => y(d));
     g.append('path').attr('class', 'area current').attr('d', area(cur.values));
   }
-  g.selectAll('path.line').data(ordered).join('path')
+  const paths = g.selectAll('path.line').data(ordered).join('path')
     .attr('class', d => `line ${d.current ? 'current' : 'past'}`)
     .attr('d', d => line(d.values));
+  // Draw the current year in, once, when the chart first comes into view.
+  if (animate && !reducedMotion()) {
+    paths.filter(d => d.current).each(function () {
+      const len = this.getTotalLength();
+      d3.select(this).attr('stroke-dasharray', `${len} ${len}`).attr('stroke-dashoffset', len)
+        .transition().duration(1100).ease(d3.easeCubicOut).attr('stroke-dashoffset', 0)
+        .on('end', function () { d3.select(this).attr('stroke-dasharray', null); });
+    });
+    g.selectAll('path.area').attr('opacity', 0).transition().delay(500).duration(700).attr('opacity', 1);
+  }
 
   // End labels: the current series, plus the most recent past year.
   const lastIdx = s => { for (let i = 11; i >= 0; i--) if (s.values[i] != null) return i; return -1; };
@@ -160,7 +173,7 @@ export function yearChart(el, { series, unit, emptyText, height = 320 }) {
 /**
  * Annual columns. items: [{ year, value, kind: 'actual'|'budget' }]
  */
-export function historyChart(el, { items, emptyText, height = 280 }) {
+export function historyChart(el, { items, emptyText, height = 280, animate = false }) {
   const usable = items.filter(d => d.value != null);
   if (!usable.length) return emptyNote(el, emptyText);
   el.replaceChildren();
@@ -179,7 +192,10 @@ export function historyChart(el, { items, emptyText, height = 280 }) {
   g.append('g').attr('class', 'grid').selectAll('line').data(y.ticks(4)).join('line')
     .attr('x1', 0).attr('x2', W).attr('y1', d => y(d)).attr('y2', d => y(d));
   g.append('g').call(d3.axisLeft(y).ticks(4).tickFormat(moneyTick(maxV)).tickSize(0).tickPadding(8));
-  g.append('g').attr('transform', `translate(0,${H})`).call(d3.axisBottom(x).tickSize(0).tickPadding(10));
+  const every = Math.ceil(usable.length / Math.max(1, Math.floor(W / 44)));
+  const lastYear = usable.at(-1).year;
+  g.append('g').attr('transform', `translate(0,${H})`).call(d3.axisBottom(x).tickSize(0).tickPadding(10)
+    .tickFormat(yr => ((lastYear - yr) % every === 0 ? (every > 1 ? `’${String(yr).slice(2)}` : yr) : '')));
 
   // Column with 4px rounded top, square at the baseline.
   const colPath = (x0, y0, w, h) => {
@@ -188,9 +204,15 @@ export function historyChart(el, { items, emptyText, height = 280 }) {
   };
   const last = usable.at(-1);
   const cols = g.selectAll('g.col').data(usable).join('g').attr('class', 'col');
-  cols.append('path')
+  const bars = cols.append('path')
     .attr('class', d => `bar ${d.kind === 'budget' ? 'inprogress' : ''}`)
     .attr('d', d => colPath(x(d.year) + (x.bandwidth() - bw) / 2, y(d.value), bw, H - y(d.value)));
+  // Columns grow from the baseline, left to right, the first time they are seen.
+  if (animate && !reducedMotion()) {
+    bars.attr('d', d => colPath(x(d.year) + (x.bandwidth() - bw) / 2, H, bw, 0))
+      .transition().delay((d, i) => i * 45).duration(650).ease(d3.easeCubicOut)
+      .attr('d', d => colPath(x(d.year) + (x.bandwidth() - bw) / 2, y(d.value), bw, H - y(d.value)));
+  }
   // Hit area = whole band, bigger than the mark.
   cols.append('rect').attr('class', 'bar-hit').attr('x', d => x(d.year)).attr('width', x.bandwidth())
     .attr('y', 0).attr('height', H).attr('tabindex', 0).attr('role', 'img')
@@ -213,5 +235,75 @@ export function historyChart(el, { items, emptyText, height = 280 }) {
     g.append('text').attr('x', x(d.year) + x.bandwidth() / 2).attr('y', y(d.value) - 6)
       .attr('text-anchor', 'middle').attr('class', d === last ? 'label-strong' : '').text(money(d.value));
   }
+  el.append(svg.node());
+}
+
+
+/**
+ * Diverging bars of change between two years, centred on zero.
+ * rows: [{ id, name, diff, rel, prev, cur }] sorted top to bottom.
+ * Increases point right in the "up" colour, decreases left in the "down" colour.
+ */
+export function changesChart(el, { rows, fmtLabel, onPick, tipRows, rowLabel, animate = false }) {
+  el.replaceChildren();
+  if (!rows.length) return;
+  const width = Math.max(320, el.clientWidth || 720);
+  const narrow = width < 640;
+  const rowH = narrow ? 50 : 34;
+  const nameW = narrow ? 0 : Math.min(380, width * 0.38);
+  const m = { top: 6, right: 8, bottom: 6, left: 8 };
+  const W = width - m.left - m.right - nameW;
+  const height = m.top + m.bottom + rows.length * rowH + (rows.some(r => r.diff < 0) && rows.some(r => r.diff > 0) ? 14 : 0);
+  const maxAbs = d3.max(rows, r => Math.abs(r.diff)) || 1;
+  // Leave room on both sides for the value labels.
+  // Wide: value labels sit beyond the bar end, so leave room on both sides.
+  // Narrow: labels sit in the empty half across the zero line, so bars can use the full width.
+  const x = d3.scaleLinear().domain([-maxAbs, maxAbs]).range(narrow ? [4, W - 4] : [150, W - 150]);
+
+  const svg = d3.create('svg').attr('viewBox', `0 0 ${width} ${height}`).attr('role', 'list');
+  const g = svg.append('g').attr('transform', `translate(${m.left + nameW},${m.top})`);
+  let yPos = 0;
+  const pos = rows.map((r, i) => {
+    if (i > 0 && rows[i - 1].diff > 0 && r.diff < 0) yPos += 14; // gap between the two groups
+    const p = yPos; yPos += rowH; return p;
+  });
+  g.append('line').attr('class', 'zero-line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', -4).attr('y2', yPos + 4);
+
+  const bh = narrow ? 14 : 16;
+  const rowsG = g.selectAll('g.chg').data(rows).join('g').attr('class', 'chg')
+    .attr('transform', (d, i) => `translate(0,${pos[i]})`)
+    .attr('role', 'listitem');
+  const barY = narrow ? rowH - bh - 8 : (rowH - bh) / 2;
+  const barPath = (d, scale = 1) => {
+    const x0 = x(0), x1 = x(d.diff * scale);
+    const left = Math.min(x0, x1), w = Math.max(Math.abs(x1 - x0), 1.5);
+    const r = Math.min(4, w / 2);
+    // Rounded at the data end only; square at zero.
+    if (d.diff >= 0) return `M${left},${barY}H${left + w - r}Q${left + w},${barY} ${left + w},${barY + r}V${barY + bh - r}Q${left + w},${barY + bh} ${left + w - r},${barY + bh}H${left}Z`;
+    return `M${left + w},${barY}H${left + r}Q${left},${barY} ${left},${barY + r}V${barY + bh - r}Q${left},${barY + bh} ${left + r},${barY + bh}H${left + w}Z`;
+  };
+  const bars = rowsG.append('path').attr('class', d => `chg-bar ${d.diff >= 0 ? 'up' : 'down'}`).attr('d', d => barPath(d));
+  if (animate && !reducedMotion()) {
+    bars.attr('d', d => barPath(d, 0)).transition().delay((d, i) => 80 + i * 40).duration(600).ease(d3.easeCubicOut).attr('d', d => barPath(d));
+  }
+  const across = narrow;
+  rowsG.append('text').attr('class', 'chg-val')
+    .attr('x', d => across ? x(0) + (d.diff >= 0 ? -6 : 6) : (d.diff >= 0 ? x(d.diff) + 6 : x(d.diff) - 6))
+    .attr('text-anchor', d => (d.diff >= 0) !== across ? 'start' : 'end')
+    .attr('y', barY + bh / 2 + 4)
+    .text(fmtLabel);
+  if (narrow) {
+    rowsG.append('text').attr('class', 'chg-name').attr('x', 0).attr('y', 14).text(d => { const max = Math.floor((W + nameW) / 6.9); return d.name.length > max ? d.name.slice(0, max - 1) + '…' : d.name; });
+  } else {
+    rowsG.append('text').attr('class', 'chg-name').attr('x', -nameW + 4).attr('y', rowH / 2 + 4)
+      .text(d => { const max = Math.floor(nameW / 6.9); return d.name.length > max ? d.name.slice(0, max - 1) + '…' : d.name; });
+  }
+  // Whole row is the hit target and a keyboard stop.
+  rowsG.insert('rect', ':first-child').attr('class', 'chg-hit').attr('x', -nameW).attr('y', 0).attr('width', nameW + W).attr('height', rowH)
+    .attr('tabindex', 0).attr('role', 'button').attr('aria-label', rowLabel)
+    .on('pointermove focus', (evt, d) => showTip(evt, d.name, tipRows(d)))
+    .on('pointerleave blur', hideTip)
+    .on('click', (evt, d) => { hideTip(); onPick(d); })
+    .on('keydown', (evt, d) => { if (evt.key === 'Enter' || evt.key === ' ') { evt.preventDefault(); hideTip(); onPick(d); } });
   el.append(svg.node());
 }

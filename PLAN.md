@@ -177,3 +177,25 @@ Existing solutions, best practices, official sources, this plan.
 - **2026-11-14 (later)** — Accessibility audit with axe-core (WCAG 2.1 AA + best practice):
   fixed chapter rows to be real buttons, labelled the filter region and chart focus targets.
   0 violations in light and dark mode.
+- **2026-11-15** — Visual redesign, data and pipeline unchanged. Each choice follows
+  published evidence:
+  - *Overview first, details on demand* (Shneiderman 1996): hero → "every 100 €" → chapter
+    list → detail dialog.
+  - **Every 100 €** icon array (10 × 10 squares) for the split of the budget: icon arrays
+    improve understanding of proportions, most of all for readers with low numeracy
+    (Galesic, Garcia-Retamero & Gigerenzer 2009). Six largest chapters + "other", fixed
+    categorical order from the validated palette.
+  - **Every second / every day** figure and a live counter: re-expressing huge numbers as
+    familiar rates improves comprehension and recall (Barrio, Goldstein & Hofman, CHI 2016).
+    Labelled as an average of actual payments; no estimate is shown as data.
+  - **Biggest changes** diverging bar chart (approved budget vs the previous approved
+    budget): bars on a common baseline are read more accurately than areas or angles
+    (Cleveland & McGill 1984), so no pies or treemaps.
+  - **Takeaway sentences** above the year and history charts (faster/slower than usual;
+    change since the first year): titles and text that state the message drive what people
+    recall (Borkin et al. 2016) — worded neutrally, computed from the data.
+  - **Short animated transitions** (bars grow, lines draw, rows slide when re-sorted):
+    help people track what changed (Heer & Robertson 2007). Under 1.2 s, played once, and
+    switched off for `prefers-reduced-motion`.
+  - Sticky section nav with the current section marked; bottom-sheet details on phones;
+    44 px-class touch targets. axe-core: 0 violations in light, dark and phone width.

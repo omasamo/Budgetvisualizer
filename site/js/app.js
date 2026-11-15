@@ -3,7 +3,7 @@
 // Nothing here is specific to Slovakia except what the data files say.
 
 import { setDict, t, money, moneyFull, pct, signedPct, date, monthGen, monthName, esc } from './format.js';
-import { yearChart, historyChart, showTip, hideTip } from './charts.js';
+import { yearChart, historyChart, changesChart, showTip, hideTip, reducedMotion } from './charts.js';
 
 const state = {
   lang: 'sk',
@@ -210,7 +210,7 @@ function chapterYear(year = state.year, kind = 'chapters') {
 // Views
 // ---------------------------------------------------------------------------
 
-function renderHero() {
+function renderHero(animate = false) {
   const y = state.year;
   const lm = lastMonthOf(y);
   const budget = budgetFor(y, 'total');
@@ -219,13 +219,16 @@ function renderHero() {
   const final = lm === 12;
   const share = budget && spent != null ? spent / budget : null;
 
+  $('hero-eyebrow').textContent = final ? t('hero.eyebrowFinal', { year: y }) : t('hero.eyebrowInProgress', { year: y, month: monthGen(lm - 1) });
+
   let sentence;
   if (final) sentence = t('hero.final', { year: y, spent: esc(money(spent)) });
   else if (budget) sentence = t('hero.inProgress', { year: y, budget: esc(money(budget)), month: monthGen(lm - 1), spent: esc(money(spent)) });
   else sentence = t('hero.noBudget', { year: y, month: monthGen(lm - 1), spent: esc(money(spent)) });
   $('hero-title').innerHTML = sentence;
 
-  $('hero-figure').textContent = money(spent);
+  $('hero-figure-sr').textContent = money(spent);
+  countUp($('hero-figure'), spent, animate);
   const adjusted = A(y)?.total?.adjusted;
   $('hero-caption').textContent = final
     ? t('hero.captionFinal', { pct: pct(adjusted ? spent / adjusted : share) , budget: money(adjusted || budget) })
@@ -236,7 +239,10 @@ function renderHero() {
   const meterEl = $('hero-meter');
   meterEl.replaceChildren();
   if (budget) {
-    meterEl.append(meter(share ?? 0, final ? null : paceShare, t('hero.meterLabel', { spent: money(spent), budget: money(budget), pct: pct(share), pace: pct(paceShare) })));
+    const m = meter(share ?? 0, final ? null : paceShare, t('hero.meterLabel', { spent: money(spent), budget: money(budget), pct: pct(share), pace: pct(paceShare) }));
+    m.classList.add('months');
+    if (animate && !reducedMotion()) growMeter(m);
+    meterEl.append(m);
     const labels = document.createElement('div');
     labels.className = 'hero-meter-labels';
     const a = document.createElement('span'); a.textContent = t('hero.meterSpent', { pct: pct(share) });
@@ -244,6 +250,8 @@ function renderHero() {
     labels.append(a, b);
     meterEl.append(labels);
   }
+
+  renderRate(y, lm, spent, final);
 
   // KPI tiles
   const k = $('kpi-row');
@@ -257,6 +265,65 @@ function renderHero() {
     kpiText(t('kpi.change'), prevSame ? signedPct(spent / prevSame - 1) : null, prevSame ? t('kpi.changeNote', { year: y - 1, amount: money(prevSame) }) : ''),
   );
 }
+
+/** Animate a hero number from zero to its value, keeping the final unit throughout. */
+let countRaf = 0;
+function countUp(el, value, animate) {
+  cancelAnimationFrame(countRaf);
+  const finalText = money(value);
+  if (!animate || value == null || reducedMotion()) { el.textContent = finalText; return; }
+  const m = finalText.match(/^(-?[\d\s .,]+)(.*)$/);
+  if (!m) { el.textContent = finalText; return; }
+  const scale = Math.abs(value) >= 1e9 ? 1e9 : Math.abs(value) >= 1e6 ? 1e6 : Math.abs(value) >= 1e4 ? 1e3 : 1;
+  const nf = new Intl.NumberFormat(t('locale'), { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const t0 = performance.now(), dur = 1100;
+  const step = now => {
+    const k = Math.min(1, (now - t0) / dur);
+    const e = 1 - Math.pow(1 - k, 3);
+    el.textContent = k < 1 ? `${nf.format(value * e / scale)}${m[2]}` : finalText;
+    if (k < 1) countRaf = requestAnimationFrame(step);
+  };
+  countRaf = requestAnimationFrame(step);
+}
+
+function growMeter(m) {
+  const f = m.querySelector('.meter-fill');
+  const w = f.style.width;
+  f.style.width = '0%';
+  requestAnimationFrame(() => requestAnimationFrame(() => { f.style.width = w; }));
+}
+
+/** "Every second" side panel: a perspective that turns billions into a rate people can feel. */
+let tickTimer = 0;
+function renderRate(y, lm, spent, final) {
+  clearInterval(tickTimer);
+  const side = $('hero-side');
+  const ticker = $('ticker');
+  if (spent == null || !lm) { side.hidden = true; return; }
+  side.hidden = false;
+  const start = Date.UTC(y, 0, 1), end = Date.UTC(y, lm, 1);
+  const seconds = (end - start) / 1000;
+  const perSecond = spent / seconds;
+  const perDay = perSecond * 86400;
+  const eur = v => `${new Intl.NumberFormat(t('locale'), { maximumFractionDigits: 0 }).format(v)} ${t('units.eur')}`;
+  if (final) {
+    $('rate-title').textContent = t('rate.titleFinal');
+    $('rate-figure').textContent = money(perDay);
+    $('rate-note').textContent = t('rate.noteFinal', { year: y, second: eur(perSecond) });
+    ticker.hidden = true;
+    return;
+  }
+  $('rate-title').textContent = t('rate.titleInProgress');
+  $('rate-figure').textContent = eur(perSecond);
+  $('rate-note').textContent = t('rate.noteInProgress', { year: y, month: monthGen(lm - 1), day: money(perDay) });
+  ticker.hidden = false;
+  $('ticker-label').textContent = t('rate.tickerLabel');
+  const out = $('ticker-value');
+  const tick = () => { out.textContent = eur(perSecond * (performance.now() - pageOpened) / 1000); };
+  tick();
+  tickTimer = setInterval(tick, reducedMotion() ? 1000 : 100);
+}
+const pageOpened = performance.now();
 
 function meter(share, pace, ariaLabel, tag = 'div') {
   const m = document.createElement(tag);
@@ -326,6 +393,10 @@ function breakdownRows() {
 function renderBreakdown() {
   const { rows, year, pace, inYear, month } = breakdownRows();
   const list = $('chapter-list');
+  // Remember where each row was, so re-sorting animates rows to their new place.
+  const before = new Map([...list.children].filter(li => li.dataset.id).map(li => [li.dataset.id, li.getBoundingClientRect().top]));
+  const sameKind = list.dataset.kind === state.breakdown;
+  list.dataset.kind = state.breakdown;
   list.replaceChildren();
 
   const ledeKey = { chapters: 'chapters.lede', functions: 'chapters.ledeFunctions', types: 'chapters.ledeTypes' }[state.breakdown];
@@ -397,8 +468,10 @@ function renderBreakdown() {
     btn.addEventListener('pointermove', e => showTip(e, r.name, tipRows(r, inYear)));
     btn.addEventListener('pointerleave', hideTip);
     li.append(btn);
+    li.dataset.id = r.id;
     list.append(li);
   }
+  flip(list, before, sameKind);
 
   const more = $('chapters-more');
   more.hidden = q || total <= LIMIT;
@@ -412,6 +485,22 @@ function renderBreakdown() {
     ? [r.name, moneyFull(r.budget), moneyFull(r.spent), pct(r.budget && r.spent != null ? r.spent / r.budget : null, 1)]
     : [r.name, moneyFull(r.approved), moneyFull(r.adjusted), moneyFull(r.spent), pct(r.adjusted ? r.spent / r.adjusted : null, 1)]);
   table($('chapters-table'), head, body);
+}
+
+/** FLIP: rows that stayed slide from their old place; a new set of rows fades in. */
+function flip(list, before, sameKind) {
+  if (reducedMotion()) return;
+  if (!sameKind || !before.size) {
+    list.classList.remove('list-enter'); void list.offsetWidth; list.classList.add('list-enter');
+    return;
+  }
+  for (const li of list.children) {
+    const old = before.get(li.dataset.id);
+    if (old == null) continue;
+    const dy = old - li.getBoundingClientRect().top;
+    if (Math.abs(dy) < 1) continue;
+    li.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration: 450, easing: 'cubic-bezier(.2,.7,.2,1)' });
+  }
 }
 
 function tipRows(r, inYear) {
@@ -459,6 +548,172 @@ function table(el, head, rows) {
   el.replaceChildren(tbl);
 }
 
+// --- Every 100 € (icon array) ------------------------------------------------
+
+const WAFFLE_SLOTS = 6;
+
+/** Split 100 into whole euros by largest remainder, so the squares always add up to 100. */
+function toHundred(values) {
+  const sum = values.reduce((a, b) => a + b, 0) || 1;
+  const raw = values.map(v => v / sum * 100);
+  const out = raw.map(Math.floor);
+  let left = 100 - out.reduce((a, b) => a + b, 0);
+  raw.map((v, i) => [v - Math.floor(v), i]).sort((a, b) => b[0] - a[0]).forEach(([, i]) => { if (left > 0) { out[i]++; left--; } });
+  return out;
+}
+
+function hundredRows() {
+  const cy = chapterYear(state.year, 'chapters');
+  const a = cy && A(cy);
+  if (!a) return null;
+  const final = a.month === 12;
+  const val = c => final ? c.actual : (c.adjusted ?? c.approved);
+  const chapters = a.chapters.filter(c => val(c) > 0).sort((x, y) => val(y) - val(x));
+  const top = chapters.slice(0, WAFFLE_SLOTS);
+  const rest = chapters.slice(WAFFLE_SLOTS);
+  const items = top.map((c, i) => ({
+    key: `ch:${c.code}`, slot: i + 1, name: chapterName(c), sub: describe('chapters', c.code), amount: val(c),
+    row: { id: `ch:${c.code}`, code: c.code, name: chapterName(c), sub: describe('chapters', c.code), budget: c.adjusted ?? c.approved, approved: c.approved, adjusted: c.adjusted, spent: c.actual, inYear: !final },
+  }));
+  if (rest.length) items.push({ key: 'other', slot: 0, name: t('hundred.other', { n: rest.length }), sub: t('hundred.otherSub'), amount: rest.reduce((s, c) => s + val(c), 0) });
+  const euros = toHundred(items.map(i => i.amount));
+  items.forEach((it, i) => { it.euros = euros[i]; });
+  return { year: cy, final, items };
+}
+
+function renderHundred() {
+  const data = hundredRows();
+  const sec = $('sto-eur');
+  if (!data) { sec.hidden = true; return; }
+  sec.hidden = false;
+  const { year, final, items } = data;
+  $('hundred-title').textContent = t(final ? 'hundred.titleActual' : 'hundred.titleBudget', { year });
+  let lede = t('hundred.lede', { n: items.filter(i => i.slot).length });
+  if (year !== state.year) lede += ' ' + t('chapters.olderYear', { year, selected: state.year });
+  $('hundred-lede').textContent = lede;
+
+  const waffle = $('waffle');
+  waffle.replaceChildren();
+  waffle.setAttribute('aria-label', t('hundred.aria', { list: items.map(i => `${i.name} ${i.euros} €`).join(', ') }));
+  // Emphasis: the chosen item keeps its colour, everything else steps back.
+  const setActive = k => {
+    if (k) waffle.dataset.active = k; else delete waffle.dataset.active;
+    for (const c of waffle.children) c.classList.toggle('is-active', c.dataset.key === k);
+    for (const li of $('waffle-legend').children) li.classList.toggle('active', li.dataset.key === k);
+  };
+  let n = 0;
+  for (const it of items) {
+    for (let j = 0; j < it.euros; j++) {
+      const c = document.createElement('span');
+      c.className = `waffle-cell slot-${it.slot}`;
+      c.dataset.key = it.key;
+      c.style.setProperty('--i', n++);
+      c.addEventListener('pointerenter', e => { setActive(it.key); showTip(e, it.name, [{ label: t('hundred.share'), value: `${it.euros} €` }, { label: t('hundred.amount'), value: money(it.amount) }]); });
+      c.addEventListener('pointermove', e => showTip(e, it.name, [{ label: t('hundred.share'), value: `${it.euros} €` }, { label: t('hundred.amount'), value: money(it.amount) }]));
+      c.addEventListener('pointerleave', () => { setActive(null); hideTip(); });
+      c.addEventListener('click', () => pickHundred(it));
+      waffle.append(c);
+    }
+  }
+
+  const legend = $('waffle-legend');
+  legend.replaceChildren();
+  for (const it of items) {
+    const li = document.createElement('li');
+    li.dataset.key = it.key;
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'wl-item';
+    const sw = document.createElement('i'); sw.className = `swatch slot-${it.slot}`;
+    const nm = document.createElement('span'); nm.className = 'wl-name'; nm.textContent = it.name;
+    const ct = document.createElement('span'); ct.className = 'wl-euros'; ct.textContent = `${it.euros} €`;
+    const am = document.createElement('span'); am.className = 'wl-amount'; am.textContent = money(it.amount);
+    b.append(sw, nm, ct, am);
+    b.setAttribute('aria-label', `${it.name}: ${t('hundred.cents', { n: it.euros })}, ${money(it.amount)}`);
+    b.addEventListener('pointerenter', () => setActive(it.key));
+    b.addEventListener('pointerleave', () => setActive(null));
+    b.addEventListener('focus', () => setActive(it.key));
+    b.addEventListener('blur', () => setActive(null));
+    b.addEventListener('click', () => pickHundred(it));
+    li.append(b);
+    legend.append(li);
+  }
+  table($('hundred-table'), [t('common.item'), t('hundred.share'), t('hundred.amount')], items.map(i => [i.name, `${i.euros} €`, moneyFull(i.amount)]));
+}
+
+function pickHundred(it) {
+  hideTip();
+  if (it.row) return openDetail(it.row);
+  // "Other" leads to the full list of chapters.
+  state.breakdown = 'chapters'; state.expanded = true; state.search = ''; $('chapter-search').value = '';
+  renderControls(); renderBreakdown();
+  $('kapitoly').scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth' });
+}
+
+// --- Biggest changes --------------------------------------------------------
+
+const CHANGE_ROWS = 6;
+
+function changeRows() {
+  const y = chapterYear(state.year, 'chapters');
+  const cur = y && A(y), prev = y && A(y - 1);
+  if (!cur || !prev) return null;
+  const prevBy = new Map(prev.chapters.map(c => [c.code, c]));
+  const all = [];
+  let unmatched = 0;
+  for (const c of cur.chapters) {
+    const p = prevBy.get(c.code);
+    if (!p || !p.approved || c.approved == null) { unmatched++; continue; }
+    prevBy.delete(c.code);
+    all.push({ id: `ch:${c.code}`, code: c.code, name: chapterName(c), prev: p.approved, cur: c.approved, diff: c.approved - p.approved, rel: c.approved / p.approved - 1, c });
+  }
+  unmatched += prevBy.size;
+  const ups = all.filter(r => r.diff > 0).sort((a, b) => b.diff - a.diff).slice(0, CHANGE_ROWS);
+  const downs = all.filter(r => r.diff < 0).sort((a, b) => a.diff - b.diff).slice(0, CHANGE_ROWS).reverse();
+  return { year: y, prevYear: y - 1, rows: [...ups, ...downs], all, unmatched, partial: cur.month < 12 };
+}
+
+const signedMoney = v => `${v >= 0 ? '+' : '−'}${money(Math.abs(v))}`;
+
+function renderChanges(animate = false) {
+  const data = changeRows();
+  const chart = $('changes-chart');
+  $('changes-title').textContent = t('changes.title');
+  const legend = $('changes-legend');
+  legend.replaceChildren();
+  if (!data || !data.rows.length) {
+    $('changes-lede').textContent = t('changes.none');
+    chart.replaceChildren();
+    table($('changes-table'), [], []);
+    return;
+  }
+  const { year, prevYear, rows, all, unmatched } = data;
+  let lede = t('changes.lede', { year, prev: prevYear, n: CHANGE_ROWS });
+  if (year !== state.year) lede += ' ' + t('chapters.olderYear', { year, selected: state.year });
+  if (unmatched) lede += ' ' + t('changes.unmatched', { n: unmatched });
+  $('changes-lede').textContent = lede;
+  legend.append(legendItem('swatch chg-up', null, t('changes.up')), legendItem('swatch chg-down', null, t('changes.down')));
+  const toDetail = r => openDetail({ id: r.id, code: r.code, name: r.name, sub: describe('chapters', r.code), budget: r.c.adjusted ?? r.c.approved, approved: r.c.approved, adjusted: r.c.adjusted, spent: r.c.actual, inYear: data.partial });
+  changesChart(chart, {
+    rows, animate: animate && inView(chart),
+    fmtLabel: r => `${signedMoney(r.diff)} (${signedPct(r.rel)})`,
+    rowLabel: r => t('changes.rowLabel', { name: r.name, prev: money(r.prev), py: prevYear, cur: money(r.cur), cy: year, diff: signedMoney(r.diff), pct: signedPct(r.rel) }),
+    tipRows: r => [
+      { label: `${t('common.approved')} ${prevYear}`, value: money(r.prev) },
+      { label: `${t('common.approved')} ${year}`, value: money(r.cur) },
+      { label: t('changes.change'), value: `${signedMoney(r.diff)} (${signedPct(r.rel)})` },
+    ],
+    onPick: toDetail,
+  });
+  table($('changes-table'), [t('common.chapter'), `${t('common.approved')} ${prevYear}`, `${t('common.approved')} ${year}`, t('changes.change'), '%'],
+    all.slice().sort((a, b) => b.diff - a.diff).map(r => [r.name, moneyFull(r.prev), moneyFull(r.cur), moneyFull(r.diff), signedPct(r.rel)]));
+}
+
+function inView(el) {
+  const r = el.getBoundingClientRect();
+  return r.bottom > 0 && r.top < innerHeight;
+}
+
 // --- Through the year -------------------------------------------------------
 
 const COMPARE_YEARS = 5;
@@ -475,18 +730,39 @@ function yearSeries(scope = state.scope, unit = state.unit, year = state.year) {
   }).filter(Boolean);
 }
 
-function renderYearView() {
+function renderYearView(animate = false) {
   const scopeHasMonthly = !state.scope.startsWith('ch:') || (state.meta.chapterMonthlyYears || []).includes(state.year);
   $('year-lede').textContent = t('year.lede', { year: state.year, scope: scopeName() });
   const series = scopeHasMonthly ? yearSeries() : [];
   const legend = $('year-legend');
   legend.replaceChildren();
   if (series.length > 1) legend.append(legendItem('swatch line', 'var(--accent)', String(state.year)), legendItem('swatch line', 'var(--past)', t('year.previous', { n: series.length - 1 })));
-  yearChart($('year-chart'), { series, unit: state.unit, emptyText: scopeHasMonthly ? t('year.noMonthly') : t('year.noMonthlyChapter') });
+  yearChart($('year-chart'), { series, unit: state.unit, emptyText: scopeHasMonthly ? t('year.noMonthly') : t('year.noMonthlyChapter'), animate: animate && inView($('year-chart')) });
+  yearInsight(scopeHasMonthly);
 
   const head = [t('year.month'), ...series.map(s => s.label)];
   const body = [...Array(12).keys()].map(i => [monthName(i), ...series.map(s => s.values[i] == null ? t('common.na') : (state.unit === 'share' ? pct(s.values[i], 1) : moneyFull(s.values[i])))]);
   table($('year-table'), head, series.length ? body : []);
+}
+
+/** A takeaway sentence: is money going out faster or slower than in past years at the same point? */
+function yearInsight(ok) {
+  const el = $('year-insight');
+  el.hidden = true;
+  if (!ok) return;
+  const shares = yearSeries(state.scope, 'share');
+  const cur = shares.find(s => s.current);
+  if (!cur) return;
+  let i = -1;
+  for (let k = 11; k >= 0; k--) if (cur.values[k] != null) { i = k; break; }
+  if (i < 0 || i === 11) return;
+  const past = shares.filter(s => !s.current && s.values[i] != null).map(s => s.values[i]);
+  if (past.length < 2) return;
+  const avg = past.reduce((a, b) => a + b, 0) / past.length;
+  const v = cur.values[i];
+  const key = v - avg > 0.01 ? 'year.insightFaster' : avg - v > 0.01 ? 'year.insightSlower' : 'year.insightSame';
+  el.innerHTML = t(key, { month: monthGen(i), pct: esc(pct(v)), avg: esc(pct(avg)), n: past.length });
+  el.hidden = false;
 }
 
 // --- Over the years ---------------------------------------------------------
@@ -505,10 +781,17 @@ function historyItems(scope = state.scope) {
   return items;
 }
 
-function renderHistory() {
+function renderHistory(animate = false) {
   const items = historyItems();
   $('history-lede').textContent = t('history.lede', { scope: scopeName() });
-  historyChart($('history-chart'), { items, emptyText: t('history.noData') });
+  historyChart($('history-chart'), { items, emptyText: t('history.noData'), animate: animate && inView($('history-chart')) });
+  const actual = items.filter(d => d.kind === 'actual');
+  const ins = $('history-insight');
+  ins.hidden = actual.length < 3;
+  if (actual.length >= 3) {
+    const a = actual[0], b = actual.at(-1);
+    ins.innerHTML = t('history.insight', { from: a.year, to: b.year, a: esc(money(a.value)), b: esc(money(b.value)), pct: esc(signedPct(b.value / a.value - 1)) });
+  }
   table($('history-table'), [t('common.year'), t('common.amount'), t('history.change')],
     items.map((d, i) => [String(d.year) + (d.kind === 'budget' ? ` (${t('history.budget')})` : ''), moneyFull(d.value),
       i > 0 && items[i - 1].value ? signedPct(d.value / items[i - 1].value - 1) : t('common.na')]));
@@ -522,7 +805,7 @@ function renderRevenue() {
   list.replaceChildren();
   const legend = $('revenue-legend');
   legend.replaceChildren();
-  if (!m?.revenue?.total) { list.append(emptyLi(t('revenue.noData'))); $('revenue-lede').textContent = ''; return; }
+  if (!m?.revenue?.total) { list.append(emptyLi(t('revenue.noData'))); $('revenue-lede').textContent = ''; $('balance').replaceChildren(); return; }
   const lm = m.lastMonth;
   const tot = m.revenue.total;
   const spent = m.expenditure.total.cumulative[lm - 1];
@@ -531,6 +814,7 @@ function renderRevenue() {
     year: state.year, month: monthGen(lm - 1), revenue: money(got), gap: money(Math.abs(spent - got)),
     budget: money(tot.budget),
   }) + ' ' + t(spent > got ? 'revenue.deficit' : 'revenue.surplus', { gap: money(Math.abs(spent - got)) });
+  renderBalance(spent, got);
   legend.append(legendItem('swatch', 'var(--accent)', t('revenue.legendGot')), legendItem('swatch', 'var(--track)', t('revenue.legendBudget')));
   if (lm < 12) legend.append(legendItem('swatch pace', null, t('chapters.legendPace')));
 
@@ -559,6 +843,35 @@ function renderRevenue() {
   table($('revenue-table'), [t('common.item'), t('common.budget'), t('revenue.legendGot'), t('common.pct')],
     [[t('revenue.total'), moneyFull(tot.budget), moneyFull(got), pct(tot.budget ? got / tot.budget : null, 1)],
       ...rows.map(r => [r.name, moneyFull(r.budget), moneyFull(r.got), pct(r.budget ? r.got / r.budget : null, 1)])]);
+}
+
+/** Spending and revenue on one scale; the gap between them is the deficit. */
+function renderBalance(spent, got) {
+  const el = $('balance');
+  el.replaceChildren();
+  const max = Math.max(spent, got) || 1;
+  el.setAttribute('role', 'img');
+  el.setAttribute('aria-label', t('revenue.balanceLabel', { spent: money(spent), got: money(got) }) + ' ' + t(spent > got ? 'revenue.gapDeficit' : 'revenue.gapSurplus', { gap: money(Math.abs(spent - got)) }));
+  const row = (cls, labelText, v) => {
+    const r = document.createElement('div'); r.className = `bal-row ${cls}`;
+    const l = document.createElement('span'); l.className = 'bal-label'; l.textContent = labelText;
+    const track = document.createElement('span'); track.className = 'bal-track';
+    const bar = document.createElement('span'); bar.className = 'bal-bar'; bar.style.width = `${v / max * 100}%`;
+    const fig = document.createElement('span'); fig.className = 'bal-fig'; fig.textContent = money(v);
+    track.append(bar); r.append(l, track, fig);
+    return r;
+  };
+  const gapRow = document.createElement('div'); gapRow.className = 'bal-row bal-gap-row';
+  const spacer = document.createElement('span');
+  const gTrack = document.createElement('span'); gTrack.className = 'bal-track';
+  const gap = document.createElement('span'); gap.className = `bal-gap ${spent > got ? 'deficit' : 'surplus'}`;
+  const lo = Math.min(spent, got);
+  gap.style.left = `${lo / max * 100}%`; gap.style.width = `${Math.abs(spent - got) / max * 100}%`;
+  gTrack.append(gap);
+  const gFig = document.createElement('span'); gFig.className = 'bal-fig strong';
+  gFig.textContent = t(spent > got ? 'revenue.gapDeficit' : 'revenue.gapSurplus', { gap: money(Math.abs(spent - got)) });
+  gapRow.append(spacer, gTrack, gFig);
+  el.append(row('spent', t('revenue.balanceSpent'), spent), row('got', t('revenue.balanceGot'), got), gapRow);
 }
 
 // --- Per person -------------------------------------------------------------
@@ -633,7 +946,7 @@ function openDetail(r) {
   $('dlg-desc').textContent = r.sub || '';
   const k = $('dlg-kpis');
   k.replaceChildren();
-  const { inYear } = breakdownRows();
+  const inYear = r.inYear ?? breakdownRows().inYear;
   if (inYear) {
     const mo = r.id.startsWith('ch:') ? (A(state.year)?.month ?? lastMonthOf(state.year)) : lastMonthOf(state.year);
     k.append(kpi(t('common.budget'), r.budget, r.id.startsWith('ch:') ? t('kpi.adjustedNote') : String(state.year)), kpi(t('common.actualSoFar'), r.spent, t('kpi.actualNoteInProgress', { month: monthGen(mo - 1) })));
@@ -666,13 +979,15 @@ function openDetail(r) {
 // Render all
 // ---------------------------------------------------------------------------
 
-function renderAll() {
+function renderAll(animate = true) {
   applyStaticText();
   renderControls();
-  renderHero();
+  renderHero(animate);
+  renderHundred();
   renderBreakdown();
-  renderYearView();
-  renderHistory();
+  renderChanges(animate);
+  renderYearView(animate);
+  renderHistory(animate);
   renderRevenue();
   renderShare();
   renderAbout();
@@ -693,6 +1008,11 @@ function showStatus(title, body) {
 }
 
 function bind() {
+  // The sticky filter bar sits right under the sticky header, whatever height the header wraps to.
+  const header = $('site-header');
+  const setH = () => document.documentElement.style.setProperty('--header-h', `${header.offsetHeight}px`);
+  setH();
+  if ('ResizeObserver' in window) new ResizeObserver(setH).observe(header);
   $('year-select').addEventListener('change', e => { state.year = Number(e.target.value); state.expanded = false; renderAll(); });
   $('chapter-select').addEventListener('change', e => { state.scope = e.target.value; renderAll(); });
   $('country-select').addEventListener('change', async e => { await loadCountry(e.target.value); state.scope = 'total'; renderAll(); });
@@ -711,16 +1031,20 @@ function bind() {
       n.focus(); n.click(); e.preventDefault();
     });
   }
-  $('lang-toggle').addEventListener('click', async () => { await loadLang(state.lang === 'sk' ? 'en' : 'sk'); renderAll(); });
+  $('lang-toggle').addEventListener('click', async () => { await loadLang(state.lang === 'sk' ? 'en' : 'sk'); renderAll(false); });
   $('theme-toggle').addEventListener('click', () => {
     const root = document.documentElement;
     const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
     root.dataset.theme = dark ? 'light' : 'dark';
     store.set('theme', root.dataset.theme);
-    renderYearView(); renderHistory();
+    renderYearView(); renderHistory(); renderChanges();
   });
-  let rt;
-  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { renderYearView(); renderHistory(); }, 150); });
+  let rt, lastW = innerWidth;
+  addEventListener('resize', () => {
+    if (innerWidth === lastW) return; // phones fire resize when the address bar hides
+    lastW = innerWidth;
+    clearTimeout(rt); rt = setTimeout(() => { renderYearView(); renderHistory(); renderChanges(); }, 150);
+  });
   $('chapter-dialog').addEventListener('close', hideTip);
 }
 
@@ -740,6 +1064,38 @@ async function init() {
     return;
   }
   renderAll();
+  observeSections();
+}
+
+/** Reveal sections as they scroll into view, play their charts once, and mark the current section in the nav. */
+function observeSections() {
+  const sections = [...document.querySelectorAll('main > section.reveal')];
+  const replay = { 'zmeny': () => renderChanges(true), 'pocas-roka': () => renderYearView(true), 'roky': () => renderHistory(true) };
+  if ('IntersectionObserver' in window && !reducedMotion()) {
+    document.documentElement.classList.add('js-reveal');
+    const io = new IntersectionObserver(entries => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+        replay[e.target.id]?.();
+      }
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.05 });
+    sections.forEach(s => (inView(s) ? s.classList.add('is-in') : io.observe(s)));
+  } else sections.forEach(s => s.classList.add('is-in'));
+
+  if (!('IntersectionObserver' in window)) return;
+  const links = new Map([...document.querySelectorAll('.header-nav a')].map(a => [a.getAttribute('href').slice(1), a]));
+  const spy = new IntersectionObserver(entries => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      for (const [id, a] of links) { if (id === e.target.id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); }
+      // On phones the nav scrolls sideways: keep the current link in view without moving the page.
+      const a = links.get(e.target.id), nav = a?.parentElement;
+      if (a && nav && nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2, behavior: reducedMotion() ? 'auto' : 'smooth' });
+    }
+  }, { rootMargin: '-35% 0px -60% 0px' });
+  for (const id of links.keys()) { const s = $(id); if (s) spy.observe(s); }
 }
 
 init();
