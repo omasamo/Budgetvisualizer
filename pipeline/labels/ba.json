@@ -1,0 +1,329 @@
+{
+  "_comment": "Plain-language names for the Bratislava city budget. 'chapters' are groups of the official functional classification (COFOG) as reported to rozpocet.sk; the official group name is kept in the description.",
+  "types": {
+    "wages": {
+      "sk": "Platy zamestnancov mesta",
+      "en": "Pay of city employees",
+      "desc": "Mzdy ľudí, ktorých platí mesto a jeho rozpočtové organizácie.",
+      "descEn": "Salaries of people paid by the city and its budgetary organisations."
+    },
+    "insurance": {
+      "sk": "Odvody za zamestnancov",
+      "en": "Social contributions for employees",
+      "desc": "Zdravotné a sociálne poistenie, ktoré mesto platí ako zamestnávateľ.",
+      "descEn": "Health and social insurance the city pays as an employer."
+    },
+    "goods": {
+      "sk": "Nákupy tovarov a služieb",
+      "en": "Goods and services",
+      "desc": "Energie, údržba, opravy, materiál a služby, ktoré mesto nakupuje.",
+      "descEn": "Energy, maintenance, repairs, supplies and services the city buys."
+    },
+    "transfers": {
+      "sk": "Príspevky iným",
+      "en": "Transfers to others",
+      "desc": "Bežné transfery: peniaze, ktoré mesto posiela ďalej, napríklad dopravnému podniku, mestským častiam, mestským organizáciám a školám.",
+      "descEn": "Current transfers: money the city passes on, for example to the public transport company, city boroughs, city organisations and schools."
+    },
+    "interest": {
+      "sk": "Úroky z úverov",
+      "en": "Interest on loans",
+      "desc": "Cena za požičané peniaze. Splátky samotných úverov sú zvlášť.",
+      "descEn": "The cost of borrowed money. Repayments of the loans themselves are shown separately."
+    },
+    "capital": {
+      "sk": "Investície",
+      "en": "Investment",
+      "desc": "Stavby, rekonštrukcie, nákup majetku a príspevky iným na investície.",
+      "descEn": "Construction, renovation, purchase of assets and grants to others for investment."
+    },
+    "debt": {
+      "sk": "Splátky úverov",
+      "en": "Loan repayments",
+      "desc": "Výdavkové finančné operácie: najmä splácanie istín úverov.",
+      "descEn": "Expenditure financial operations: mainly repaying loan principal."
+    },
+    "other": {
+      "sk": "Ostatné",
+      "en": "Other",
+      "desc": "",
+      "descEn": ""
+    }
+  },
+  "revenue": {
+    "shared_tax": {
+      "sk": "Podiel na dani z príjmov",
+      "en": "Share of income tax",
+      "desc": "Časť dane z príjmov fyzických osôb, ktorú štát posiela obciam.",
+      "descEn": "The part of personal income tax the state passes to municipalities."
+    },
+    "property_tax": {
+      "sk": "Daň z nehnuteľností",
+      "en": "Property tax",
+      "desc": "Daň z pozemkov, stavieb a bytov na území mesta.",
+      "descEn": "Tax on land, buildings and flats in the city."
+    },
+    "local_tax": {
+      "sk": "Miestne dane a poplatky",
+      "en": "Local taxes and charges",
+      "desc": "Napríklad poplatok za komunálny odpad, daň za ubytovanie a za užívanie verejného priestranstva.",
+      "descEn": "For example the municipal waste charge, the accommodation tax and the tax for using public space."
+    },
+    "own": {
+      "sk": "Príjmy z majetku, poplatkov a služieb",
+      "en": "Income from property, fees and services",
+      "desc": "Nájomné, administratívne poplatky, platby za služby, pokuty a úroky.",
+      "descEn": "Rent, administrative fees, payments for services, fines and interest."
+    },
+    "grants": {
+      "sk": "Dotácie a granty na bežný chod",
+      "en": "Grants for running costs",
+      "desc": "Najmä peniaze od štátu na úlohy, ktoré mesto vykonáva za štát, napríklad v školstve.",
+      "descEn": "Mainly money from the state for tasks the city carries out on its behalf, such as schooling."
+    },
+    "capital": {
+      "sk": "Predaj majetku a dotácie na investície",
+      "en": "Asset sales and investment grants",
+      "desc": "Kapitálové príjmy a kapitálové granty vrátane eurofondov.",
+      "descEn": "Capital revenue and capital grants, including EU funds."
+    },
+    "financing": {
+      "sk": "Úvery a peniaze z minulých rokov",
+      "en": "Loans and money from previous years",
+      "desc": "Príjmové finančné operácie: prijaté úvery a prostriedky prevedené z fondov mesta a z minulých rokov. Nie sú to bežné príjmy.",
+      "descEn": "Revenue financial operations: loans taken and money brought in from city funds and previous years. These are not regular income."
+    }
+  },
+  "chapters": {
+    "011": {
+      "sk": "Úrad a správa mesta",
+      "en": "City office and administration",
+      "desc": "Magistrát, primátor a mestské zastupiteľstvo. Suma je vyššia než samotný chod úradu, lebo mesto v tejto skupine vykazuje aj ďalšie výdavky. Oficiálne: Výkonné a zákonodarné orgány.",
+      "descEn": "The city office, the mayor and the city council. The amount is larger than running the office alone, because the city reports other spending in this group too. Officially: executive and legislative organs."
+    },
+    "016": {
+      "sk": "Iné všeobecné služby",
+      "en": "Other general services",
+      "desc": "Oficiálne: Všeobecné verejné služby inde neklasifikované.",
+      "descEn": "Officially: general public services not elsewhere classified."
+    },
+    "018": {
+      "sk": "Transfery iným úrovniam verejnej správy",
+      "en": "Transfers to other levels of government",
+      "desc": "Oficiálne: Transfery všeobecnej povahy medzi rôznymi úrovňami verejnej správy.",
+      "descEn": "Officially: transfers of a general character between levels of government."
+    },
+    "022": {
+      "sk": "Civilná ochrana",
+      "en": "Civil protection",
+      "desc": "Príprava na mimoriadne udalosti.",
+      "descEn": "Preparedness for emergencies."
+    },
+    "031": {
+      "sk": "Mestská polícia",
+      "en": "City police",
+      "desc": "Oficiálne: Policajné služby.",
+      "descEn": "Officially: police services."
+    },
+    "042": {
+      "sk": "Mestské lesy a poľnohospodárstvo",
+      "en": "City forests and agriculture",
+      "desc": "Oficiálne: Poľnohospodárstvo, lesníctvo, rybné hospodárstvo a poľovníctvo.",
+      "descEn": "Officially: agriculture, forestry, fishing and hunting."
+    },
+    "044": {
+      "sk": "Výstavba",
+      "en": "Construction",
+      "desc": "Oficiálne: Ťažba, výroba a výstavba.",
+      "descEn": "Officially: mining, manufacturing and construction."
+    },
+    "045": {
+      "sk": "Doprava: MHD a cesty",
+      "en": "Transport: public transport and roads",
+      "desc": "Verejná doprava, cesty, mosty a ich údržba. Oficiálne: Doprava.",
+      "descEn": "Public transport, roads, bridges and their upkeep. Officially: transport."
+    },
+    "047": {
+      "sk": "Cestovný ruch a iné odvetvia",
+      "en": "Tourism and other sectors",
+      "desc": "Oficiálne: Iné odvetvia.",
+      "descEn": "Officially: other industries."
+    },
+    "051": {
+      "sk": "Odpady",
+      "en": "Waste",
+      "desc": "Zber, odvoz a spracovanie odpadu. Oficiálne: Nakladanie s odpadmi.",
+      "descEn": "Collection, removal and treatment of waste. Officially: waste management."
+    },
+    "052": {
+      "sk": "Odpadové vody",
+      "en": "Waste water",
+      "desc": "Oficiálne: Nakladanie s odpadovými vodami.",
+      "descEn": "Officially: waste water management."
+    },
+    "054": {
+      "sk": "Ochrana prírody a krajiny",
+      "en": "Nature and landscape protection",
+      "desc": "Oficiálne: Ochrana prírody a krajiny.",
+      "descEn": "Officially: protection of biodiversity and landscape."
+    },
+    "056": {
+      "sk": "Ostatná ochrana životného prostredia",
+      "en": "Other environmental protection",
+      "desc": "Oficiálne: Ochrana životného prostredia inde neklasifikovaná.",
+      "descEn": "Officially: environmental protection not elsewhere classified."
+    },
+    "061": {
+      "sk": "Bývanie",
+      "en": "Housing",
+      "desc": "Mestské nájomné byty a ich výstavba. Oficiálne: Rozvoj bývania.",
+      "descEn": "City rental flats and their construction. Officially: housing development."
+    },
+    "062": {
+      "sk": "Rozvoj mesta a verejné priestory",
+      "en": "City development and public spaces",
+      "desc": "Oficiálne: Rozvoj obcí.",
+      "descEn": "Officially: community development."
+    },
+    "063": {
+      "sk": "Zásobovanie vodou",
+      "en": "Water supply",
+      "desc": "Oficiálne: Zásobovanie vodou.",
+      "descEn": "Officially: water supply."
+    },
+    "064": {
+      "sk": "Verejné osvetlenie",
+      "en": "Street lighting",
+      "desc": "Prevádzka a obnova pouličného osvetlenia.",
+      "descEn": "Running and renewing street lighting."
+    },
+    "066": {
+      "sk": "Ostatné bývanie a vybavenosť",
+      "en": "Other housing and amenities",
+      "desc": "Oficiálne: Bývanie a občianska vybavenosť inde neklasifikované.",
+      "descEn": "Officially: housing and community amenities not elsewhere classified."
+    },
+    "076": {
+      "sk": "Zdravotníctvo",
+      "en": "Health",
+      "desc": "Oficiálne: Zdravotníctvo inde neklasifikované.",
+      "descEn": "Officially: health not elsewhere classified."
+    },
+    "081": {
+      "sk": "Šport a rekreácia",
+      "en": "Sport and recreation",
+      "desc": "Športoviská, kúpaliská a rekreačné areály. Oficiálne: Rekreačné a športové služby.",
+      "descEn": "Sports grounds, swimming pools and recreation areas. Officially: recreational and sporting services."
+    },
+    "082": {
+      "sk": "Kultúra",
+      "en": "Culture",
+      "desc": "Múzeum, galéria, knižnica, pamiatky a podujatia. Oficiálne: Kultúrne služby.",
+      "descEn": "Museum, gallery, library, heritage and events. Officially: cultural services."
+    },
+    "083": {
+      "sk": "Vysielanie a vydavateľské služby",
+      "en": "Broadcasting and publishing",
+      "desc": "Oficiálne: Vysielacie a vydavateľské služby.",
+      "descEn": "Officially: broadcasting and publishing services."
+    },
+    "084": {
+      "sk": "Náboženské a iné spoločenské služby",
+      "en": "Religious and other community services",
+      "desc": "Oficiálne: Náboženské a iné spoločenské služby.",
+      "descEn": "Officially: religious and other community services."
+    },
+    "086": {
+      "sk": "Ostatná kultúra a rekreácia",
+      "en": "Other culture and recreation",
+      "desc": "Oficiálne: Rekreácia, kultúra a náboženstvo inde neklasifikované.",
+      "descEn": "Officially: recreation, culture and religion not elsewhere classified."
+    },
+    "091": {
+      "sk": "Materské a základné školy",
+      "en": "Kindergartens and primary schools",
+      "desc": "Oficiálne: Predprimárne a primárne vzdelávanie.",
+      "descEn": "Officially: pre-primary and primary education."
+    },
+    "092": {
+      "sk": "Stredné školy",
+      "en": "Secondary schools",
+      "desc": "Oficiálne: Sekundárne vzdelávanie.",
+      "descEn": "Officially: secondary education."
+    },
+    "095": {
+      "sk": "Umelecké školy a voľný čas",
+      "en": "Art schools and leisure centres",
+      "desc": "Základné umelecké školy a centrá voľného času. Oficiálne: Vzdelávanie nedefinované podľa úrovne.",
+      "descEn": "Elementary art schools and leisure centres. Officially: education not definable by level."
+    },
+    "096": {
+      "sk": "Služby pre školy",
+      "en": "Services for schools",
+      "desc": "Napríklad školské stravovanie. Oficiálne: Vedľajšie služby v školstve.",
+      "descEn": "For example school meals. Officially: subsidiary services to education."
+    },
+    "098": {
+      "sk": "Ostatné vzdelávanie",
+      "en": "Other education",
+      "desc": "Oficiálne: Vzdelávanie inde neklasifikované.",
+      "descEn": "Officially: education not elsewhere classified."
+    },
+    "101": {
+      "sk": "Choroba a invalidita",
+      "en": "Sickness and disability",
+      "desc": "Oficiálne: Choroba a invalidita.",
+      "descEn": "Officially: sickness and disability."
+    },
+    "102": {
+      "sk": "Seniori",
+      "en": "Older people",
+      "desc": "Domovy seniorov a služby pre starších ľudí. Oficiálne: Staroba.",
+      "descEn": "Homes for seniors and services for older people. Officially: old age."
+    },
+    "104": {
+      "sk": "Rodina a deti",
+      "en": "Family and children",
+      "desc": "Oficiálne: Rodina a deti.",
+      "descEn": "Officially: family and children."
+    },
+    "106": {
+      "sk": "Sociálne bývanie",
+      "en": "Social housing",
+      "desc": "Oficiálne: Bývanie (v rámci sociálneho zabezpečenia).",
+      "descEn": "Officially: housing (within social protection)."
+    },
+    "107": {
+      "sk": "Pomoc ľuďom v núdzi",
+      "en": "Help for people in need",
+      "desc": "Oficiálne: Sociálna pomoc občanom v hmotnej a sociálnej núdzi.",
+      "descEn": "Officially: social assistance to people in material and social need."
+    },
+    "108": {
+      "sk": "Výskum v sociálnej oblasti",
+      "en": "Research in social protection",
+      "desc": "Oficiálne: Výskum a vývoj v oblasti sociálneho zabezpečenia.",
+      "descEn": "Officially: R&D in social protection."
+    },
+    "109": {
+      "sk": "Ostatné sociálne služby",
+      "en": "Other social services",
+      "desc": "Oficiálne: Sociálne zabezpečenie inde neklasifikované.",
+      "descEn": "Officially: social protection not elsewhere classified."
+    },
+    "FO": {
+      "sk": "Splátky úverov",
+      "en": "Loan repayments",
+      "desc": "Výdavkové finančné operácie: najmä splácanie istín úverov. Úroky sú súčasťou ostatných výdavkov.",
+      "descEn": "Expenditure financial operations: mainly repaying loan principal. Interest is part of other spending."
+    }
+  },
+  "orgs": {
+    "00603481": {
+      "sk": "Magistrát hlavného mesta",
+      "en": "City office (Magistrát)",
+      "desc": "Cez jeho rozpočet ide väčšina výdavkov mesta vrátane príspevkov mestským organizáciám a podnikom.",
+      "descEn": "Most city spending goes through its budget, including contributions to city organisations and companies."
+    }
+  }
+}

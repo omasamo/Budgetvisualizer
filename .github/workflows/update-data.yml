@@ -1,5 +1,6 @@
 name: Update official data
-# Downloads the official files (MF SR open data portal and rozpocet.sk), rebuilds
+# Downloads the official files (MF SR open data portal and rozpocet.sk, for the state
+# budget and for the city of Bratislava), rebuilds
 # data/processed and commits any change. Runs twice a month; MF SR publishes the
 # previous month's budget execution around the middle of the month.
 on:
@@ -29,6 +30,8 @@ jobs:
         run: python pipeline/fetch.py sk
       - name: Download chapter data from rozpocet.sk
         run: python pipeline/fetch_ris.py 2016
+      - name: Download Bratislava city budget from rozpocet.sk
+        run: python pipeline/fetch_ris_sam.py ba 2016
       - name: Save downloaded files
         # Raw files are kept even if the next step finds a problem, so nothing is downloaded twice.
         run: |
@@ -39,6 +42,9 @@ jobs:
             git commit -m "data: download official budget files ($(date -u +%Y-%m-%d))"; fi
       - name: Build site data (validates totals)
         run: python pipeline/parse_sk.py
+      - name: Build Bratislava site data (validates totals)
+        if: always()
+        run: python pipeline/parse_ba.py
       - name: Commit site data
         if: always()
         run: |
