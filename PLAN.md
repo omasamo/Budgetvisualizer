@@ -199,3 +199,8 @@ Existing solutions, best practices, official sources, this plan.
     switched off for `prefers-reduced-motion`.
   - Sticky section nav with the current section marked; bottom-sheet details on phones;
     44 px-class touch targets. axe-core: 0 violations in light, dark and phone width.
+- **2026-11-15 (later)** — More colour, per the owner's feedback that the page felt plain:
+  a tinted page with a faint dot grid, a deep-blue band behind the header and hero, and a
+  matching footer. Decoration stays in the page background; every chart and number keeps
+  a plain card surface so nothing competes with the data. axe-core still reports 0
+  violations in light, dark and phone width.
