@@ -1,0 +1,121 @@
+{
+  "nav": {
+    "chapters": "Kam idú peniaze"
+  },
+  "filters": {
+    "all": "Celý rozpočet mesta",
+    "byChapter": "Účel",
+    "byType": "Druh výdavku",
+    "byOrg": "Organizácia mesta"
+  },
+  "asOf": "Údaje o čerpaní k {date} (mesto ich vykazuje štvrťročne)",
+  "hero": {
+    "inProgress": "V roku {year} plánuje Bratislava minúť <em>{budget}</em>. Do konca {month} už vyplatila {spent}.",
+    "final": "V roku {year} Bratislava minula <em>{spent}</em>.",
+    "noBudget": "V roku {year} Bratislava do konca {month} vyplatila <em>{spent}</em>.",
+    "eyebrowInProgress": "Rozpočet Bratislavy {year} · stav ku koncu {month}",
+    "eyebrowFinal": "Rozpočet Bratislavy {year} · uzavretý rok"
+  },
+  "kpi": {
+    "approvedNote": "ako ho mesto vykazuje v rozpočtovom systéme",
+    "adjustedNote": "po zmenách počas roka",
+    "changeNote": "výdavky za rovnaké obdobie {year}"
+  },
+  "chapters": {
+    "lede": "Mesto nemá ministerstvá. Jeho výdavky sa preto delia podľa účelu: {n} oblastí, od dopravy cez školy po odpady. Dĺžka pruhu ukazuje rozpočet oblasti v roku {year}, tmavá časť je to, čo mesto už naozaj vyplatilo. Kliknite na oblasť pre jej vývoj.",
+    "ledeOrgs": "Magistrát a {m} mestských organizácií: školy, domovy seniorov, múzeum, zoo a ďalšie. Každý riadok je vlastný rozpočet organizácie v roku {year}. Príspevkové organizácie hospodária aj s vlastnými príjmami, preto sa riadky nedajú sčítať do rozpočtu mesta. Mestské podniky, napríklad dopravný podnik, tu nie sú; mesto im platí cez rozpočet magistrátu.",
+    "ledeTypes": "Výdavky roka {year} podľa toho, za čo mesto platí: platy, nákupy, príspevky iným, úroky, investície alebo splátky úverov. Tmavá časť je vyplatená suma, svetlá je schválený rozpočet.",
+    "search": "Hľadať",
+    "searchPlaceholder": "Hľadať oblasť alebo organizáciu…",
+    "showAll": "Zobraziť všetko ({n})",
+    "none": "Nič nezodpovedá hľadaniu.",
+    "byChapter": "Na čo",
+    "byOrg": "Kto míňa",
+    "byType": "Akým spôsobom",
+    "olderYear": "Za rok {selected} toto rozdelenie zatiaľ nie je zverejnené, preto vidíte rok {year}.",
+    "asOfMonth": "Údaje sú ku koncu {month}."
+  },
+  "year": {
+    "lede": "Súčet výdavkov od januára: {scope}. Mesto vykazuje čerpanie štvrťročne, preto má čiara body ku koncu marca, júna, septembra a decembra. Červená čiara je rok {year}, sivé sú predchádzajúce roky.",
+    "noMonthly": "Priebeh počas roka pre tento výber nie je zverejnený, iba stav od začiatku roka.",
+    "noMonthlyChapter": "Pre jednotlivé účely mesto vykazuje iba stav od začiatku roka, nie priebeh po štvrťrokoch.",
+    "keyboardHint": "Graf po štvrťrokoch. Šípkami doľava a doprava prechádzate štvrťroky.",
+    "insightFaster": "Ku koncu {month} mesto vyplatilo {pct} rozpočtu. V predchádzajúcich {n} rokoch to bolo v rovnakom čase v priemere {avg}. Tento rok sa teda míňa <strong>rýchlejšie ako zvyčajne</strong>.",
+    "insightSlower": "Ku koncu {month} mesto vyplatilo {pct} rozpočtu. V predchádzajúcich {n} rokoch to bolo v rovnakom čase v priemere {avg}. Tento rok sa teda míňa <strong>pomalšie ako zvyčajne</strong>.",
+    "insightSame": "Ku koncu {month} mesto vyplatilo {pct} rozpočtu, <strong>približne ako zvyčajne</strong>: v predchádzajúcich {n} rokoch to bolo v rovnakom čase v priemere {avg}."
+  },
+  "share": {
+    "lede": "Výdavky rozpočtu mesta prepočítané na jedného obyvateľa Bratislavy ({pop} obyvateľov podľa {popSource})."
+  },
+  "about": {
+    "body": "<p>Čísla pochádzajú z Rozpočtového informačného systému ministerstva financií (rozpocet.sk), kam Bratislava svoj rozpočet a jeho plnenie vykazuje každý štvrťrok. Stránka ich nemení, iba prevádza do prehľadnej podoby. Ak niektorý údaj nie je zverejnený, stránka to povie a nič neodhaduje.</p><p><strong>Čo je inak ako pri štátnom rozpočte.</strong> Mesto nemá kapitoly ani ministerstvá, preto výdavky vidíte podľa účelu (oficiálna funkčná klasifikácia) a podľa mestských organizácií. Údaje sú štvrťročné, nie mesačné. Výdavky aj príjmy sú vrátane finančných operácií, teda splátok úverov, prijatých úverov a peňazí z minulých rokov.</p><p><strong>Rozdiel oproti dokumentom mesta.</strong> Schválený rozpočet v tomto systéme sa nezhoduje so sumou v rozpočte, ktorý mesto zverejňuje na svojej stránke. Napríklad na rok 2026 schválilo mestské zastupiteľstvo 6. novembra 2025 rozpočet 760,5 mil. €, kým v rozpočtovom systéme mesto vykazuje schválený rozpočet 835,4 mil. €. Stránka používa údaje zo systému, lebo iba tie sú zverejnené v strojovo čitateľnej podobe aj s čerpaním. Pôvodné dokumenty mesta nájdete v zdrojoch nižšie.</p><p>Rozpočet hlavného mesta nezahŕňa rozpočty 17 mestských častí ani hospodárenie mestských podnikov.</p>",
+    "licence": "Podmienky použitia údajov:"
+  },
+  "glossary": [
+    [
+      "Rozpočet mesta",
+      "Plán príjmov a výdavkov hlavného mesta na jeden rok. Schvaľuje ho mestské zastupiteľstvo."
+    ],
+    [
+      "Účel (funkčná klasifikácia)",
+      "Oficiálne triedenie výdavkov podľa toho, na čo slúžia: doprava, vzdelávanie, odpady a podobne. Používajú ho všetky obce."
+    ],
+    [
+      "Schválený rozpočet",
+      "Rozpočet, ktorý mesto vykazuje v rozpočtovom systéme ako schválený. Od sumy v uznesení zastupiteľstva sa môže líšiť."
+    ],
+    [
+      "Upravený rozpočet",
+      "Rozpočet po zmenách počas roka."
+    ],
+    [
+      "Skutočnosť (čerpanie)",
+      "Peniaze, ktoré mesto naozaj vyplatilo. Počas roka ide o súčet od 1. januára."
+    ],
+    [
+      "Rozpočtová organizácia",
+      "Organizácia mesta, ktorej príjmy aj výdavky sú celé súčasťou rozpočtu mesta, napríklad domov seniorov alebo základná umelecká škola."
+    ],
+    [
+      "Príspevková organizácia",
+      "Organizácia mesta, ktorá má aj vlastné príjmy a od mesta dostáva príspevok, napríklad zoo, múzeum alebo mestské lesy."
+    ],
+    [
+      "Finančné operácie",
+      "Prijaté úvery a ich splátky a presuny peňazí z fondov a z minulých rokov. Nie sú to bežné príjmy ani výdavky."
+    ]
+  ],
+  "revenue": {
+    "ledeInProgress": "Do konca {month} {year} mesto prijalo {revenue} (plán na celý rok: {budget}).",
+    "ledeFinal": "V roku {year} mesto prijalo {revenue}.",
+    "deficit": "Výdavky boli vyššie o {gap}. Príjmy aj výdavky sú tu vrátane úverov, ich splátok a peňazí z minulých rokov, takže tento rozdiel nie je schodok mesta.",
+    "surplus": "Príjmy boli vyššie ako výdavky o {gap}. Príjmy aj výdavky sú tu vrátane úverov, ich splátok a peňazí z minulých rokov, takže tento rozdiel nie je prebytok hospodárenia mesta.",
+    "legendGot": "Prijaté",
+    "eyebrow": "Príjmy",
+    "sourcesTitle": "Z čoho má mesto peniaze",
+    "balanceGot": "Prijaté",
+    "gapDeficit": "Rozdiel {gap}",
+    "gapSurplus": "Rozdiel {gap}"
+  },
+  "rate": {
+    "noteInProgress": "Toľko mesto v roku {year} v priemere vyplatilo za každú sekundu od 1. januára do konca {month}. Za jeden deň je to {day}.",
+    "noteFinal": "Priemerné výdavky mesta na jeden deň roka {year}. Za sekundu je to {second}.",
+    "tickerLabel": "Pri tomto tempe mesto odkedy ste otvorili stránku vyplatilo približne"
+  },
+  "hundred": {
+    "titleBudget": "Kam ide každých 100 € z rozpočtu Bratislavy na rok {year}",
+    "titleActual": "Kam išlo každých 100 €, ktoré Bratislava minula v roku {year}",
+    "lede": "Každý štvorček je 1 € zo 100 €. Najväčších {n} oblastí má vlastnú farbu, ostatné sú sivé. Ukážte na položku alebo na ňu ťuknite a uvidíte podrobnosti.",
+    "other": "Ostatných {n} oblastí",
+    "otherSub": "Menšie oblasti výdavkov. Všetky sú v zozname nižšie."
+  },
+  "changes": {
+    "title": "Kde v rozpočte mesta najviac pribudlo a kde ubudlo",
+    "lede": "Schválený rozpočet oblastí na rok {year} oproti schválenému rozpočtu na rok {prev}. Vidíte {n} oblastí s najväčším nárastom a {n} s najväčším poklesom v eurách. Sumy nie sú očistené od inflácie.",
+    "unmatched": "Počet oblastí, ktoré sú v údajoch iba v jednom z rokov, a preto nie sú porovnané: {n}."
+  },
+  "common": {
+    "chapter": "Oblasť"
+  },
+  "footer": "Údaje: {publisher} ({licence}). Stránka čísla nemení, iba ich zobrazuje. Zdrojový kód je na"
+}

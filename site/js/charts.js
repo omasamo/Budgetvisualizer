@@ -70,7 +70,7 @@ function emptyNote(el, text) {
  * series: [{ key, label, current, values: [12 numbers|null] }] — values already in the chosen unit
  * unit: 'share' (0..1+) or 'eur'
  */
-export function yearChart(el, { series, unit, emptyText, height = 320, animate = false }) {
+export function yearChart(el, { series, unit, emptyText, height = 320, animate = false, sparse = false }) {
   const usable = series.filter(s => s.values.some(v => v != null));
   if (!usable.length) return emptyNote(el, emptyText);
   el.replaceChildren();
@@ -104,12 +104,17 @@ export function yearChart(el, { series, unit, emptyText, height = 320, animate =
     g.append('line').attr('class', 'pace-line').attr('x1', 0).attr('x2', W).attr('y1', y(1)).attr('y2', y(1));
   }
 
-  const line = d3.line().defined(d => d != null).x((d, i) => x(i)).y(d => y(d));
+  // Points that exist, as [month index, value]. A budget reported by quarter (sparse) has a
+  // point every third month; the line then joins the reported points and each one gets a dot.
+  const pts = s => s.values.map((v, i) => (v == null ? null : [i, v])).filter(Boolean);
+  const line = sparse ? (vals => d3.line().x(d => x(d[0])).y(d => y(d[1]))(pts({ values: vals })))
+    : d3.line().defined(d => d != null).x((d, i) => x(i)).y(d => y(d));
   const ordered = [...usable].sort((a, b) => (a.current === b.current ? 0 : a.current ? 1 : -1));
   const cur = usable.find(s => s.current);
 
   if (cur) {
-    const area = d3.area().defined(d => d != null).x((d, i) => x(i)).y0(H).y1(d => y(d));
+    const area = sparse ? (vals => d3.area().x(d => x(d[0])).y0(H).y1(d => y(d[1]))(pts({ values: vals })))
+      : d3.area().defined(d => d != null).x((d, i) => x(i)).y0(H).y1(d => y(d));
     g.append('path').attr('class', 'area current').attr('d', area(cur.values));
   }
   const paths = g.selectAll('path.line').data(ordered).join('path')
@@ -125,6 +130,16 @@ export function yearChart(el, { series, unit, emptyText, height = 320, animate =
     });
     g.selectAll('path.area').attr('opacity', 0).transition().delay(500).duration(700).attr('opacity', 1);
   }
+
+  if (sparse) {
+    for (const s of ordered) {
+      g.append('g').selectAll('circle').data(pts(s)).join('circle')
+        .attr('class', `dot ${s.current ? 'current' : 'past'}`).attr('r', s.current ? 3.5 : 2.5).attr('cx', d => x(d[0])).attr('cy', d => y(d[1]));
+    }
+  }
+  // Months that have a value in any series: the crosshair and the keyboard stop only there.
+  const stops = d3.range(12).filter(i => usable.some(s => s.values[i] != null));
+  const nearest = i => stops.reduce((a, b) => (Math.abs(b - i) < Math.abs(a - i) ? b : a), stops[0]);
 
   // End labels: the current series, plus the most recent past year.
   const lastIdx = s => { for (let i = 11; i >= 0; i--) if (s.values[i] != null) return i; return -1; };
@@ -155,12 +170,13 @@ export function yearChart(el, { series, unit, emptyText, height = 320, animate =
   }
   overlay.on('pointermove', evt => {
     const [px] = d3.pointer(evt);
-    const i = Math.max(0, Math.min(11, Math.round(px / (W / 11))));
+    const i = nearest(Math.max(0, Math.min(11, Math.round(px / (W / 11)))));
     show(i, evt);
   }).on('pointerleave', () => { cross.style('display', 'none'); hideTip(); })
     .on('keydown', evt => {
       if (evt.key === 'ArrowRight' || evt.key === 'ArrowLeft') {
-        focusIdx = Math.max(0, Math.min(11, (focusIdx < 0 ? 0 : focusIdx + (evt.key === 'ArrowRight' ? 1 : -1))));
+        const at = stops.indexOf(focusIdx);
+        focusIdx = stops[Math.max(0, Math.min(stops.length - 1, at < 0 ? 0 : at + (evt.key === 'ArrowRight' ? 1 : -1)))];
         const r = overlay.node().getBoundingClientRect();
         show(focusIdx, { clientX: r.left + (x(focusIdx) / W) * r.width, clientY: r.top + 20 });
         evt.preventDefault();

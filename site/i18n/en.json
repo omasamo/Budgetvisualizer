@@ -13,6 +13,7 @@
     "changes": "Changes"
   },
   "country": "Country",
+  "entity": "Which budget",
   "themeToggle": "Toggle dark mode",
   "langToggle": "Prepnúť do slovenčiny",
   "filters": {
@@ -21,7 +22,8 @@
     "all": "Whole state budget",
     "byChapter": "Chapter",
     "byType": "Type of spending",
-    "label": "Filters"
+    "label": "Filters",
+    "byOrg": "Organisation"
   },
   "asOf": "Spending data up to {date}",
   "asOfFinal": "Final figures for {year}",
@@ -86,7 +88,9 @@
     "noTypes": "Monthly figures have not been published for this year.",
     "ofBudget": "{pct} of {budget}",
     "asOfMonth": "Chapter figures are up to the end of {month}.",
-    "eyebrow": "In detail"
+    "eyebrow": "In detail",
+    "byOrg": "Organisations",
+    "ledeOrgs": "Organisations and their own budgets in {year}."
   },
   "year": {
     "title": "How the money is spent through the year",
@@ -136,7 +140,8 @@
     "sourcesTitle": "Sources",
     "downloads": "Download the processed data:",
     "licence": "MF SR data licence:",
-    "downloaded": "downloaded {date}"
+    "downloaded": "downloaded {date}",
+    "reference": "original documents for comparison"
   },
   "glossary": [
     [
@@ -277,5 +282,12 @@
     "unmatched": "Chapters that exist in only one of the two years (a new office, for example), so they are not compared: {n}.",
     "change": "Change",
     "rowLabel": "{name}: {prev} in {py}, {cur} in {cy}, a change of {diff} ({pct}). Open details."
+  },
+  "orgs": {
+    "kind": {
+      "office": "Office",
+      "budgetary": "Budgetary organisation",
+      "contributory": "Contributory organisation"
+    }
   }
 }

@@ -464,6 +464,8 @@ dialog[open] { animation: dlg-in .3s cubic-bezier(.2,.7,.2,1); }
   --band-dot: rgba(255, 255, 255, 0.10);
   --card-shadow: 0 1px 2px rgba(13, 54, 107, .06), 0 10px 30px rgba(13, 54, 107, .08);
   --eyebrow-bg: #dcebfc;
+  --band-ink-2: #cde2fb;     /* secondary text on the band */
+  --brand-mark: #86b6ef;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -505,14 +507,14 @@ body::before {
 /* Header and filter bar are part of the band: deep blue glass, light text. */
 .site-header, .filter-bar { background: color-mix(in srgb, var(--band-1) 94%, transparent); border-bottom: 1px solid rgba(255, 255, 255, .10); color: #ffffff; }
 .brand { color: #ffffff; }
-.brand svg { fill: #86b6ef; }
-.header-nav a { color: #cde2fb; }
+.brand svg { fill: var(--brand-mark); }
+.header-nav a { color: var(--band-ink-2); }
 .header-nav a:hover { color: #ffffff; background: rgba(255, 255, 255, .10); }
 .header-nav a[aria-current="true"] { background: #ffffff; color: var(--band-1); }
 .site-header .ghost-btn { border-color: rgba(255, 255, 255, .28); color: #ffffff; }
 .site-header .ghost-btn:hover { background: rgba(255, 255, 255, .10); }
 .site-header :focus-visible, .filter-bar :focus-visible { outline-color: #ffffff; }
-.filter-bar .field label, .filter-bar .as-of { color: #cde2fb; }
+.filter-bar .field label, .filter-bar .as-of { color: var(--band-ink-2); }
 .filter-bar select, .site-header select { border-color: transparent; color: var(--ink); background-color: var(--surface); }
 @media (max-width: 1180px) { .header-nav a { background: rgba(255, 255, 255, .08); } .header-nav a[aria-current="true"] { background: #ffffff; } }
 
@@ -525,9 +527,73 @@ body::before {
 .hero .eyebrow { background: transparent; padding: 0; }
 
 /* Footer mirrors the top band to close the page. */
-.site-footer { margin-top: 40px; padding: 32px 0 48px; color: #cde2fb;
+.site-footer { margin-top: 40px; padding: 32px 0 48px; color: var(--band-ink-2);
   background: radial-gradient(circle at 1px 1px, var(--band-dot) 1.2px, transparent 0) 0 0 / 22px 22px, linear-gradient(165deg, var(--band-1), var(--band-2)); }
 .site-footer a { color: #ffffff; }
 
 @media (forced-colors: active) { body::before { display: none; } }
 @media print { body { background: #fff; } body::before, .site-footer { background: none; color: inherit; } }
+
+/* =========================================================================
+   Budget switch in the top bar: state (Slovensko) or city (Bratislava).
+   ========================================================================= */
+.entity-switch { display: inline-flex; padding: 3px; gap: 2px; border-radius: 999px; background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .22); }
+.entity-switch[hidden] { display: none; }
+.entity-switch button { border: 0; background: transparent; color: var(--band-ink-2); font-weight: 650; font-size: .9rem; padding: 5px 12px; min-height: 30px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+.entity-switch button:hover { color: #ffffff; background: rgba(255, 255, 255, .10); }
+.entity-switch button[aria-checked="true"] { background: #ffffff; color: var(--band-1); }
+@media (max-width: 420px) { .entity-switch button { padding: 5px 9px; font-size: .85rem; } }
+
+/* =========================================================================
+   Bratislava: the city's colours, red and white. More white in the page,
+   red in the band, the accents and the "spent" bars. Data colours keep
+   enough contrast; red is the city's own series, change uses red vs slate.
+   ========================================================================= */
+:root[data-entity="ba"] {
+  --page: #fbf7f7;
+  --surface: #ffffff;
+  --surface-2: #f6efef;
+  --accent: #c8102e;
+  --accent-ink: #a00c24;
+  --track: #f7d3d8;
+  --track-over: #e98b97;
+  --focus: #c8102e;
+  --cat-1: #c8102e; --cat-2: #2a78d6; --cat-3: #1baf7a; --cat-4: #eda100; --cat-5: #8a5cd0; --cat-6: #5b6770;
+  --up: #c8102e; --down: #5b6770;
+  --hero-from: #fdeef0;
+  --hero-side-bg: #8f0a1f; --hero-side-ink: #ffffff; --hero-side-ink-2: #fbd5da;
+  --insight-bg: #fdf0f1;
+  --band-1: #8f0a1f; --band-2: #b80d29; --band-3: #e0303f;
+  --dot: rgba(200, 16, 46, 0.09);
+  --band-dot: rgba(255, 255, 255, 0.12);
+  --card-shadow: 0 1px 2px rgba(110, 10, 25, .05), 0 10px 30px rgba(110, 10, 25, .07);
+  --eyebrow-bg: #fbe3e6;
+  --band-ink-2: #fbd5da;
+  --brand-mark: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-entity="ba"]:not([data-theme="light"]) {
+    --page: #120b0c; --surface: #1c1617; --surface-2: #261e1f;
+    --accent: #ec4b5b; --accent-ink: #f59aa4; --track: #5a1a23; --track-over: #8a2533; --focus: #f59aa4;
+    --cat-1: #ec4b5b; --cat-2: #3987e5; --cat-3: #199e70; --cat-4: #c98500; --cat-5: #9d77dc; --cat-6: #8a949b;
+    --up: #ec4b5b; --down: #8a949b;
+    --hero-from: #2a1316; --hero-side-bg: #6b0f1a; --hero-side-ink-2: #fbd5da;
+    --insight-bg: #2a1417;
+    --band-1: #3a070e; --band-2: #620d19; --band-3: #8f1424;
+    --dot: rgba(245, 154, 164, 0.07); --band-dot: rgba(255, 255, 255, 0.07);
+    --eyebrow-bg: #33171b;
+  }
+}
+:root[data-entity="ba"][data-theme="dark"] {
+  --page: #120b0c; --surface: #1c1617; --surface-2: #261e1f;
+  --accent: #ec4b5b; --accent-ink: #f59aa4; --track: #5a1a23; --track-over: #8a2533; --focus: #f59aa4;
+  --cat-1: #ec4b5b; --cat-2: #3987e5; --cat-3: #199e70; --cat-4: #c98500; --cat-5: #9d77dc; --cat-6: #8a949b;
+  --up: #ec4b5b; --down: #8a949b;
+  --hero-from: #2a1316; --hero-side-bg: #6b0f1a; --hero-side-ink-2: #fbd5da;
+  --insight-bg: #2a1417;
+  --band-1: #3a070e; --band-2: #620d19; --band-3: #8f1424;
+  --dot: rgba(245, 154, 164, 0.07); --band-dot: rgba(255, 255, 255, 0.07);
+  --eyebrow-bg: #33171b;
+}
+/* The city's band is shorter and ends in a white wave of page, so the page reads mostly white. */
+:root[data-entity="ba"] body::before { height: 460px; }
