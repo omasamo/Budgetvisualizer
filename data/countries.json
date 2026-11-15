@@ -1,5 +1,29 @@
 {
   "countries": [
-    { "code": "sk", "name": { "sk": "Slovensko", "en": "Slovakia" }, "flag": "🇸🇰" }
+    {
+      "code": "sk",
+      "name": {
+        "sk": "Slovensko: štátny rozpočet",
+        "en": "Slovakia: state budget"
+      },
+      "short": {
+        "sk": "Slovensko",
+        "en": "Slovakia"
+      },
+      "flag": "🇸🇰"
+    },
+    {
+      "code": "ba",
+      "name": {
+        "sk": "Bratislava: rozpočet hlavného mesta",
+        "en": "Bratislava: city budget"
+      },
+      "short": {
+        "sk": "Bratislava",
+        "en": "Bratislava"
+      },
+      "theme": "ba",
+      "wording": true
+    }
   ]
 }

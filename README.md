@@ -9,6 +9,9 @@ All numbers come from official sources of the Ministry of Finance of the Slovak
 Republic and are refreshed automatically twice a month. The site never estimates or
 fills in missing figures.
 
+The switch in the top bar changes between two budgets: the **state budget of Slovakia**
+(blue) and the **budget of the city of Bratislava** (red and white, the city's colours).
+
 See [PLAN.md](PLAN.md) for the full development plan, research and change log.
 
 ## What is on the site
@@ -35,6 +38,25 @@ English, light and dark themes.
 | [Tabuľky k hotovostnému čerpaniu ŠR v ŠZÚ 2020–2023](https://opendata.mfsr.sk/mi/opendata/category/237-udaje-zo-zaverecneho-uctu-sr) | MF SR open data portal | CC BY 4.0 | Final accounts: chapters and functions |
 | [Rozpočtový informačný systém, rozpocet.sk](https://rozpocet.sk/web/#/rozpocet/VS/kapitoly/0) | MF SR | public data of MF SR | Chapters: approved, adjusted and actual, 2016 onwards, monthly for recent years |
 
+### Bratislava
+
+| Source | Publisher | Used for |
+|---|---|---|
+| [Rozpočtový informačný systém, rozpocet.sk, samospráva](https://rozpocet.sk/web/#/rozpocet/SAM/sam/0) | MF SR; figures reported by the City of Bratislava | Approved, adjusted and actual revenue and spending, quarterly, 2016 onwards: totals, by purpose (functional classification), by kind, by city organisation; population |
+| [Rozpočet a hospodárenie](https://bratislava.sk/mesto-bratislava/transparentne-mesto/rozpocet-a-hospodarenie) | City of Bratislava | Linked for comparison; published as PDF only, so not parsed |
+
+A city is not a small state, and the page says so where it matters:
+
+- there are no chapters or ministries: the main breakdown is **by purpose**, the second is
+  **by city organisation** (the city office, art schools, homes for seniors, zoo, museum…);
+- the city reports **every quarter**, not every month, so the line through the year has
+  four points;
+- totals include financial operations (loans taken and repaid, money from previous years),
+  so revenue minus spending is not called a deficit;
+- organisations' own budgets are never added up: they do not sum to the city total;
+- the approved budget in rozpocet.sk differs from the council's resolution published by the
+  city (2026: 835.4 vs 760.5 million €); the site uses rozpocet.sk and says this in *About the data*.
+
 Original files are kept unchanged in `data/raw/sk/`, with download dates and
 checksums in `data/raw/sk/sources.lock.json`.
 
@@ -44,6 +66,8 @@ checksums in `data/raw/sk/sources.lock.json`.
 pipeline/fetch.py       download MF SR open data files  -> data/raw/sk/
 pipeline/fetch_ris.py   download chapter data (rozpocet.sk API) -> data/raw/sk/ris/
 pipeline/parse_sk.py    validate and convert -> data/processed/sk/*.json
+pipeline/fetch_ris_sam.py  download a city's budget (rozpocet.sk API) -> data/raw/ba/ris/
+pipeline/parse_ba.py    validate and convert -> data/processed/ba/*.json
 pipeline/build_site.sh  site/ + data/processed -> _site/ (what GitHub Pages serves)
 site/                   static HTML, CSS and JavaScript (D3 for charts), no build step
 ```
@@ -69,15 +93,19 @@ pip install -r pipeline/requirements.txt
 python pipeline/fetch.py sk          # needs internet access to opendata.mfsr.sk
 python pipeline/fetch_ris.py 2016    # needs internet access to rozpocet.sk
 python pipeline/parse_sk.py
+python pipeline/fetch_ris_sam.py ba 2016   # Bratislava; needs internet access to rozpocet.sk
+python pipeline/parse_ba.py
 bash pipeline/build_site.sh _site
 python -m http.server -d _site 8000  # open http://localhost:8000
 ```
 
-## Adding another country
+## Adding another country or city
 
-1. Write `pipeline/sources/<cc>.json`, a parser that outputs the same files as
-   `data/processed/sk/` (`meta.json`, `monthly.json`, `annual.json`, `labels.json`).
-2. Add the country to `data/countries.json`.
+1. Write a parser that outputs the same files as `data/processed/sk/`
+   (`meta.json`, `monthly.json`, `annual.json`, `labels.json`). For another Slovak city,
+   add its rozpocet.sk id to `CITIES` in `pipeline/fetch_ris_sam.py` and reuse `parse_ba.py`.
+2. Add it to `data/countries.json` (`theme` picks a colour theme from `style.css`,
+   `wording: true` loads `site/i18n/<lang>.<code>.json` on top of the shared texts).
 
 The site code does not need to change; names, currency, years and sources all come
 from the data files.

@@ -13,6 +13,7 @@
     "changes": "Zmeny"
   },
   "country": "Krajina",
+  "entity": "Ktorý rozpočet",
   "themeToggle": "Prepnúť tmavý režim",
   "langToggle": "Switch to English",
   "filters": {
@@ -21,7 +22,8 @@
     "all": "Celý štátny rozpočet",
     "byChapter": "Kapitola",
     "byType": "Druh výdavku",
-    "label": "Filtre"
+    "label": "Filtre",
+    "byOrg": "Organizácia"
   },
   "asOf": "Údaje o čerpaní k {date}",
   "asOfFinal": "Konečné údaje za rok {year}",
@@ -86,7 +88,9 @@
     "noTypes": "Mesačné údaje pre tento rok nie sú zverejnené.",
     "ofBudget": "{pct} z {budget}",
     "asOfMonth": "Údaje kapitol sú ku koncu {month}.",
-    "eyebrow": "Podrobne"
+    "eyebrow": "Podrobne",
+    "byOrg": "Organizácie",
+    "ledeOrgs": "Organizácie a ich vlastné rozpočty v roku {year}."
   },
   "year": {
     "title": "Ako sa míňa počas roka",
@@ -136,7 +140,8 @@
     "sourcesTitle": "Zdroje",
     "downloads": "Spracované údaje na stiahnutie:",
     "licence": "Licencia údajov MF SR:",
-    "downloaded": "stiahnuté {date}"
+    "downloaded": "stiahnuté {date}",
+    "reference": "pôvodné dokumenty na porovnanie"
   },
   "glossary": [
     [
@@ -277,5 +282,12 @@
     "unmatched": "Počet kapitol, ktoré existujú iba v jednom z rokov (napríklad nový úrad), a preto nie sú porovnané: {n}.",
     "change": "Zmena",
     "rowLabel": "{name}: {prev} v roku {py}, {cur} v roku {cy}, zmena {diff} ({pct}). Otvoriť detail."
+  },
+  "orgs": {
+    "kind": {
+      "office": "Úrad",
+      "budgetary": "Rozpočtová organizácia",
+      "contributory": "Príspevková organizácia"
+    }
   }
 }

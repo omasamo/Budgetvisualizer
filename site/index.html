@@ -31,8 +31,7 @@
         <a href="#o-datach" data-i18n="nav.about">O dátach</a>
       </nav>
       <div class="header-tools">
-        <label class="visually-hidden" for="country-select" data-i18n="country">Krajina</label>
-        <select id="country-select" class="compact-select"></select>
+        <div class="entity-switch" id="entity-switch" role="radiogroup" aria-label="Rozpočet" data-i18n-attr="aria-label:entity" hidden></div>
         <button id="lang-toggle" class="ghost-btn" type="button" aria-label="Switch to English">EN</button>
         <button id="theme-toggle" class="ghost-btn icon-btn" type="button" aria-label="Prepnúť tmavý režim" data-i18n-attr="aria-label:themeToggle">
           <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg>
@@ -109,6 +108,7 @@
       <div class="toolbar">
         <div class="seg" role="radiogroup" aria-label="Rozdelenie" data-i18n-attr="aria-label:chapters.breakdown">
           <button type="button" role="radio" aria-checked="true" data-breakdown="chapters" data-i18n="chapters.byChapter">Kto míňa</button>
+          <button type="button" role="radio" aria-checked="false" data-breakdown="orgs" data-i18n="chapters.byOrg" hidden>Organizácie</button>
           <button type="button" role="radio" aria-checked="false" data-breakdown="functions" data-i18n="chapters.byFunction">Na čo</button>
           <button type="button" role="radio" aria-checked="false" data-breakdown="types" data-i18n="chapters.byType">Akým spôsobom</button>
         </div>

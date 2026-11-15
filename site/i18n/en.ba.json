@@ -1,0 +1,119 @@
+{
+  "nav": {
+    "chapters": "Where money goes"
+  },
+  "filters": {
+    "all": "Whole city budget",
+    "byChapter": "Purpose",
+    "byType": "Type of spending",
+    "byOrg": "City organisation"
+  },
+  "asOf": "Spending data as of {date} (the city reports quarterly)",
+  "hero": {
+    "inProgress": "In {year} Bratislava plans to spend <em>{budget}</em>. By the end of {month} it had paid out {spent}.",
+    "final": "In {year} Bratislava spent <em>{spent}</em>.",
+    "noBudget": "In {year} Bratislava had paid out <em>{spent}</em> by the end of {month}.",
+    "eyebrowInProgress": "Bratislava city budget {year} · as of the end of {month}",
+    "eyebrowFinal": "Bratislava city budget {year} · closed year"
+  },
+  "kpi": {
+    "approvedNote": "as the city reports it in the budget system",
+    "adjustedNote": "after changes during the year"
+  },
+  "chapters": {
+    "lede": "A city has no ministries, so its spending is split by purpose: {n} areas, from transport and schools to waste. The length of a bar shows the area's budget in {year}; the dark part is what the city has actually paid out. Click an area to see how it developed.",
+    "ledeOrgs": "The city office and {m} city organisations: schools, homes for seniors, the museum, the zoo and others. Each row is the organisation's own budget in {year}. Contributory organisations also spend their own income, so the rows cannot be added up to the city budget. City-owned companies such as the public transport company are not listed; the city pays them through the city office's budget.",
+    "ledeTypes": "Spending in {year} by what the city pays for: pay, purchases, transfers to others, interest, investment or loan repayments. The dark part is the amount paid out, the light part is the approved budget.",
+    "search": "Search",
+    "searchPlaceholder": "Search an area or organisation…",
+    "showAll": "Show all ({n})",
+    "none": "Nothing matches the search.",
+    "byChapter": "What for",
+    "byOrg": "Who spends",
+    "byType": "How",
+    "asOfMonth": "Figures are as of the end of {month}."
+  },
+  "year": {
+    "lede": "Spending added up from January: {scope}. The city reports quarterly, so the line has points at the end of March, June, September and December. The red line is {year}, grey lines are previous years.",
+    "noMonthly": "The course through the year is not published for this selection, only the total since January.",
+    "noMonthlyChapter": "For individual purposes the city reports only the total since January, not the course by quarter.",
+    "keyboardHint": "Chart by quarter. Use the left and right arrow keys to move between quarters.",
+    "insightFaster": "By the end of {month} the city had paid out {pct} of its budget. In the previous {n} years it was {avg} on average at the same point. So this year money is going out <strong>faster than usual</strong>.",
+    "insightSlower": "By the end of {month} the city had paid out {pct} of its budget. In the previous {n} years it was {avg} on average at the same point. So this year money is going out <strong>more slowly than usual</strong>.",
+    "insightSame": "By the end of {month} the city had paid out {pct} of its budget, <strong>about as usual</strong>: in the previous {n} years it was {avg} on average at the same point."
+  },
+  "share": {
+    "lede": "City budget spending per inhabitant of Bratislava ({pop} inhabitants according to {popSource})."
+  },
+  "about": {
+    "body": "<p>The figures come from the finance ministry's Budget Information System (rozpocet.sk), where Bratislava reports its budget and spending every quarter. The site does not change them, it only presents them clearly. If a figure is not published, the site says so and never estimates.</p><p><strong>What differs from the state budget.</strong> A city has no chapters or ministries, so spending is shown by purpose (the official functional classification) and by city organisation. The data is quarterly, not monthly. Spending and revenue include financial operations: loan repayments, loans taken and money from previous years.</p><p><strong>Difference from the city's own documents.</strong> The approved budget in this system does not match the amount in the budget the city publishes on its website. For 2026, for example, the city council approved a budget of €760.5 million on 6 November 2025, while in the budget system the city reports an approved budget of €835.4 million. The site uses the system's data because only that is published in machine-readable form together with spending. The city's original documents are linked in the sources below.</p><p>The city budget does not include the budgets of the 17 city boroughs or the finances of city-owned companies.</p>",
+    "licence": "Terms of use of the data:"
+  },
+  "glossary": [
+    [
+      "City budget",
+      "The plan of the capital's revenue and spending for one year. It is approved by the city council."
+    ],
+    [
+      "Purpose (functional classification)",
+      "The official way of sorting spending by what it is for: transport, education, waste and so on. All municipalities use it."
+    ],
+    [
+      "Approved budget",
+      "The budget the city reports in the budget system as approved. It can differ from the amount in the council's resolution."
+    ],
+    [
+      "Adjusted budget",
+      "The budget after changes during the year."
+    ],
+    [
+      "Actual (spending)",
+      "Money the city has actually paid out. During the year it is the total since 1 January."
+    ],
+    [
+      "Budgetary organisation",
+      "A city organisation whose revenue and spending are entirely part of the city budget, such as a home for seniors or an elementary art school."
+    ],
+    [
+      "Contributory organisation",
+      "A city organisation that also has its own income and receives a contribution from the city, such as the zoo, the museum or the city forests."
+    ],
+    [
+      "Financial operations",
+      "Loans taken and repaid, and money moved from funds and previous years. They are not regular revenue or spending."
+    ]
+  ],
+  "revenue": {
+    "ledeInProgress": "By the end of {month} {year} the city had received {revenue} (plan for the whole year: {budget}).",
+    "ledeFinal": "In {year} the city received {revenue}.",
+    "deficit": "Spending was higher by {gap}. Revenue and spending here include loans, their repayment and money from previous years, so this difference is not the city's deficit.",
+    "surplus": "Revenue was higher than spending by {gap}. Revenue and spending here include loans, their repayment and money from previous years, so this difference is not the city's operating surplus.",
+    "legendGot": "Received",
+    "eyebrow": "Revenue",
+    "sourcesTitle": "Where the city's money comes from",
+    "balanceGot": "Received",
+    "gapDeficit": "Difference {gap}",
+    "gapSurplus": "Difference {gap}"
+  },
+  "rate": {
+    "noteInProgress": "What the city paid out on average every second in {year}, from 1 January to the end of {month}. That is {day} a day.",
+    "noteFinal": "Average city spending per day of {year}. That is {second} per second.",
+    "tickerLabel": "At this rate, since you opened the page the city has paid out about"
+  },
+  "hundred": {
+    "titleBudget": "Where every €100 of Bratislava's {year} budget goes",
+    "titleActual": "Where every €100 Bratislava spent in {year} went",
+    "lede": "Each square is €1 out of €100. The {n} largest areas have their own colour, the rest are grey. Point at or tap an item for details.",
+    "other": "Other {n} areas",
+    "otherSub": "Smaller areas of spending. All are in the list below."
+  },
+  "changes": {
+    "title": "Where the city budget grew most and where it shrank",
+    "lede": "Approved budget of each area for {year} against the approved budget for {prev}. You see the {n} areas with the biggest increase and the {n} with the biggest decrease in euros. Amounts are not adjusted for inflation.",
+    "unmatched": "Number of areas present in the data in only one of the years, and therefore not compared: {n}."
+  },
+  "common": {
+    "chapter": "Area"
+  },
+  "footer": "Data: {publisher} ({licence}). The site does not change the figures, it only displays them. Source code is on"
+}

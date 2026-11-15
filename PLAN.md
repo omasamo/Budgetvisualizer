@@ -204,3 +204,19 @@ Existing solutions, best practices, official sources, this plan.
   matching footer. Decoration stays in the page background; every chart and number keeps
   a plain card surface so nothing competes with the data. axe-core still reports 0
   violations in light, dark and phone width.
+- **2026-11-15 (evening)** — Second budget: the city of **Bratislava**, switchable in the
+  top bar (State / Bratislava), in the city's red and white.
+  - Source: rozpocet.sk, module *Samospráva* (the same MF SR system already used for
+    chapters), where the city reports quarterly. The city's own portal and website publish
+    the budget as PDF only; they are linked, not parsed.
+  - Same page structure, but honest about what a city is: no chapters, so the main
+    breakdown is by purpose (functional classification), plus a breakdown by city
+    organisation; four points a year instead of twelve; financial operations are included
+    in totals, so the revenue section does not speak of a deficit; per-person view uses
+    the population figure from rozpocet.sk.
+  - `parse_ba.py` refuses to publish unless spending by kind, spending by purpose plus
+    financial operations, and revenue by kind each add up to the reported totals
+    (they do, to the euro, for 2016–2026).
+  - Known difference, stated on the page: the approved budget in rozpocet.sk (835.4 mil. €
+    for 2026) is higher than the council's resolution (760.5 mil. €). Open question for a
+    later stage: parse the city's programme budget (8 programmes) from its PDF documents.

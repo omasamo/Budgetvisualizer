@@ -1,0 +1,76 @@
+{
+  "country": "ba",
+  "kind": "city",
+  "periodicity": "quarter",
+  "currency": "EUR",
+  "publisher": "Ministerstvo financií SR, Rozpočtový informačný systém; údaje vykazuje Hlavné mesto SR Bratislava",
+  "publisherEn": "Ministry of Finance of the Slovak Republic, Budget Information System; data reported by the City of Bratislava",
+  "licence": "verejné údaje MF SR",
+  "licenceEn": "public data of MF SR",
+  "licenceUrl": "https://rozpocet.sk/web/#/prehlad",
+  "currentYear": 2026,
+  "currentLastMonth": 6,
+  "asOf": "2026-06-30",
+  "monthlyYears": [
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025,
+    2026
+  ],
+  "annualYears": [
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025,
+    2026
+  ],
+  "functionYears": [],
+  "chapterMonth": 6,
+  "chapterMonthlyYears": [],
+  "orgMonthlyYears": [
+    2022,
+    2023,
+    2024,
+    2025,
+    2026
+  ],
+  "population": {
+    "value": 478035,
+    "year": 2026,
+    "label": "rozpocet.sk",
+    "labelEn": "rozpocet.sk"
+  },
+  "sources": [
+    {
+      "id": "ris-sam",
+      "title": "Rozpočtový informačný systém (rozpocet.sk), samospráva: Bratislava",
+      "titleEn": "Budget Information System (rozpocet.sk), local government: Bratislava",
+      "page": "https://rozpocet.sk/web/#/rozpocet/SAM/sam/0",
+      "url": "https://rozpocet.sk/rest/api/",
+      "downloaded": "2026-11-15T22:42:27Z"
+    },
+    {
+      "id": "ba-budget",
+      "title": "Rozpočet a hospodárenie hlavného mesta (bratislava.sk): schválené rozpočty, zmeny a záverečné účty",
+      "titleEn": "Budget and finances of the capital (bratislava.sk): approved budgets, amendments and final accounts",
+      "page": "https://bratislava.sk/mesto-bratislava/transparentne-mesto/rozpocet-a-hospodarenie",
+      "url": "https://bratislava.sk/mesto-bratislava/transparentne-mesto/rozpocet-a-hospodarenie",
+      "downloaded": null,
+      "reference": true
+    }
+  ],
+  "generated": "2026-11-15T22:42:39Z"
+}

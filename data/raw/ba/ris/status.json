@@ -1,0 +1,43 @@
+{
+ "fetched": "2026-11-15T22:42:27Z",
+ "actual": {
+  "subjekt": "SAM",
+  "typRozpoctu": "SKU",
+  "zobrazujemeLVV": false,
+  "rok": 2026,
+  "mesiac": 6,
+  "aktualizacia": 1788127200000,
+  "modul": "SAM",
+  "rokPlanovany": 0,
+  "mesiacPlanovany": 0,
+  "aktualizaciaPlanovana": null,
+  "ukoncena": true
+ },
+ "adjusted": {
+  "subjekt": "SAM",
+  "typRozpoctu": "UPR",
+  "zobrazujemeLVV": false,
+  "rok": 2026,
+  "mesiac": 6,
+  "aktualizacia": 1788127200000,
+  "modul": "SAM",
+  "rokPlanovany": 0,
+  "mesiacPlanovany": 0,
+  "aktualizaciaPlanovana": null,
+  "ukoncena": true
+ },
+ "approved": {
+  "subjekt": "SAM",
+  "typRozpoctu": "SCH",
+  "zobrazujemeLVV": false,
+  "rok": 2026,
+  "mesiac": 6,
+  "aktualizacia": 1788127200000,
+  "modul": "SAM",
+  "rokPlanovany": 0,
+  "mesiacPlanovany": 0,
+  "aktualizaciaPlanovana": null,
+  "ukoncena": true
+ },
+ "currentYear": 2026
+}

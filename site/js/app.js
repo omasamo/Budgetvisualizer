@@ -7,7 +7,8 @@ import { yearChart, historyChart, changesChart, showTip, hideTip, reducedMotion 
 
 const state = {
   lang: 'sk',
-  country: null,
+  baseDict: null,          // UI strings for the language
+  country: null,           // which budget: 'sk' (state) or 'ba' (city of Bratislava)…
   countries: [],
   meta: null,
   monthly: null,
@@ -38,10 +39,27 @@ async function getJSON(url) {
   return r.json();
 }
 
+/** Deep merge: values in b replace values in a; nested objects merge. */
+function merge(a, b) {
+  if (!b || typeof b !== 'object' || Array.isArray(b)) return b ?? a;
+  const out = { ...(a || {}) };
+  for (const [k, v] of Object.entries(b)) out[k] = (v && typeof v === 'object' && !Array.isArray(v)) ? merge(out[k], v) : v;
+  return out;
+}
+
+/** UI strings: the language file, then the wording of the selected budget (a city has no ministries). */
+const overrides = new Map();
+async function applyDict() {
+  const key = `${state.lang}.${state.country}`;
+  const own = state.countries.find(c => c.code === state.country)?.wording;   // countries.json says which budgets have their own wording
+  if (own && !overrides.has(key)) overrides.set(key, await getJSON(`i18n/${key}.json`).catch(() => null));
+  setDict(merge(state.baseDict, overrides.get(key)));
+}
+
 async function loadLang(lang) {
-  const dict = await getJSON(`i18n/${lang}.json`);
-  setDict(dict);
+  state.baseDict = await getJSON(`i18n/${lang}.json`);
   state.lang = lang;
+  await applyDict();
   document.documentElement.lang = lang;
   store.set('lang', lang);
 }
@@ -55,6 +73,9 @@ async function loadCountry(cc) {
     getJSON(base + 'labels.json').catch(() => ({})),
   ]);
   Object.assign(state, { country: cc, meta, monthly, annual, labels });
+  await applyDict();
+  const entry = state.countries.find(c => c.code === cc);
+  document.documentElement.dataset.entity = entry?.theme || cc;
   const years = availableYears();
   const want = Number(new URLSearchParams(location.search).get('rok'));
   state.year = years.includes(want) ? want : (meta.currentYear ?? years.at(-1));
@@ -85,16 +106,24 @@ function describe(group, key) {
 }
 
 function chapterName(c) { return label('chapters', c.code, c.name); }
+function orgName(o) { return label('orgs', o.code, o.name); }
+function orgSub(o) { return [t(`orgs.kind.${o.kind}`), describe('orgs', o.code)].filter(Boolean).join('. '); }
+/** A scope that names one row of the yearly data: a chapter ('ch:') or an organisation ('org:'). */
+const isItem = scope => scope.startsWith('ch:') || scope.startsWith('org:');
+function itemOf(year, scope) {
+  if (scope.startsWith('ch:')) return chapterOf(year, scope.slice(3));
+  if (scope.startsWith('org:')) return A(year)?.orgs?.find(o => o.code === scope.slice(4)) || null;
+  return null;
+}
 function functionName(f) { return label('functions', f.code, f.name); }
 
 /** The 12 cumulative values for the current scope in a year, or null. */
 function cumulativeFor(year, scope = state.scope) {
   const m = M(year);
-  if (scope.startsWith('ch:')) return chapterOf(year, scope.slice(3))?.monthly || null;
+  if (isItem(scope)) return itemOf(year, scope)?.monthly || null;
   if (!m) return null;
   if (scope === 'total') return m.expenditure.total?.cumulative || null;
   if (scope.startsWith('type:')) return m.expenditure[scope.slice(5)]?.cumulative || null;
-  if (scope.startsWith('ch:')) return chapterOf(year, scope.slice(3))?.monthly || null;
   return null;
 }
 function chapterOf(year, code) { return A(year)?.chapters.find(c => c.code === code) || null; }
@@ -102,8 +131,8 @@ function budgetFor(year, scope = state.scope) {
   const m = M(year);
   if (scope === 'total') return m?.expenditure.total?.budget ?? A(year)?.total?.approved ?? null;
   if (scope.startsWith('type:')) return m?.expenditure[scope.slice(5)]?.budget ?? null;
-  if (scope.startsWith('ch:')) {
-    const c = chapterOf(year, scope.slice(3));
+  if (isItem(scope)) {
+    const c = itemOf(year, scope);
     return c ? (c.adjusted ?? c.approved) : null;
   }
   return null;
@@ -112,9 +141,9 @@ function lastMonthOf(year) { return M(year)?.lastMonth ?? (A(year) ? 12 : 0); }
 
 /** Annual actual for a scope; for an unfinished year returns null. */
 function annualActual(year, scope = state.scope) {
-  if (scope.startsWith('ch:')) {
+  if (isItem(scope)) {
     if (A(year)?.month !== 12) return null;
-    return chapterOf(year, scope.slice(3))?.actual ?? null;
+    return itemOf(year, scope)?.actual ?? null;
   }
   const cum = cumulativeFor(year, scope);
   if (cum && cum[11] != null) return cum[11];
@@ -125,10 +154,10 @@ function annualActual(year, scope = state.scope) {
 function scopeName(scope = state.scope) {
   if (scope === 'total') return t('filters.all');
   if (scope.startsWith('type:')) return label('types', scope.slice(5));
-  const code = scope.slice(3);
-  const y = [...(state.meta.annualYears || [])].reverse().find(y => A(y)?.chapters.some(c => c.code === code));
-  const c = y && A(y).chapters.find(c => c.code === code);
-  return c ? chapterName(c) : code;
+  const y = [...(state.meta.annualYears || [])].reverse().find(y => itemOf(y, scope));
+  const c = y && itemOf(y, scope);
+  if (!c) return scope.slice(scope.indexOf(':') + 1);
+  return scope.startsWith('org:') ? orgName(c) : chapterName(c);
 }
 
 // ---------------------------------------------------------------------------
@@ -169,8 +198,7 @@ function fillSelect(sel, options, value) {
 }
 
 function renderControls() {
-  fillSelect($('country-select'), state.countries.map(c => ({ value: c.code, label: c.flag ? `${c.flag} ${c.name[state.lang] || c.name.sk}` : (c.name[state.lang] || c.name.sk) })), state.country);
-  $('country-select').hidden = state.countries.length < 2;
+  renderEntitySwitch();
 
   fillSelect($('year-select'), availableYears().slice().reverse().map(y => ({ value: String(y), label: String(y) })), String(state.year));
 
@@ -180,17 +208,66 @@ function renderControls() {
   const opts = [{ value: 'total', label: t('filters.all') }];
   if (types.length) opts.push({ group: t('filters.byType'), options: types.map(k => ({ value: `type:${k}`, label: label('types', k) })) });
   if (chapters.length) opts.push({ group: t('filters.byChapter'), options: chapters.map(c => ({ value: `ch:${c.code}`, label: chapterName(c) })) });
+  const orgs = (chYear && A(chYear).orgs) || [];
+  if (orgs.length) opts.push({ group: t('filters.byOrg'), options: orgs.map(o => ({ value: `org:${o.code}`, label: orgLabel(o, orgs) })) });
   fillSelect($('chapter-select'), opts, state.scope);
 
   for (const b of document.querySelectorAll('[data-unit]')) b.setAttribute('aria-checked', String(b.dataset.unit === state.unit));
   for (const b of document.querySelectorAll('[data-sort]')) b.setAttribute('aria-checked', String(b.dataset.sort === state.sort));
-  for (const b of document.querySelectorAll('[data-breakdown]')) b.setAttribute('aria-checked', String(b.dataset.breakdown === state.breakdown));
+  const bds = availableBreakdowns();
+  for (const b of document.querySelectorAll('[data-breakdown]')) {
+    b.setAttribute('aria-checked', String(b.dataset.breakdown === state.breakdown));
+    b.hidden = !bds.includes(b.dataset.breakdown);
+  }
+  document.querySelector('[data-breakdown]').closest('.seg').hidden = bds.length < 2;
 
   const lm = lastMonthOf(state.year);
   const m = M(state.year);
   $('as-of').textContent = m && lm < 12
     ? t('asOf', { date: date(endOfMonth(state.year, lm)) })
     : t('asOfFinal', { year: state.year });
+}
+
+/** Organisation name; when several share one official name (art schools), the registration number tells them apart. */
+function orgLabel(o, all) {
+  const n = orgName(o);
+  return all.filter(x => orgName(x) === n).length > 1 ? `${n} (IČO ${o.code})` : n;
+}
+
+/** State / city switch in the top bar. */
+function renderEntitySwitch() {
+  const sw = $('entity-switch');
+  sw.hidden = state.countries.length < 2;
+  sw.replaceChildren();
+  for (const c of state.countries) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role', 'radio');
+    b.setAttribute('aria-checked', String(c.code === state.country));
+    b.dataset.entity = c.code;
+    b.textContent = c.short?.[state.lang] || c.name[state.lang] || c.name.sk;
+    b.title = c.name[state.lang] || c.name.sk;
+    b.addEventListener('click', () => switchEntity(c.code));
+    sw.append(b);
+  }
+}
+
+async function switchEntity(cc) {
+  if (cc === state.country) return;
+  try { await loadCountry(cc); } catch (e) { console.error(e); return; }
+  state.scope = 'total'; state.expanded = false; state.search = ''; $('chapter-search').value = '';
+  if (!availableBreakdowns().includes(state.breakdown)) state.breakdown = 'chapters';
+  store.set('entity', cc);
+  renderAll();
+}
+
+/** Breakdowns this budget has data for (a city may publish no economic or COFOG split). */
+function availableBreakdowns() {
+  const out = ['chapters'];
+  if ((state.meta.annualYears || []).some(y => A(y)?.orgs?.length)) out.push('orgs');
+  if ((state.meta.annualYears || []).some(y => A(y)?.functions?.length)) out.push('functions');
+  if (Object.keys(M(state.meta.currentYear)?.expenditure || {}).some(k => k !== 'total')) out.push('types');
+  return out;
 }
 
 function endOfMonth(y, m) {
@@ -374,6 +451,13 @@ function breakdownRows() {
   const cy = chapterYear(y, state.breakdown);
   const a = cy && A(cy);
   if (!a) return { rows: [], year: cy };
+  if (state.breakdown === 'orgs') {
+    const partial = a.month < 12;
+    return {
+      year: cy, inYear: partial, month: a.month, pace: partial && a.month ? a.month / 12 : null,
+      rows: a.orgs.map(o => ({ id: `org:${o.code}`, code: o.code, name: orgLabel(o, a.orgs), sub: orgSub(o), budget: o.adjusted ?? o.approved, approved: o.approved, adjusted: o.adjusted, spent: o.actual })),
+    };
+  }
   if (state.breakdown === 'functions') {
     return {
       year: cy,
@@ -399,10 +483,10 @@ function renderBreakdown() {
   list.dataset.kind = state.breakdown;
   list.replaceChildren();
 
-  const ledeKey = { chapters: 'chapters.lede', functions: 'chapters.ledeFunctions', types: 'chapters.ledeTypes' }[state.breakdown];
-  let lede = t(ledeKey, { n: rows.length, year });
+  const ledeKey = { chapters: 'chapters.lede', orgs: 'chapters.ledeOrgs', functions: 'chapters.ledeFunctions', types: 'chapters.ledeTypes' }[state.breakdown];
+  let lede = t(ledeKey, { n: rows.length, m: rows.length - 1, year });
   if (state.breakdown !== 'types' && year !== state.year) lede += ' ' + t('chapters.olderYear', { year, selected: state.year });
-  if (state.breakdown === 'chapters' && inYear && month) lede += ' ' + t('chapters.asOfMonth', { month: monthGen(month - 1) });
+  if (['chapters', 'orgs'].includes(state.breakdown) && inYear && month) lede += ' ' + t('chapters.asOfMonth', { month: monthGen(month - 1) });
   $('chapters-lede').textContent = lede;
 
   const legend = $('chapters-legend');
@@ -719,7 +803,7 @@ function inView(el) {
 const COMPARE_YEARS = 5;
 
 function yearSeries(scope = state.scope, unit = state.unit, year = state.year) {
-  const pool = scope.startsWith('ch:') ? (state.meta.chapterMonthlyYears || []) : (state.meta.monthlyYears || []);
+  const pool = scope.startsWith('ch:') ? (state.meta.chapterMonthlyYears || []) : scope.startsWith('org:') ? (state.meta.orgMonthlyYears || []) : (state.meta.monthlyYears || []);
   const years = pool.filter(y => y <= year && y > year - 1 - COMPARE_YEARS);
   return years.map(y => {
     const cum = cumulativeFor(y, scope);
@@ -731,19 +815,24 @@ function yearSeries(scope = state.scope, unit = state.unit, year = state.year) {
 }
 
 function renderYearView(animate = false) {
-  const scopeHasMonthly = !state.scope.startsWith('ch:') || (state.meta.chapterMonthlyYears || []).includes(state.year);
+  const scopeHasMonthly = !isItem(state.scope) || (state.meta[state.scope.startsWith('org:') ? 'orgMonthlyYears' : 'chapterMonthlyYears'] || []).includes(state.year);
   $('year-lede').textContent = t('year.lede', { year: state.year, scope: scopeName() });
   const series = scopeHasMonthly ? yearSeries() : [];
   const legend = $('year-legend');
   legend.replaceChildren();
   if (series.length > 1) legend.append(legendItem('swatch line', 'var(--accent)', String(state.year)), legendItem('swatch line', 'var(--past)', t('year.previous', { n: series.length - 1 })));
-  yearChart($('year-chart'), { series, unit: state.unit, emptyText: scopeHasMonthly ? t('year.noMonthly') : t('year.noMonthlyChapter'), animate: animate && inView($('year-chart')) });
+  yearChart($('year-chart'), { series, unit: state.unit, sparse: sparse(), emptyText: scopeHasMonthly ? t('year.noMonthly') : t('year.noMonthlyChapter'), animate: animate && inView($('year-chart')) });
   yearInsight(scopeHasMonthly);
 
   const head = [t('year.month'), ...series.map(s => s.label)];
-  const body = [...Array(12).keys()].map(i => [monthName(i), ...series.map(s => s.values[i] == null ? t('common.na') : (state.unit === 'share' ? pct(s.values[i], 1) : moneyFull(s.values[i])))]);
+  // A budget reported every quarter has rows only for the months it reports.
+  const body = [...Array(12).keys()].filter(i => !sparse() || series.some(s => s.values[i] != null))
+    .map(i => [monthName(i), ...series.map(s => s.values[i] == null ? t('common.na') : (state.unit === 'share' ? pct(s.values[i], 1) : moneyFull(s.values[i])))]);
   table($('year-table'), head, series.length ? body : []);
 }
+
+/** True when the budget is reported by quarter, not by month. */
+const sparse = () => state.meta?.periodicity === 'quarter';
 
 /** A takeaway sentence: is money going out faster or slower than in past years at the same point? */
 function yearInsight(ok) {
@@ -773,7 +862,7 @@ function historyItems(scope = state.scope) {
   for (const y of years) {
     const act = annualActual(y, scope);
     if (act != null) items.push({ year: y, value: act, kind: 'actual' });
-    else if (y === state.meta.currentYear && (lastMonthOf(y) < 12 || (scope.startsWith('ch:') && A(y)?.month < 12))) {
+    else if (y === state.meta.currentYear && (lastMonthOf(y) < 12 || (isItem(scope) && A(y)?.month < 12))) {
       const b = budgetFor(y, scope);
       if (b != null) items.push({ year: y, value: b, kind: 'budget' });
     }
@@ -818,7 +907,7 @@ function renderRevenue() {
   legend.append(legendItem('swatch', 'var(--accent)', t('revenue.legendGot')), legendItem('swatch', 'var(--track)', t('revenue.legendBudget')));
   if (lm < 12) legend.append(legendItem('swatch pace', null, t('chapters.legendPace')));
 
-  const keys = ['vat', 'personal', 'corporate', 'excise', 'nontax', 'eu'];
+  const keys = Object.keys(state.labels?.revenue || {});
   const rows = keys.map(k => m.revenue[k] && ({ key: k, name: label('revenue', k), sub: describe('revenue', k), budget: m.revenue[k].budget, got: m.revenue[k].cumulative[lm - 1] })).filter(Boolean);
   const maxVal = Math.max(...rows.map(r => Math.max(r.budget ?? 0, r.got ?? 0)), 1);
   for (const r of rows) {
@@ -884,7 +973,7 @@ function renderShare() {
   const y = state.year;
   const total = annualActual(y, 'total') ?? budgetFor(y, 'total');
   const basis = annualActual(y, 'total') != null ? t('share.basisActual', { year: y }) : t('share.basisBudget', { year: y });
-  $('share-lede').textContent = t('share.lede', { pop: new Intl.NumberFormat(state.lang === 'en' ? 'en-GB' : 'sk-SK').format(pop.value), popSource: pop.label || '' });
+  $('share-lede').textContent = t('share.lede', { pop: new Intl.NumberFormat(state.lang === 'en' ? 'en-GB' : 'sk-SK').format(pop.value), popSource: (state.lang === 'en' && pop.labelEn) || pop.label || '', popYear: pop.year || '' });
   const row = $('share-row');
   row.replaceChildren(
     kpi(t('share.perYear'), total / pop.value, basis),
@@ -894,6 +983,9 @@ function renderShare() {
 }
 
 // --- About ------------------------------------------------------------------
+
+const publisher = () => (state.lang === 'en' && state.meta.publisherEn) || state.meta.publisher;
+const licence = () => (state.lang === 'en' && state.meta.licenceEn) || state.meta.licence;
 
 function renderAbout() {
   $('about-body').innerHTML = t('about.body');
@@ -912,12 +1004,12 @@ function renderAbout() {
     a.href = s.page || s.url;
     a.textContent = state.lang === 'en' ? (s.titleEn || s.title) : s.title;
     a.rel = 'noopener';
-    li.append(a, document.createTextNode(` — ${state.meta.publisher}${s.downloaded ? `, ${t('about.downloaded', { date: date(s.downloaded.slice(0, 10)) })}` : ''}`));
+    li.append(a, document.createTextNode(s.reference ? ` — ${t('about.reference')}` : ` — ${publisher()}${s.downloaded ? `, ${t('about.downloaded', { date: date(s.downloaded.slice(0, 10)) })}` : ''}`));
     ul.append(li);
   }
   const lic = document.createElement('li');
   const la = document.createElement('a');
-  la.href = state.meta.licenceUrl; la.textContent = state.meta.licence; la.rel = 'noopener';
+  la.href = state.meta.licenceUrl; la.textContent = licence(); la.rel = 'noopener';
   lic.append(document.createTextNode(t('about.licence') + ' '), la);
   ul.append(lic);
 
@@ -931,7 +1023,7 @@ function renderAbout() {
   });
   dl.append(document.createTextNode('.'));
 
-  $('footer-text').replaceChildren(document.createTextNode(t('footer', { publisher: state.meta.publisher, licence: state.meta.licence }) + ' '));
+  $('footer-text').replaceChildren(document.createTextNode(t('footer', { publisher: publisher(), licence: licence() }) + ' '));
   const gh = document.createElement('a');
   gh.href = 'https://github.com/omasamo/Budgetvisualizer';
   gh.textContent = 'GitHub';
@@ -948,8 +1040,8 @@ function openDetail(r) {
   k.replaceChildren();
   const inYear = r.inYear ?? breakdownRows().inYear;
   if (inYear) {
-    const mo = r.id.startsWith('ch:') ? (A(state.year)?.month ?? lastMonthOf(state.year)) : lastMonthOf(state.year);
-    k.append(kpi(t('common.budget'), r.budget, r.id.startsWith('ch:') ? t('kpi.adjustedNote') : String(state.year)), kpi(t('common.actualSoFar'), r.spent, t('kpi.actualNoteInProgress', { month: monthGen(mo - 1) })));
+    const mo = isItem(r.id) ? (A(state.year)?.month ?? lastMonthOf(state.year)) : lastMonthOf(state.year);
+    k.append(kpi(t('common.budget'), r.budget, isItem(r.id) ? t('kpi.adjustedNote') : String(state.year)), kpi(t('common.actualSoFar'), r.spent, t('kpi.actualNoteInProgress', { month: monthGen(mo - 1) })));
   } else {
     k.append(kpi(t('common.approved'), r.approved, ''), kpi(t('common.adjusted'), r.adjusted, ''), kpi(t('common.actual'), r.spent, pct(r.adjusted ? r.spent / r.adjusted : null) + ' ' + t('common.ofAdjusted')));
   }
@@ -959,14 +1051,15 @@ function openDetail(r) {
   requestAnimationFrame(() => {
     const yc = $('dlg-year-chart');
     const yh = $('dlg-year-title');
-    const series = (r.id.startsWith('type:') || r.id.startsWith('ch:')) ? yearSeries(r.id, 'share') : [];
-    if (series.length) {
+    const series = (r.id.startsWith('type:') || isItem(r.id)) ? yearSeries(r.id, 'share') : [];
+    // A single point per year is not a course through the year: skip the chart then.
+    if (series.some(s => s.values.filter(v => v != null).length > 1)) {
       yh.hidden = false; yc.hidden = false;
-      yearChart(yc, { series, unit: 'share', emptyText: t('year.noMonthly'), height: 260 });
+      yearChart(yc, { series, unit: 'share', sparse: sparse(), emptyText: t('year.noMonthly'), height: 260 });
     } else { yh.hidden = true; yc.hidden = true; yc.replaceChildren(); }
 
     let items = [];
-    if (r.id.startsWith('ch:') || r.id.startsWith('type:')) items = historyItems(r.id);
+    if (isItem(r.id) || r.id.startsWith('type:')) items = historyItems(r.id);
     else if (r.id.startsWith('fn:')) {
       const code = r.id.slice(3);
       items = (state.meta.annualYears || []).map(y => ({ year: y, value: A(y)?.functions.find(f => f.code === code)?.actual ?? null, kind: 'actual' }));
@@ -994,6 +1087,8 @@ function renderAll(animate = true) {
   const url = new URL(location.href);
   url.searchParams.set('rok', state.year);
   if (state.lang !== 'sk') url.searchParams.set('lang', state.lang); else url.searchParams.delete('lang');
+  url.searchParams.delete('krajina');
+  if (state.country !== state.countries[0]?.code) url.searchParams.set('rozpocet', state.country); else url.searchParams.delete('rozpocet');
   history.replaceState(null, '', url);
 }
 
@@ -1015,7 +1110,14 @@ function bind() {
   if ('ResizeObserver' in window) new ResizeObserver(setH).observe(header);
   $('year-select').addEventListener('change', e => { state.year = Number(e.target.value); state.expanded = false; renderAll(); });
   $('chapter-select').addEventListener('change', e => { state.scope = e.target.value; renderAll(); });
-  $('country-select').addEventListener('change', async e => { await loadCountry(e.target.value); state.scope = 'total'; renderAll(); });
+  $('entity-switch').addEventListener('keydown', e => {
+    if (!['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+    const btns = [...$('entity-switch').querySelectorAll('button')];
+    const i = btns.findIndex(b => b.dataset.entity === state.country);
+    const n = btns[(i + (e.key === 'ArrowRight' ? 1 : btns.length - 1)) % btns.length];
+    switchEntity(n.dataset.entity).then(() => $('entity-switch').querySelector(`[data-entity="${n.dataset.entity}"]`)?.focus());
+    e.preventDefault();
+  });
   $('chapter-search').addEventListener('input', e => { state.search = e.target.value; renderBreakdown(); });
   $('chapters-more').addEventListener('click', () => { state.expanded = !state.expanded; renderBreakdown(); });
   for (const b of document.querySelectorAll('[data-sort]')) b.addEventListener('click', () => { state.sort = b.dataset.sort; renderControls(); renderBreakdown(); });
@@ -1056,8 +1158,9 @@ async function init() {
   bind();
   try {
     state.countries = (await getJSON('data/countries.json')).countries;
-    const cc = params.get('krajina') || state.countries[0]?.code;
-    await loadCountry(cc);
+    const codes = state.countries.map(c => c.code);
+    const want = params.get('rozpocet') || params.get('krajina') || store.get('entity');
+    await loadCountry(codes.includes(want) ? want : codes[0]);
   } catch (e) {
     showStatus(t('noData.title'), t('noData.body'));
     console.error(e);
