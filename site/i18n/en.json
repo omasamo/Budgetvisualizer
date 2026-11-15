@@ -8,7 +8,9 @@
     "year": "Through the year",
     "history": "Over the years",
     "about": "About the data",
-    "revenue": "Revenue"
+    "revenue": "Revenue",
+    "hundred": "Every 100 €",
+    "changes": "Changes"
   },
   "country": "Country",
   "themeToggle": "Toggle dark mode",
@@ -38,7 +40,9 @@
     "meterSpent": "Paid out: {pct}",
     "meterPace": "{pct} of the year has passed",
     "meterLabel": "Paid out {spent} of {budget} ({pct}). {pace} of the year has passed.",
-    "meterBudget": "Budget: {budget}"
+    "meterBudget": "Budget: {budget}",
+    "eyebrowInProgress": "State budget {year} · status at the end of {month}",
+    "eyebrowFinal": "State budget {year} · closed year"
   },
   "kpi": {
     "approved": "Approved budget",
@@ -81,7 +85,8 @@
     "noData": "This breakdown has not been published for this year.",
     "noTypes": "Monthly figures have not been published for this year.",
     "ofBudget": "{pct} of {budget}",
-    "asOfMonth": "Chapter figures are up to the end of {month}."
+    "asOfMonth": "Chapter figures are up to the end of {month}.",
+    "eyebrow": "In detail"
   },
   "year": {
     "title": "How the money is spent through the year",
@@ -93,7 +98,11 @@
     "month": "Month",
     "noMonthlyChapter": "Monthly figures are not available for this chapter.",
     "previous": "previous years ({n})",
-    "keyboardHint": "Chart by month. Use the left and right arrow keys to move between months."
+    "keyboardHint": "Chart by month. Use the left and right arrow keys to move between months.",
+    "eyebrow": "Pace",
+    "insightFaster": "By the end of {month} the state had paid out {pct} of its budget. In the previous {n} years it averaged {avg} at the same point. So this year money is going out <strong>faster than usual</strong>.",
+    "insightSlower": "By the end of {month} the state had paid out {pct} of its budget. In the previous {n} years it averaged {avg} at the same point. So this year money is going out <strong>more slowly than usual</strong>.",
+    "insightSame": "By the end of {month} the state had paid out {pct} of its budget, <strong>about as usual</strong>: in the previous {n} years it averaged {avg} at the same point."
   },
   "history": {
     "title": "Over the years",
@@ -101,7 +110,9 @@
     "actual": "Actual",
     "budget": "Budget (year in progress)",
     "noData": "Figures for previous years are not available for this selection.",
-    "change": "Change on the previous year"
+    "change": "Change on the previous year",
+    "eyebrow": "Long term",
+    "insight": "From {from} to {to}, actual spending went from {a} to <strong>{b}</strong>, a change of {pct}. Amounts are in current prices, not adjusted for inflation."
   },
   "share": {
     "title": "What it means per person",
@@ -228,6 +239,43 @@
     "legendGot": "Collected",
     "legendBudget": "Plan for the year",
     "noData": "Revenue figures have not been published for this year.",
-    "total": "Total revenue"
+    "total": "Total revenue",
+    "eyebrow": "Revenue and deficit",
+    "sourcesTitle": "What the state collects",
+    "balanceSpent": "Paid out",
+    "balanceGot": "Collected",
+    "gapDeficit": "Deficit {gap}",
+    "gapSurplus": "Surplus {gap}",
+    "balanceLabel": "Spending {spent}, revenue {got}."
+  },
+  "rate": {
+    "titleInProgress": "Every second",
+    "titleFinal": "Every day",
+    "noteInProgress": "This is how much the state paid out on average every second in {year}, from 1 January to the end of {month}. That is {day} a day.",
+    "noteFinal": "Average state spending per day in {year}. That is {second} a second.",
+    "tickerLabel": "At this pace, since you opened this page the state has paid out about"
+  },
+  "hundred": {
+    "eyebrow": "At a glance",
+    "titleBudget": "Where every 100 € of the {year} budget goes",
+    "titleActual": "Where every 100 € the state spent in {year} went",
+    "lede": "Each square is 1 € out of 100 €. The {n} largest chapters have their own colour; the rest are grey. Point at or tap an item to see details.",
+    "other": "The other {n} chapters",
+    "otherSub": "Smaller ministries, offices and courts. All of them are in the list below.",
+    "cents": "{n} € of every 100 €",
+    "aria": "Of every 100 €: {list}.",
+    "amount": "Amount",
+    "share": "Of 100 €"
+  },
+  "changes": {
+    "eyebrow": "What changed",
+    "title": "Who got more money in the budget, and who got less",
+    "lede": "Approved chapter budgets for {year} compared with the approved budgets for {prev}. You see the {n} chapters with the largest increase and the {n} with the largest decrease in euros. Amounts are not adjusted for inflation.",
+    "up": "More money",
+    "down": "Less money",
+    "none": "A comparison with the previous year is not available for this year.",
+    "unmatched": "Chapters that exist in only one of the two years (a new office, for example), so they are not compared: {n}.",
+    "change": "Change",
+    "rowLabel": "{name}: {prev} in {py}, {cur} in {cy}, a change of {diff} ({pct}). Open details."
   }
 }

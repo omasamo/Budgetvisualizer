@@ -8,7 +8,9 @@
     "year": "Počas roka",
     "history": "V rokoch",
     "about": "O dátach",
-    "revenue": "Príjmy"
+    "revenue": "Príjmy",
+    "hundred": "Zo 100 €",
+    "changes": "Zmeny"
   },
   "country": "Krajina",
   "themeToggle": "Prepnúť tmavý režim",
@@ -38,7 +40,9 @@
     "meterSpent": "Vyplatené: {pct}",
     "meterPace": "Uplynulo {pct} roka",
     "meterLabel": "Vyplatené {spent} z {budget} ({pct}). Uplynulo {pace} roka.",
-    "meterBudget": "Rozpočet: {budget}"
+    "meterBudget": "Rozpočet: {budget}",
+    "eyebrowInProgress": "Štátny rozpočet {year} · stav ku koncu {month}",
+    "eyebrowFinal": "Štátny rozpočet {year} · uzavretý rok"
   },
   "kpi": {
     "approved": "Schválený rozpočet",
@@ -81,7 +85,8 @@
     "noData": "Pre tento rok rozdelenie nie je zverejnené.",
     "noTypes": "Mesačné údaje pre tento rok nie sú zverejnené.",
     "ofBudget": "{pct} z {budget}",
-    "asOfMonth": "Údaje kapitol sú ku koncu {month}."
+    "asOfMonth": "Údaje kapitol sú ku koncu {month}.",
+    "eyebrow": "Podrobne"
   },
   "year": {
     "title": "Ako sa míňa počas roka",
@@ -93,7 +98,11 @@
     "month": "Mesiac",
     "noMonthlyChapter": "Mesačné údaje pre túto kapitolu nie sú k dispozícii.",
     "previous": "predchádzajúce roky ({n})",
-    "keyboardHint": "Graf po mesiacoch. Šípkami doľava a doprava prechádzate mesiace."
+    "keyboardHint": "Graf po mesiacoch. Šípkami doľava a doprava prechádzate mesiace.",
+    "eyebrow": "Tempo",
+    "insightFaster": "Ku koncu {month} štát vyplatil {pct} rozpočtu. V predchádzajúcich {n} rokoch to bolo v rovnakom čase v priemere {avg}. Tento rok sa teda míňa <strong>rýchlejšie ako zvyčajne</strong>.",
+    "insightSlower": "Ku koncu {month} štát vyplatil {pct} rozpočtu. V predchádzajúcich {n} rokoch to bolo v rovnakom čase v priemere {avg}. Tento rok sa teda míňa <strong>pomalšie ako zvyčajne</strong>.",
+    "insightSame": "Ku koncu {month} štát vyplatil {pct} rozpočtu, <strong>približne ako zvyčajne</strong>: v predchádzajúcich {n} rokoch to bolo v rovnakom čase v priemere {avg}."
   },
   "history": {
     "title": "Vývoj v rokoch",
@@ -101,7 +110,9 @@
     "actual": "Skutočnosť",
     "budget": "Rozpočet (rok prebieha)",
     "noData": "Údaje za minulé roky pre tento výber nie sú k dispozícii.",
-    "change": "Zmena oproti predchádzajúcemu roku"
+    "change": "Zmena oproti predchádzajúcemu roku",
+    "eyebrow": "Dlhodobo",
+    "insight": "Od roku {from} do roku {to} sa skutočné výdavky zmenili z {a} na <strong>{b}</strong>, teda o {pct}. Sumy sú v bežných cenách, nie sú očistené od inflácie."
   },
   "share": {
     "title": "Koľko je to na človeka",
@@ -228,6 +239,43 @@
     "legendGot": "Vybrané",
     "legendBudget": "Plán na rok",
     "noData": "Údaje o príjmoch pre tento rok nie sú zverejnené.",
-    "total": "Príjmy spolu"
+    "total": "Príjmy spolu",
+    "eyebrow": "Príjmy a schodok",
+    "sourcesTitle": "Z čoho štát vyberá",
+    "balanceSpent": "Vyplatené",
+    "balanceGot": "Vybrané",
+    "gapDeficit": "Schodok {gap}",
+    "gapSurplus": "Prebytok {gap}",
+    "balanceLabel": "Výdavky {spent}, príjmy {got}."
+  },
+  "rate": {
+    "titleInProgress": "Každú sekundu",
+    "titleFinal": "Každý deň",
+    "noteInProgress": "Toľko štát v roku {year} v priemere vyplatil za každú sekundu od 1. januára do konca {month}. Za jeden deň je to {day}.",
+    "noteFinal": "Priemerné výdavky štátu na jeden deň roka {year}. Za sekundu je to {second}.",
+    "tickerLabel": "Pri tomto tempe štát odkedy ste otvorili stránku vyplatil približne"
+  },
+  "hundred": {
+    "eyebrow": "Na jeden pohľad",
+    "titleBudget": "Kam ide každých 100 € z rozpočtu na rok {year}",
+    "titleActual": "Kam išlo každých 100 €, ktoré štát minul v roku {year}",
+    "lede": "Každý štvorček je 1 € zo 100 €. Najväčších {n} kapitol má vlastnú farbu, ostatné sú sivé. Ukážte na položku alebo na ňu ťuknite a uvidíte podrobnosti.",
+    "other": "Ostatných {n} kapitol",
+    "otherSub": "Menšie ministerstvá, úrady a súdy. Všetky sú v zozname nižšie.",
+    "cents": "{n} € zo 100 €",
+    "aria": "Zo 100 €: {list}.",
+    "amount": "Suma",
+    "share": "Zo 100 €"
+  },
+  "changes": {
+    "eyebrow": "Čo sa zmenilo",
+    "title": "Komu v rozpočte najviac pribudlo a komu ubudlo",
+    "lede": "Schválený rozpočet kapitol na rok {year} oproti schválenému rozpočtu na rok {prev}. Vidíte {n} kapitol s najväčším nárastom a {n} s najväčším poklesom v eurách. Sumy nie sú očistené od inflácie.",
+    "up": "Viac peňazí",
+    "down": "Menej peňazí",
+    "none": "Porovnanie s predchádzajúcim rokom pre tento rok nie je k dispozícii.",
+    "unmatched": "Počet kapitol, ktoré existujú iba v jednom z rokov (napríklad nový úrad), a preto nie sú porovnané: {n}.",
+    "change": "Zmena",
+    "rowLabel": "{name}: {prev} v roku {py}, {cur} v roku {cy}, zmena {diff} ({pct}). Otvoriť detail."
   }
 }

@@ -15,14 +15,16 @@
 <body>
   <a class="skip-link" href="#main" data-i18n="skip">Preskočiť na obsah</a>
 
-  <header class="site-header">
+  <header class="site-header" id="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="./">
         <svg aria-hidden="true" viewBox="0 0 32 32" width="28" height="28"><rect x="4" y="14" width="6" height="14" rx="2"/><rect x="13" y="8" width="6" height="20" rx="2"/><rect x="22" y="4" width="6" height="24" rx="2"/></svg>
         <span data-i18n="brand">Rozpočet pre ľudí</span>
       </a>
       <nav class="header-nav" aria-label="Sekcie" data-i18n-attr="aria-label:navLabel">
+        <a href="#sto-eur" data-i18n="nav.hundred">Zo 100 €</a>
         <a href="#kapitoly" data-i18n="nav.chapters">Kapitoly</a>
+        <a href="#zmeny" data-i18n="nav.changes">Zmeny</a>
         <a href="#pocas-roka" data-i18n="nav.year">Počas roka</a>
         <a href="#roky" data-i18n="nav.history">V rokoch</a>
         <a href="#prijmy" data-i18n="nav.revenue">Príjmy</a>
@@ -57,20 +59,49 @@
     <div id="status" class="status" role="status" hidden></div>
 
     <section class="hero" aria-labelledby="hero-title">
-      <h1 id="hero-title" class="hero-sentence"></h1>
-      <div class="hero-figure-row">
-        <div>
-          <p class="hero-figure" id="hero-figure"></p>
+      <div class="hero-grid">
+        <div class="hero-main">
+          <p class="eyebrow" id="hero-eyebrow"></p>
+          <h1 id="hero-title" class="hero-sentence"></h1>
+          <p class="hero-figure"><span id="hero-figure" aria-hidden="true"></span><span class="visually-hidden" id="hero-figure-sr"></span></p>
           <p class="hero-caption" id="hero-caption"></p>
+          <div class="hero-meter" id="hero-meter"></div>
         </div>
-        <div class="hero-meter" id="hero-meter"></div>
+        <div class="hero-side" id="hero-side">
+          <p class="rate-title" id="rate-title"></p>
+          <p class="rate-figure" id="rate-figure"></p>
+          <p class="rate-note" id="rate-note"></p>
+          <div class="ticker" id="ticker" hidden>
+            <p class="ticker-label" id="ticker-label"></p>
+            <p class="ticker-value" id="ticker-value" aria-hidden="true"></p>
+          </div>
+        </div>
       </div>
       <div class="kpi-row" id="kpi-row"></div>
     </section>
 
-    <section id="kapitoly" class="card" aria-labelledby="chapters-title">
+    <section id="sto-eur" class="card reveal" aria-labelledby="hundred-title">
       <div class="card-head">
         <div>
+          <p class="eyebrow" data-i18n="hundred.eyebrow">Na jeden pohľad</p>
+          <h2 id="hundred-title"></h2>
+          <p class="lede" id="hundred-lede"></p>
+        </div>
+      </div>
+      <div class="hundred">
+        <div class="waffle" id="waffle" role="img"></div>
+        <ul class="waffle-legend" id="waffle-legend"></ul>
+      </div>
+      <details class="table-view">
+        <summary data-i18n="common.showTable">Zobraziť ako tabuľku</summary>
+        <div class="table-scroll" id="hundred-table"></div>
+      </details>
+    </section>
+
+    <section id="kapitoly" class="card reveal" aria-labelledby="chapters-title">
+      <div class="card-head">
+        <div>
+          <p class="eyebrow" data-i18n="chapters.eyebrow">Podrobne</p>
           <h2 id="chapters-title" data-i18n="chapters.title">Kam idú peniaze</h2>
           <p class="lede" id="chapters-lede"></p>
         </div>
@@ -99,9 +130,26 @@
       </details>
     </section>
 
-    <section id="pocas-roka" class="card" aria-labelledby="year-title">
+    <section id="zmeny" class="card reveal" aria-labelledby="changes-title">
       <div class="card-head">
         <div>
+          <p class="eyebrow" data-i18n="changes.eyebrow">Čo sa zmenilo</p>
+          <h2 id="changes-title"></h2>
+          <p class="lede" id="changes-lede"></p>
+        </div>
+      </div>
+      <div class="legend" id="changes-legend"></div>
+      <div class="chart" id="changes-chart"></div>
+      <details class="table-view">
+        <summary data-i18n="common.showTable">Zobraziť ako tabuľku</summary>
+        <div class="table-scroll" id="changes-table"></div>
+      </details>
+    </section>
+
+    <section id="pocas-roka" class="card reveal" aria-labelledby="year-title">
+      <div class="card-head">
+        <div>
+          <p class="eyebrow" data-i18n="year.eyebrow">Tempo</p>
           <h2 id="year-title" data-i18n="year.title">Ako sa míňa počas roka</h2>
           <p class="lede" id="year-lede"></p>
         </div>
@@ -112,6 +160,7 @@
           </div>
         </div>
       </div>
+      <p class="insight" id="year-insight" hidden></p>
       <div class="legend" id="year-legend"></div>
       <div class="chart" id="year-chart"></div>
       <details class="table-view">
@@ -120,13 +169,15 @@
       </details>
     </section>
 
-    <section id="roky" class="card" aria-labelledby="history-title">
+    <section id="roky" class="card reveal" aria-labelledby="history-title">
       <div class="card-head">
         <div>
+          <p class="eyebrow" data-i18n="history.eyebrow">Dlhodobo</p>
           <h2 id="history-title" data-i18n="history.title">Vývoj v rokoch</h2>
           <p class="lede" id="history-lede"></p>
         </div>
       </div>
+      <p class="insight" id="history-insight" hidden></p>
       <div class="chart" id="history-chart"></div>
       <details class="table-view">
         <summary data-i18n="common.showTable">Zobraziť ako tabuľku</summary>
@@ -134,13 +185,16 @@
       </details>
     </section>
 
-    <section id="prijmy" class="card" aria-labelledby="revenue-title">
+    <section id="prijmy" class="card reveal" aria-labelledby="revenue-title">
       <div class="card-head">
         <div>
+          <p class="eyebrow" data-i18n="revenue.eyebrow">Príjmy a schodok</p>
           <h2 id="revenue-title" data-i18n="revenue.title">Odkiaľ peniaze prichádzajú</h2>
           <p class="lede" id="revenue-lede"></p>
         </div>
       </div>
+      <div class="balance" id="balance"></div>
+      <h3 class="sub-head" data-i18n="revenue.sourcesTitle">Z čoho štát vyberá</h3>
       <div class="legend" id="revenue-legend"></div>
       <ol class="meter-list" id="revenue-list"></ol>
       <details class="table-view">
@@ -159,7 +213,7 @@
       <div class="kpi-row" id="share-row"></div>
     </section>
 
-    <section id="o-datach" class="card prose" aria-labelledby="about-title">
+    <section id="o-datach" class="card prose reveal" aria-labelledby="about-title">
       <h2 id="about-title" data-i18n="about.title">O dátach</h2>
       <div id="about-body"></div>
       <h3 data-i18n="about.glossaryTitle">Slovníček</h3>
