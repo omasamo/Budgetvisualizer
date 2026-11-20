@@ -60,7 +60,7 @@
       "titleEn": "Budget Information System (rozpocet.sk), local government: Bratislava",
       "page": "https://rozpocet.sk/web/#/rozpocet/SAM/sam/0",
       "url": "https://rozpocet.sk/rest/api/",
-      "downloaded": "2026-11-15T22:42:27Z"
+      "downloaded": "2026-11-20T15:43:41Z"
     },
     {
       "id": "ba-budget",
@@ -72,5 +72,5 @@
       "reference": true
     }
   ],
-  "generated": "2026-11-15T22:42:39Z"
+  "generated": "2026-11-20T15:43:52Z"
 }
